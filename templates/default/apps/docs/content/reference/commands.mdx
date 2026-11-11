@@ -1,0 +1,51 @@
+---
+title: Commands
+description: Every command in the root package.json, when to run it, and whether running it twice is safe.
+---
+
+Run them from the repository root. "Safe again" means a second run changes nothing it already did.
+
+## Every day
+
+| Command                                            | What it does                                                    | Safe again |
+| -------------------------------------------------- | --------------------------------------------------------------- | ---------- |
+| `pnpm dev`                                         | API, website, docs and Metro together                           | Yes        |
+| `pnpm docs`                                        | These docs only, on http://localhost:3004                       | Yes        |
+| `pnpm workshop`                                    | Storybook for every UI component, on :6006                      | Yes        |
+| `pnpm db:start` / `db:stop`                        | Local CockroachDB and Redis in Docker                           | Yes        |
+| `pnpm db:push`                                     | Apply the schema to the local database, no migration            | Yes        |
+| `pnpm db:seed`                                     | A demo user                                                     | Yes        |
+| `pnpm db:migrate`                                  | Write a migration (a person does this, never a script or agent) | No         |
+| `pnpm typecheck`, `lint`, `test`, `spell`, `build` | What CI runs (`pnpm ci:checks` runs them all)                   | Yes        |
+| `pnpm format`                                      | Prettier on every file                                          | Yes        |
+
+## Setup, once per project
+
+Dry run by default, `--apply` to change.
+
+| Command                                  | Phase                                   | What it does                                                                                                      |
+| ---------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `pnpm doctor`                            | Any                                     | Checks tools, `.env`, GitHub and Google Cloud. Never changes anything                                             |
+| `pnpm infra:init`                        | [5 Cloud](../setup/5-cloud.mdx)         | State bucket, first apply of every stack, GitHub variables (asks before each apply)                               |
+| `pnpm infra:describe`                    | 5                                       | What each stack manages, and the service addresses                                                                |
+| `pnpm secrets:set <staging\|production>` | 5                                       | Secret Manager values from `.env.staging` / `.env.production`                                                     |
+| `pnpm mobile:signing`                    | [6 Apple](../setup/6-apple.mdx)         | GitHub `production` environment, deploy key, signing secrets, App Store profiles (runs straight away, no dry run) |
+| `pnpm github:vars`                       | 6                                       | Repository variables the phone build reads                                                                        |
+| `pnpm setupwise setup [module] --apply`  | Any                                     | Every scripted setup step: GitHub variables and labels, cloud secrets for each environment                        |
+
+## Release, as often as needed
+
+| Command                                    | What it does                                                                                    |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `pnpm mobile:deploy <staging\|production>` | Builds the iPhone app on this Mac and uploads it to TestFlight, like the Deploy Mobile workflow |
+| `git push origin main:production`          | Creates the production branch (once). After that, promote with a pull request                   |
+
+## Which workspace
+
+To run a script in one app or package, use `--filter`:
+
+```sh
+pnpm --filter=@starter/mobile ios -- --device
+pnpm --filter=@starter/api test
+pnpm --filter=@starter/design-tokens generate
+```

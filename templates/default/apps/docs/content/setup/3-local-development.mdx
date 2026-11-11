@@ -1,0 +1,66 @@
+---
+title: 3. Local development
+description: The local database, the API's local secrets, and everything running on your computer.
+---
+
+This is the [Quick start](../start-here/quick-start.mdx) with the reasons behind each step.
+
+<Steps>
+<Step>
+
+### Start the database
+
+```sh
+pnpm db:start
+```
+
+Docker runs CockroachDB (SQL on `localhost:26261`, admin on http://localhost:8086) and Redis (`localhost:6383`). On its first start, `docker/cockroach/init.sql` creates the `starter_app` user, its databases and makes it create tables **unlocked**: CockroachDB locks new tables by default, which breaks Prisma's migrations. The cloud databases need the same setting ([4 Backend services](4-backend-services.mdx)).
+
+Set in `.env`:
+
+```sh
+DATABASE_URL="postgresql://starter_app@localhost:26261/starter_app?sslmode=disable"
+TEST_DATABASE_URL="postgresql://starter_app@localhost:26261/starter_app_test?sslmode=disable"
+```
+
+</Step>
+<Step>
+
+### Create the tables and a demo user
+
+```sh
+pnpm db:push
+pnpm db:seed
+```
+
+`db:push` applies the schema without a migration, for local work only. Migrations are written by a person (`pnpm db:migrate`), never by a script or an agent.
+
+</Step>
+<Step>
+
+### The API's local secrets
+
+`AUTH_SECRET` signs the sign-in tokens and `API_KEY` is the key the app sends. Locally any long random string works: `openssl rand -base64 32`, once for each.
+
+Without `RESEND_API_KEY`, sign-in codes print in the API's log instead of being emailed.
+
+</Step>
+<Step>
+
+### Run it
+
+```sh
+pnpm dev
+```
+
+The API on :4000, the website on :3003, these docs on :3004 and Metro on :8083 for the iPhone app.
+
+To test on a real iPhone, set `EXPO_PUBLIC_API_URL` to your Mac's network address (`http://192.168.x.x:4000`) and build to the phone: `pnpm --filter=@starter/mobile ios -- --device`.
+
+</Step>
+</Steps>
+
+<Callout type="success" title="Check it">
+  `pnpm doctor` → **Root .env** shows ✓ Local API. In the simulator, you can
+  create an account with an email code read from the API log.
+</Callout>

@@ -1,0 +1,122 @@
+---
+title: Quick start
+description: Run the app, the API, the website and these docs on your computer, with no cloud account.
+---
+
+Everything here runs locally. You don't need Google Cloud, Apple or any API key yet: sign-in codes print in the API log, and Google sign-in stays hidden until you add its keys.
+
+<Steps>
+<Step>
+
+### Install the tools
+
+Node.js 24.11 or newer, pnpm 10.10 (`corepack enable`), Docker, and on a Mac, Xcode for the iPhone app. The full list, with the cloud command-line tools: [Your machine](../setup/1-your-machine.mdx).
+
+</Step>
+<Step>
+
+### Get the code and install
+
+```sh
+git clone git@github.com:your-github-user/starter-app.git
+cd starter-app
+pnpm install
+cp .env.example .env
+```
+
+</Step>
+<Step>
+
+### Start the local database
+
+`pnpm db:start` runs CockroachDB and Redis in Docker; `DATABASE_URL` in `.env.example` already points at it. Then create the tables and a demo user (`demo@example.com` / `password123`, with two notes):
+
+```sh
+pnpm db:start
+pnpm db:push
+pnpm db:seed
+```
+
+</Step>
+<Step>
+
+### Give the API its two local secrets
+
+Any long random string works locally. Run this twice and paste one value into `AUTH_SECRET` and one into `API_KEY`:
+
+```sh
+openssl rand -base64 32
+```
+
+</Step>
+<Step>
+
+### Run everything
+
+```sh
+pnpm dev
+```
+
+| Address               | What                                           |
+| --------------------- | ---------------------------------------------- |
+| http://localhost:4000 | API                                            |
+| http://localhost:3003 | Website                                        |
+| http://localhost:3004 | These docs (`pnpm docs` alone)                 |
+| Metro on :8083        | The iPhone app in the iOS simulator            |
+| http://localhost:6006 | Workshop, every UI component (`pnpm workshop`) |
+| http://localhost:8086 | CockroachDB admin                              |
+
+</Step>
+<Step>
+
+### Check what is missing
+
+`pnpm doctor` reads your tools, `.env` and, once you're logged in, GitHub and Google Cloud. It changes nothing. Locally, the `!` lines are normal: they're the services you haven't set up yet.
+
+<Terminal
+  title="pnpm doctor"
+  lines={[
+    {
+      command: 'pnpm doctor',
+      output: `Starter App: doctor
+
+Tools
+  ✓ Node 24.11.1
+  ✓ git
+  ✓ pnpm
+  ✓ docker
+  ✓ gh
+  ! gcloud is not installed: needed for Google Cloud (pnpm infra:init, pnpm secrets:set)
+  ! tofu is not installed: needed for OpenTofu (pnpm infra:init); install: brew install opentofu
+
+Env file
+  ✓ required keys
+  ! Email codes: RESEND_API_KEY, RESEND_FROM not set
+  ! Infrastructure: GCP_PROJECT_ID not set
+
+GitHub
+  ! this folder has no GitHub remote gh can read: GitHub skipped
+
+Google Cloud
+  ! GCP_PROJECT_ID is not set: Google Cloud skipped
+
+Nothing to fix. Notes (!) are worth a look.`,
+    },
+  ]}
+/>
+
+</Step>
+</Steps>
+
+## On a real iPhone
+
+Plug in an iPhone and build to it. The phone calls the API on your Mac, so set `EXPO_PUBLIC_API_URL` in `.env` to your Mac's network address (`http://192.168.x.x:4000`) first:
+
+```sh
+pnpm --filter=@starter/mobile ios -- --device
+```
+
+## Next
+
+- Want to deploy? Follow [Setup, step by step](../setup/index.mdx) from phase 0.
+- Want to build a feature? Read [Adding a feature](../architecture/adding-a-feature.md) and the [conventions](../conventions/index.md).

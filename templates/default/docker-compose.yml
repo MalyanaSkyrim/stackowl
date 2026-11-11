@@ -1,0 +1,47 @@
+# Local services for development: `pnpm db:start` / `pnpm db:stop`.
+services:
+  cockroach:
+    container_name: starter-app-cockroach-dev
+    image: cockroachdb/cockroach:v26.2.3
+    restart: unless-stopped
+    # Local only: insecure mode has no TLS and no passwords.
+    command: start-single-node --insecure
+    ports:
+      - '26261:26257' # SQL (DATABASE_URL)
+      - '8086:8080' # admin UI: http://localhost:8086
+    volumes:
+      - starter-app-cockroach-data:/cockroach/cockroach-data
+      # Creates the app user and its databases on the first start.
+      - ./docker/cockroach/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      # Ready once the init script has created the app database.
+      test:
+        [
+          'CMD',
+          'cockroach',
+          'sql',
+          '--insecure',
+          '--database=starter_app',
+          '--execute=SELECT 1',
+        ]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+
+  redis:
+    container_name: starter-app-redis-dev
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - '6383:6379'
+    volumes:
+      - starter-app-redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  starter-app-cockroach-data:
+  starter-app-redis-data:

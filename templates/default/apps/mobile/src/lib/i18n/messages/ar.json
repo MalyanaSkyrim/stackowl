@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "notes": "الملاحظات",
+    "settings": "الإعدادات"
+  },
+  "notes": {
+    "title": "الملاحظات",
+    "new": "ملاحظة جديدة",
+    "signedOutTitle": "ملاحظاتك على كل هاتف",
+    "signedOutBody": "سجّل الدخول لتكتب ملاحظاتك وتجدها أينما سجّلت الدخول.",
+    "signIn": "تسجيل الدخول",
+    "emptyTitle": "لا توجد ملاحظات بعد",
+    "emptyBody": "اضغط + لتكتب أول ملاحظة.",
+    "loadError": "تعذّر تحميل ملاحظاتك.",
+    "retry": "حاول مجددًا",
+    "updated": "عُدّلت في {date}",
+    "editor": {
+      "back": "رجوع",
+      "newTitle": "ملاحظة جديدة",
+      "editTitle": "ملاحظة",
+      "titlePlaceholder": "العنوان",
+      "bodyPlaceholder": "اكتب شيئًا…",
+      "save": "حفظ",
+      "saveError": "تعذّر الحفظ. تحقّق من اتصالك وحاول مجددًا.",
+      "delete": "حذف الملاحظة",
+      "deleteTitle": "حذف هذه الملاحظة؟",
+      "deleteBody": "لا يمكن التراجع عن ذلك.",
+      "cancel": "إلغاء"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "titleSignIn": "مرحبًا بعودتك",
+      "titleSignUp": "أنشئ حسابك",
+      "tabSignIn": "تسجيل الدخول",
+      "tabSignUp": "إنشاء حساب",
+      "close": "إغلاق",
+      "orWithEmail": "أو بالبريد الإلكتروني",
+      "continueWithApple": "المتابعة باستخدام Apple",
+      "continueWithGoogle": "المتابعة باستخدام Google",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "you@example.com",
+      "password": "كلمة المرور",
+      "passwordPlaceholderSignIn": "كلمة المرور",
+      "passwordPlaceholderSignUp": "8 أحرف على الأقل",
+      "submitSignIn": "تسجيل الدخول",
+      "submitSignUp": "إنشاء حساب",
+      "noteSignIn": "جديد هنا؟ أنشئ حسابًا في ثوانٍ.",
+      "noteSignUp": "سنرسل إليك رمزًا من 6 أرقام عبر البريد الإلكتروني للتأكد من هويتك.",
+      "forgotPassword": "نسيت كلمة المرور؟"
+    },
+    "validation": {
+      "emailInvalid": "أدخل بريدًا إلكترونيًا صحيحًا.",
+      "passwordRequired": "أدخل كلمة المرور.",
+      "passwordTooShort": "استخدم {min} أحرف على الأقل.",
+      "passwordTooLong": "استخدم {max} حرفًا على الأكثر.",
+      "codeInvalid": "أدخل الرمز المكوّن من 6 أرقام.",
+      "passwordsDontMatch": "كلمتا المرور غير متطابقتين."
+    },
+    "verifyEmail": {
+      "title": "تحقّق من بريدك الإلكتروني",
+      "sentTo": "أرسلنا رمزًا من 6 أرقام إلى",
+      "change": "تغيير",
+      "back": "رجوع",
+      "checkSpam": "لم يصلك؟ تحقّق من البريد المزعج.",
+      "newCodeSent": "تم إرسال رمز جديد.",
+      "resend": "إعادة إرسال الرمز",
+      "resendIn": "إعادة الإرسال بعد {seconds} ث",
+      "verify": "تحقّق"
+    },
+    "forgotPassword": {
+      "back": "رجوع",
+      "close": "إغلاق",
+      "stepLabel": "الخطوة {step} من {total}",
+      "titleEmail": "إعادة تعيين كلمة المرور",
+      "emailIntro": "أدخل البريد الذي سجّلت به. سنرسل إليك رمزًا من 6 أرقام.",
+      "sendCode": "إرسال الرمز",
+      "titleReset": "اختر كلمة مرور جديدة",
+      "codeIntro": "أدخل الرمز الذي أرسلناه إلى",
+      "newCodeMaybeSent": "إذا كان لهذا البريد حساب، فهناك رمز جديد في الطريق إليك. يمكنك طلب 5 رموز في الساعة.",
+      "code": "الرمز المكوّن من 6 أرقام",
+      "codePlaceholder": "123456",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmPassword": "أعد كتابة كلمة المرور الجديدة",
+      "confirmPasswordPlaceholder": "اكتبها مرة أخرى",
+      "save": "حفظ كلمة المرور",
+      "titleDone": "تم تحديث كلمة المرور",
+      "doneBody": "تم تسجيل دخولك. ملاحظاتك في مكانها كما تركتها.",
+      "done": "تم"
+    },
+    "errors": {
+      "EMAIL_TAKEN": "هذا البريد مرتبط بحساب بالفعل. سجّل الدخول بدلًا من ذلك.",
+      "INVALID_CREDENTIALS": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+      "INVALID_CODE": "هذا الرمز غير صحيح أو انتهت صلاحيته.",
+      "TOO_MANY_ATTEMPTS": "محاولات خاطئة كثيرة. اطلب رمزًا جديدًا.",
+      "RESEND_COOLDOWN": "انتظر قليلًا قبل طلب رمز آخر.",
+      "SESSION_EXPIRED": "تم تسجيل خروجك. يُرجى تسجيل الدخول مجددًا.",
+      "EMAIL_NOT_VERIFIED": "أكّد بريدك الإلكتروني أولًا: أرسلنا إليك رمزًا.",
+      "OAUTH_INVALID_TOKEN": "تعذّر تسجيل الدخول عبر Apple أو Google. يُرجى المحاولة مرة أخرى.",
+      "OAUTH_EMAIL_NOT_VERIFIED": "البريد الإلكتروني لحسابك في Apple أو Google غير مُتحقَّق منه.",
+      "OAUTH_NO_EMAIL": "لم تشارك Apple أو Google بريدك الإلكتروني. اسمح بذلك وحاول مرة أخرى.",
+      "OAUTH_NOT_CONFIGURED": "خيار تسجيل الدخول هذا غير متاح حاليًا.",
+      "NETWORK": "تعذّر الوصول إلى الخادم. تحقّق من اتصالك وحاول مرة أخرى.",
+      "UNKNOWN": "حدث خطأ ما. يُرجى المحاولة مرة أخرى."
+    }
+  },
+  "profile": {
+    "menu": {
+      "general": "عام",
+      "language": "اللغة",
+      "darkMode": "الوضع الداكن",
+      "legal": "قانوني",
+      "privacyPolicy": "سياسة الخصوصية",
+      "termsConditions": "الشروط والأحكام",
+      "aboutApp": "عن التطبيق",
+      "account": "الحساب",
+      "signIn": "تسجيل الدخول",
+      "signInDescription": "احتفظ بملاحظاتك على كل هاتف · Apple أو Google أو البريد",
+      "signedInDescription": "الملاحظات محفوظة في حسابك"
+    },
+    "about": {
+      "title": "حول التطبيق",
+      "back": "رجوع",
+      "version": "الإصدار {version}",
+      "website": "الموقع",
+      "privacyPolicy": "سياسة الخصوصية",
+      "termsConditions": "الشروط والأحكام"
+    },
+    "language": {
+      "title": "اللغة",
+      "english": "الإنجليزية (US)",
+      "french": "الفرنسية",
+      "arabic": "العربية",
+      "changeFailed": "تعذّر تغيير اللغة. يُرجى المحاولة مرة أخرى."
+    },
+    "account": {
+      "title": "الحساب",
+      "back": "رجوع",
+      "signedInWith": "مسجّل الدخول عبر {methods}",
+      "methodPassword": "البريد الإلكتروني",
+      "methodApple": "Apple",
+      "methodGoogle": "Google",
+      "email": "البريد الإلكتروني",
+      "signInMethod": "طريقة الدخول",
+      "changePassword": "تغيير كلمة المرور",
+      "signOut": "تسجيل الخروج",
+      "signOutNote": "تبقى ملاحظاتك في حسابك.",
+      "delete": "حذف الحساب",
+      "deleteTitle": "حذف حسابك؟",
+      "deleteBody": "يُحذف حسابك وكل ملاحظاتك من خوادمنا، ويُسجَّل خروج كل هاتف متصل به. لا يمكن التراجع عن ذلك.",
+      "deleteConfirm": "احذف نهائيًا",
+      "deleteCancel": "أبقِ حسابي",
+      "deleted": "تم حذف حسابك."
+    }
+  }
+}

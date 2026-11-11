@@ -1,0 +1,23 @@
+/// 6-digit codes sent by email. Only the sha256 hash is stored.
+/// A new code for the same user and purpose consumes the previous one, and a
+/// code is consumed after too many wrong attempts.
+model OtpCode {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// [OtpPurpose]
+  purpose    String
+  /// The address the code was sent to.
+  email      String
+  codeHash   String
+  attempts   Int       @default(0)
+  expiresAt  DateTime
+  consumedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, purpose])
+  @@index([email, purpose])
+  @@index([expiresAt])
+}

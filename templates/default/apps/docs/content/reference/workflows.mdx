@@ -1,0 +1,110 @@
+---
+title: GitHub workflows
+description: What runs on a pull request, on a merge, and by hand.
+---
+
+<FlowDiagram
+  height={340}
+  nodes={[
+    { id: 'pr', label: 'Pull request', x: 0, y: 120 },
+    {
+      id: 'ci',
+      label: 'Continuous Integration',
+      note: 'spell, format, types, lint, tests, build, migrations',
+      x: 260,
+      y: 0,
+    },
+    {
+      id: 'plan',
+      label: 'Infrastructure',
+      note: 'plan, posted on the PR',
+      x: 260,
+      y: 120,
+    },
+    { id: 'main', label: 'main', note: 'merge', x: 260, y: 240 },
+    {
+      id: 'staging',
+      label: 'Deploy Staging',
+      note: 'migrate, then api + web',
+      x: 540,
+      y: 180,
+    },
+    {
+      id: 'apply',
+      label: 'Infrastructure',
+      note: 'apply shared + staging',
+      x: 540,
+      y: 300,
+    },
+    {
+      id: 'prod',
+      label: 'production',
+      note: 'merge main into it',
+      x: 540,
+      y: 60,
+    },
+    {
+      id: 'deployProd',
+      label: 'Deploy Production',
+      note: 'migrate, then api + web',
+      x: 820,
+      y: 0,
+    },
+    {
+      id: 'mobile',
+      label: 'Deploy Mobile (iOS)',
+      note: 'by hand, from main or production',
+      x: 820,
+      y: 180,
+      kind: 'outside',
+    },
+  ]}
+  edges={[
+    { from: 'pr', to: 'ci' },
+    { from: 'pr', to: 'plan', label: 'infra/ changed' },
+    { from: 'pr', to: 'main', label: 'merge' },
+    { from: 'main', to: 'staging' },
+    { from: 'main', to: 'apply', label: 'infra/ changed' },
+    { from: 'main', to: 'prod', label: 'PR' },
+    { from: 'prod', to: 'deployProd' },
+    { from: 'main', to: 'mobile' },
+    { from: 'prod', to: 'mobile' },
+  ]}
+  steps={[
+    {
+      caption:
+        'Every pull request runs CI. One that changes infra/ also gets its OpenTofu plan as a comment.',
+      edges: ['pr>ci', 'pr>plan'],
+    },
+    {
+      caption:
+        'Merging into main deploys staging (unless the PR has the skip-staging-deploy label) and applies infra changes.',
+      edges: ['pr>main', 'main>staging', 'main>apply'],
+    },
+    {
+      caption:
+        'A pull request from main into production deploys production the same way.',
+      edges: ['main>prod', 'prod>deployProd'],
+    },
+    {
+      caption:
+        'Phone builds are by hand: Deploy Mobile from main gives a staging build, from production a production build.',
+      edges: ['main>mobile', 'prod>mobile'],
+    },
+  ]}
+/>
+
+| Workflow               | File                    | Runs on                                                                               | What it does                                                                                                                                                  |
+| ---------------------- | ----------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Continuous Integration | `ci.yml`                | Every pull request, or by hand                                                        | Spelling, formatting, types, lint, tests, build, Storybook build; checks the migrations match the Prisma schema on a throwaway CockroachDB                    |
+| Infrastructure         | `infra.yml`             | Pull requests and pushes that change `infra/`, on `main` and `production`; or by hand | `tofu fmt` and validate, plan on pull requests, apply on merge                                                                                                |
+| Deploy Staging         | `deploy-staging.yml`    | Push to `main`, or by hand                                                            | Calls `deploy.yml` for staging                                                                                                                                |
+| Deploy Production      | `deploy-production.yml` | Push to `production`, or by hand                                                      | Calls `deploy.yml` for production                                                                                                                             |
+| Deploy (reusable)      | `deploy.yml`            | Called by the two above                                                               | Checks the skip label, runs Prisma migrations with the environment's `DATABASE_URL`, then builds `api` and `web` on Cloud Build and deploys them to Cloud Run |
+| Deploy Mobile (iOS)    | `deploy-mobile.yml`     | By hand only, from `main` or `production`                                             | Builds with Fastlane on a Mac runner, signs with Match, uploads to TestFlight                                                                                 |
+
+## When a deploy skips a service
+
+A deploy builds `api` or `web` only when something it's built from changed since the commit its Cloud Run service runs now (images are tagged with their commit). A service still on the placeholder image is always deployed. Tick **Force deploy all services** when running it by hand to skip the check.
+
+Logging in to Google Cloud uses no stored key (Workload Identity Federation): only this repository can log in, pull requests can only plan, and only `main` and `production` can apply or deploy.

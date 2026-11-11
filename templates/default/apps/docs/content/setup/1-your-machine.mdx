@@ -1,0 +1,73 @@
+---
+title: 1. Your machine
+description: The tools to install and the accounts to log in to on the Mac you'll work from.
+---
+
+A Mac is needed for the iPhone app (Xcode). The API, the website and the scripts also run on Linux.
+
+<Steps>
+<Step>
+
+### Install the tools
+
+| Tool             | Version                             | Install                                              |
+| ---------------- | ----------------------------------- | ---------------------------------------------------- |
+| Node.js          | 24.11 or newer                      | [nodejs.org](https://nodejs.org) or `nvm install 24` |
+| pnpm             | 10.10                               | `corepack enable`                                    |
+| Docker           | Any recent                          | Docker Desktop                                       |
+| Xcode            | Latest                              | Mac App Store, then open it once                     |
+| Ruby             | `apps/mobile/.ruby-version` (3.3.8) | `rbenv install` in `apps/mobile`                     |
+| GitHub CLI       | Any recent                          | `brew install gh`                                    |
+| Google Cloud CLI | Any recent                          | `brew install --cask google-cloud-sdk`               |
+| OpenTofu         | 1.12                                | `brew install opentofu`                              |
+
+</Step>
+<Step>
+
+### Log in
+
+```sh
+gh auth login
+gcloud auth login
+gcloud auth application-default login
+```
+
+OpenTofu uses the last one (Application Default Credentials).
+
+</Step>
+<Step>
+
+### Clone and install
+
+```sh
+git clone git@github.com:your-github-user/starter-app.git
+cd starter-app
+cp .env.example .env
+pnpm install
+```
+
+</Step>
+</Steps>
+
+<Callout type="success" title="Check it">
+  `pnpm doctor` shows a ✓ for every tool under **Tools**. A `!` line names the
+  tool and what needs it.
+</Callout>
+
+<Terminal
+  title="pnpm doctor"
+  lines={[
+    {
+      command: 'pnpm doctor',
+      output: `Tools
+  ✓ Node 24.11.1
+  ✓ pnpm
+  ✓ docker
+  ✓ gh
+  ✓ gcloud
+  ✓ tofu
+  ✓ xcodebuild
+  ✓ bundle`,
+    },
+  ]}
+/>

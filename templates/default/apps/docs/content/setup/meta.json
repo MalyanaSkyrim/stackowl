@@ -1,0 +1,15 @@
+{
+  "title": "Setup, step by step",
+  "pages": [
+    "index",
+    "0-basics",
+    "1-your-machine",
+    "2-repository",
+    "3-local-development",
+    "4-backend-services",
+    "5-cloud",
+    "6-apple",
+    "7-release",
+    "after-launch"
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "notes": "Notes",
+    "settings": "Réglages"
+  },
+  "notes": {
+    "title": "Notes",
+    "new": "Nouvelle note",
+    "signedOutTitle": "Vos notes, sur chaque téléphone",
+    "signedOutBody": "Connectez-vous pour écrire des notes et les retrouver partout où vous vous connectez.",
+    "signIn": "Se connecter",
+    "emptyTitle": "Aucune note",
+    "emptyBody": "Touchez + pour écrire la première.",
+    "loadError": "Impossible de charger vos notes.",
+    "retry": "Réessayer",
+    "updated": "Modifiée le {date}",
+    "editor": {
+      "back": "Retour",
+      "newTitle": "Nouvelle note",
+      "editTitle": "Note",
+      "titlePlaceholder": "Titre",
+      "bodyPlaceholder": "Écrivez quelque chose…",
+      "save": "Enregistrer",
+      "saveError": "Impossible d’enregistrer. Vérifiez votre connexion et réessayez.",
+      "delete": "Supprimer la note",
+      "deleteTitle": "Supprimer cette note ?",
+      "deleteBody": "Cette action est définitive.",
+      "cancel": "Annuler"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "titleSignIn": "Bon retour",
+      "titleSignUp": "Créez votre compte",
+      "tabSignIn": "Se connecter",
+      "tabSignUp": "Créer un compte",
+      "close": "Fermer",
+      "orWithEmail": "ou avec un e-mail",
+      "continueWithApple": "Continuer avec Apple",
+      "continueWithGoogle": "Continuer avec Google",
+      "email": "E-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "password": "Mot de passe",
+      "passwordPlaceholderSignIn": "Votre mot de passe",
+      "passwordPlaceholderSignUp": "Au moins 8 caractères",
+      "submitSignIn": "Se connecter",
+      "submitSignUp": "Créer un compte",
+      "noteSignIn": "Nouveau ? Créez un compte en quelques secondes.",
+      "noteSignUp": "Nous vous enverrons un code à 6 chiffres par e-mail pour confirmer que c’est bien vous.",
+      "forgotPassword": "Mot de passe oublié ?"
+    },
+    "validation": {
+      "emailInvalid": "Saisissez une adresse e-mail valide.",
+      "passwordRequired": "Saisissez votre mot de passe.",
+      "passwordTooShort": "Utilisez au moins {min} caractères.",
+      "passwordTooLong": "Utilisez {max} caractères au maximum.",
+      "codeInvalid": "Saisissez le code à 6 chiffres.",
+      "passwordsDontMatch": "Les mots de passe ne correspondent pas."
+    },
+    "verifyEmail": {
+      "title": "Vérifiez vos e-mails",
+      "sentTo": "Nous avons envoyé un code à 6 chiffres à",
+      "change": "Modifier",
+      "back": "Retour",
+      "checkSpam": "Rien reçu ? Vérifiez vos spams.",
+      "newCodeSent": "Nouveau code envoyé.",
+      "resend": "Renvoyer le code",
+      "resendIn": "Renvoyer dans {seconds} s",
+      "verify": "Vérifier"
+    },
+    "forgotPassword": {
+      "back": "Retour",
+      "close": "Fermer",
+      "stepLabel": "Étape {step} sur {total}",
+      "titleEmail": "Réinitialiser le mot de passe",
+      "emailIntro": "Saisissez l’e-mail utilisé à l’inscription. Nous vous enverrons un code à 6 chiffres.",
+      "sendCode": "Envoyer le code",
+      "titleReset": "Choisissez un nouveau mot de passe",
+      "codeIntro": "Saisissez le code envoyé à",
+      "newCodeMaybeSent": "Si cet e-mail a un compte, un nouveau code est en route. Vous pouvez demander 5 codes par heure.",
+      "code": "Code à 6 chiffres",
+      "codePlaceholder": "123456",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Répétez le nouveau mot de passe",
+      "confirmPasswordPlaceholder": "Saisissez-le à nouveau",
+      "save": "Enregistrer le mot de passe",
+      "titleDone": "Mot de passe modifié",
+      "doneBody": "Vous êtes connecté. Vos notes sont là où vous les avez laissées.",
+      "done": "Terminé"
+    },
+    "errors": {
+      "EMAIL_TAKEN": "Cet e-mail a déjà un compte. Connectez-vous plutôt.",
+      "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect.",
+      "INVALID_CODE": "Ce code est incorrect ou a expiré.",
+      "TOO_MANY_ATTEMPTS": "Trop de codes erronés. Demandez-en un nouveau.",
+      "RESEND_COOLDOWN": "Patientez un instant avant de demander un autre code.",
+      "SESSION_EXPIRED": "Vous avez été déconnecté. Veuillez vous reconnecter.",
+      "EMAIL_NOT_VERIFIED": "Confirmez d’abord votre e-mail : nous vous avons envoyé un code.",
+      "OAUTH_INVALID_TOKEN": "La connexion avec Apple ou Google a échoué. Veuillez réessayer.",
+      "OAUTH_EMAIL_NOT_VERIFIED": "L’e-mail de votre compte Apple ou Google n’est pas vérifié.",
+      "OAUTH_NO_EMAIL": "Apple ou Google n’a pas partagé votre e-mail. Autorisez-le et réessayez.",
+      "OAUTH_NOT_CONFIGURED": "Cette option de connexion n’est pas disponible pour le moment.",
+      "NETWORK": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.",
+      "UNKNOWN": "Une erreur est survenue. Veuillez réessayer."
+    }
+  },
+  "profile": {
+    "menu": {
+      "general": "Général",
+      "language": "Langue",
+      "darkMode": "Mode sombre",
+      "legal": "Légal",
+      "privacyPolicy": "Politique de Confidentialité",
+      "termsConditions": "Termes & Conditions",
+      "aboutApp": "À Propos de l'Application",
+      "account": "Compte",
+      "signIn": "Se connecter",
+      "signInDescription": "Gardez vos notes sur chaque téléphone · Apple, Google ou e-mail",
+      "signedInDescription": "Notes enregistrées dans votre compte"
+    },
+    "about": {
+      "title": "À propos",
+      "back": "Retour",
+      "version": "Version {version}",
+      "website": "Site web",
+      "privacyPolicy": "Politique de confidentialité",
+      "termsConditions": "Conditions d’utilisation"
+    },
+    "language": {
+      "title": "Langue",
+      "english": "Anglais (US)",
+      "french": "Français",
+      "arabic": "Arabe",
+      "changeFailed": "Impossible de changer la langue. Veuillez réessayer."
+    },
+    "account": {
+      "title": "Compte",
+      "back": "Retour",
+      "signedInWith": "Connecté avec {methods}",
+      "methodPassword": "E-mail",
+      "methodApple": "Apple",
+      "methodGoogle": "Google",
+      "email": "E-mail",
+      "signInMethod": "Mode de connexion",
+      "changePassword": "Changer le mot de passe",
+      "signOut": "Se déconnecter",
+      "signOutNote": "Vos notes restent dans votre compte.",
+      "delete": "Supprimer le compte",
+      "deleteTitle": "Supprimer votre compte ?",
+      "deleteBody": "Votre compte et toutes vos notes sont effacés de nos serveurs, et chaque téléphone connecté est déconnecté. Cette action est définitive.",
+      "deleteConfirm": "Supprimer définitivement",
+      "deleteCancel": "Garder mon compte",
+      "deleted": "Votre compte est supprimé."
+    }
+  }
+}

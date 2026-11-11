@@ -1,0 +1,19 @@
+/// One signed-in device. The app holds a short-lived access token (JWT) and
+/// this session's refresh token; only the refresh token's sha256 hash is stored.
+/// Signing out, or a refresh, revokes the row.
+model Session {
+  id               String    @id @default(cuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshTokenHash String    @unique
+  /// Shown in the account screen, e.g. "iPhone 15".
+  deviceName       String?
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  lastUsedAt       DateTime  @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}

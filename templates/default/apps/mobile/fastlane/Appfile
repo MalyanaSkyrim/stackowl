@@ -1,0 +1,6 @@
+# Staging and production builds share one app identifier.
+app_identifier("com.example.starterapp")
+apple_id(ENV["APPLE_ID"])
+
+itc_team_id(ENV["APPLE_TEAM_ID"])
+team_id(ENV["APPLE_TEAM_ID"])

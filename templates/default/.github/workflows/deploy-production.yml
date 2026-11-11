@@ -1,0 +1,32 @@
+name: Deploy Production
+
+# Runs on every push to `production`, merges included, and by hand from the
+# Actions tab (with "Force deploy all services"). Only `production` may log in
+# to the production environment. The steps live in deploy.yml, shared with
+# staging. The iOS app ships separately, with deploy-mobile.yml.
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force deploy all services'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: read
+
+# One deploy at a time; a newer push waits for the running one.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: production
+      force: ${{ inputs.force == true }}

@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "notes": "Notes",
+    "settings": "Settings"
+  },
+  "notes": {
+    "title": "Notes",
+    "new": "New note",
+    "signedOutTitle": "Your notes, on every phone",
+    "signedOutBody": "Sign in to write notes and find them wherever you sign in.",
+    "signIn": "Sign in",
+    "emptyTitle": "No notes yet",
+    "emptyBody": "Tap + to write your first one.",
+    "loadError": "Couldn't load your notes.",
+    "retry": "Try again",
+    "updated": "Edited {date}",
+    "editor": {
+      "back": "Back",
+      "newTitle": "New note",
+      "editTitle": "Note",
+      "titlePlaceholder": "Title",
+      "bodyPlaceholder": "Write something…",
+      "save": "Save",
+      "saveError": "Couldn't save. Check your connection and try again.",
+      "delete": "Delete note",
+      "deleteTitle": "Delete this note?",
+      "deleteBody": "This can't be undone.",
+      "cancel": "Cancel"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "titleSignIn": "Welcome back",
+      "titleSignUp": "Create your account",
+      "tabSignIn": "Sign in",
+      "tabSignUp": "Create account",
+      "close": "Close",
+      "orWithEmail": "or with email",
+      "continueWithApple": "Continue with Apple",
+      "continueWithGoogle": "Continue with Google",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholderSignIn": "Your password",
+      "passwordPlaceholderSignUp": "At least 8 characters",
+      "submitSignIn": "Sign in",
+      "submitSignUp": "Create account",
+      "noteSignIn": "New here? Create an account in a few seconds.",
+      "noteSignUp": "We’ll email you a 6-digit code to confirm it’s you.",
+      "forgotPassword": "Forgot password?"
+    },
+    "validation": {
+      "emailInvalid": "Enter a valid email address.",
+      "passwordRequired": "Enter your password.",
+      "passwordTooShort": "Use at least {min} characters.",
+      "passwordTooLong": "Use at most {max} characters.",
+      "codeInvalid": "Enter the 6-digit code.",
+      "passwordsDontMatch": "The passwords don’t match."
+    },
+    "verifyEmail": {
+      "title": "Check your email",
+      "sentTo": "We sent a 6-digit code to",
+      "change": "Change",
+      "back": "Back",
+      "checkSpam": "Didn’t get it? Check spam.",
+      "newCodeSent": "New code sent.",
+      "resend": "Resend code",
+      "resendIn": "Resend in {seconds}s",
+      "verify": "Verify"
+    },
+    "forgotPassword": {
+      "back": "Back",
+      "close": "Close",
+      "stepLabel": "Step {step} of {total}",
+      "titleEmail": "Reset your password",
+      "emailIntro": "Enter the email you signed up with. We’ll send you a 6-digit code.",
+      "sendCode": "Send code",
+      "titleReset": "Choose a new password",
+      "codeIntro": "Enter the code we sent to",
+      "newCodeMaybeSent": "If this email has an account, a new code is on its way. You can ask for 5 codes an hour.",
+      "code": "6-digit code",
+      "codePlaceholder": "123456",
+      "newPassword": "New password",
+      "confirmPassword": "Repeat new password",
+      "confirmPasswordPlaceholder": "Type it again",
+      "save": "Save new password",
+      "titleDone": "Password updated",
+      "doneBody": "You’re signed in. Your notes are right where you left them.",
+      "done": "Done"
+    },
+    "errors": {
+      "EMAIL_TAKEN": "This email already has an account. Sign in instead.",
+      "INVALID_CREDENTIALS": "Wrong email or password.",
+      "INVALID_CODE": "This code is wrong or has expired.",
+      "TOO_MANY_ATTEMPTS": "Too many wrong codes. Ask for a new one.",
+      "RESEND_COOLDOWN": "Wait a moment before asking for another code.",
+      "SESSION_EXPIRED": "You were signed out. Please sign in again.",
+      "EMAIL_NOT_VERIFIED": "Confirm your email first: we sent you a code.",
+      "OAUTH_INVALID_TOKEN": "Signing in with Apple or Google didn’t work. Please try again.",
+      "OAUTH_EMAIL_NOT_VERIFIED": "The email of your Apple or Google account isn’t verified.",
+      "OAUTH_NO_EMAIL": "Apple or Google didn’t share your email. Allow it and try again.",
+      "OAUTH_NOT_CONFIGURED": "This sign-in option isn’t available right now.",
+      "NETWORK": "Can’t reach the server. Check your connection and try again.",
+      "UNKNOWN": "Something went wrong. Please try again."
+    }
+  },
+  "profile": {
+    "menu": {
+      "general": "General",
+      "language": "Language",
+      "darkMode": "Dark mode",
+      "legal": "Legal",
+      "privacyPolicy": "Privacy & Policy",
+      "termsConditions": "Terms & Conditions",
+      "aboutApp": "About App",
+      "account": "Account",
+      "signIn": "Sign in",
+      "signInDescription": "Keep your notes on every phone · Apple, Google or email",
+      "signedInDescription": "Notes saved to your account"
+    },
+    "about": {
+      "title": "About",
+      "back": "Back",
+      "version": "Version {version}",
+      "website": "Website",
+      "privacyPolicy": "Privacy policy",
+      "termsConditions": "Terms & conditions"
+    },
+    "language": {
+      "title": "Language",
+      "english": "English (US)",
+      "french": "French",
+      "arabic": "Arabic",
+      "changeFailed": "Couldn't change the language. Please try again."
+    },
+    "account": {
+      "title": "Account",
+      "back": "Back",
+      "signedInWith": "Signed in with {methods}",
+      "methodPassword": "Email",
+      "methodApple": "Apple",
+      "methodGoogle": "Google",
+      "email": "Email",
+      "signInMethod": "Sign-in method",
+      "changePassword": "Change password",
+      "signOut": "Sign out",
+      "signOutNote": "Your notes stay in your account.",
+      "delete": "Delete account",
+      "deleteTitle": "Delete your account?",
+      "deleteBody": "Your account and all your notes are erased from our servers, and every phone signed in to it signs out. This can't be undone.",
+      "deleteConfirm": "Delete permanently",
+      "deleteCancel": "Keep my account",
+      "deleted": "Your account is deleted."
+    }
+  }
+}

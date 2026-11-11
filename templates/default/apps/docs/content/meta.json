@@ -1,0 +1,15 @@
+{
+  "title": "Docs",
+  "pages": [
+    "index",
+    "---Start here---",
+    "...start-here",
+    "---Setup, step by step---",
+    "...setup",
+    "---Reference---",
+    "...reference",
+    "---The project---",
+    "architecture",
+    "conventions"
+  ]
+}

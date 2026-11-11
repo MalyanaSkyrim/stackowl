@@ -1,0 +1,52 @@
+---
+title: 2. Repository
+description: The GitHub repository, the two branches that deploy, the labels the workflows read, and branch rules.
+---
+
+<Steps>
+<Step>
+
+### Create the repository
+
+Create a **private** repository on GitHub and push the starter to `main`. Ours is `your-github-user/starter-app`.
+
+</Step>
+<Step>
+
+### Add the labels the workflows read
+
+| Label                 | Meaning                                                                      |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `migration`           | The pull request changes the Prisma schema. Every such pull request gets it. |
+| `skip-staging-deploy` | Merge into `main` without deploying staging (a docs change, say).            |
+
+```sh
+gh label create migration --description "Changes the Prisma schema"
+gh label create skip-staging-deploy --description "Merge without deploying staging"
+```
+
+</Step>
+<Step>
+
+### Protect `main` and `production`
+
+GitHub → Settings → Rules → Rulesets (or Branches): require a pull request and the **Continuous Integration** check before merging.
+
+</Step>
+<Step>
+
+### Optional: Turborepo remote cache
+
+Makes CI faster. Put `TURBO_TOKEN` and `TURBO_TEAM` in the repository secrets.
+
+</Step>
+</Steps>
+
+The `production` branch is created later, in [5 Cloud](5-cloud.mdx), once staging works.
+
+<Callout type="success" title="Check it">
+  `pnpm doctor` → **GitHub** shows ✓ labels. The production branch stays a `!`
+  note until phase 5.
+</Callout>
+
+How we branch, commit and review: [Git and CI](../conventions/git-and-ci.md).

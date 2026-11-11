@@ -1,0 +1,40 @@
+steps:
+  # Build the Docker image from the monorepo root context
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACTS_REPO}/web:${_TAG}
+      - -f
+      - apps/web/Dockerfile
+      - .
+
+  # Push to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACTS_REPO}/web:${_TAG}
+
+  # Roll the new image out to Cloud Run. Only the image changes here: size,
+  # environment, secrets and public access are owned by OpenTofu
+  # (infra/modules/cloud-run-service), which creates the service.
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - web-${_ENVIRONMENT}
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACTS_REPO}/web:${_TAG}
+      - --region=${_REGION}
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACTS_REPO}/web:${_TAG}
+
+substitutions:
+  _REGION: europe-west1
+  _ARTIFACTS_REPO: starter-app-docker
+  _ENVIRONMENT: staging
+  _TAG: latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY

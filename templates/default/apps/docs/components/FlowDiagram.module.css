@@ -1,0 +1,120 @@
+.figure {
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--color-fd-card);
+}
+
+.figure :global(.react-flow__node).node {
+  width: auto;
+  min-width: 9.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1.5px solid var(--color-fd-primary);
+  background: var(--color-fd-secondary);
+  color: var(--color-fd-foreground);
+  font-size: 0.9rem;
+  text-align: center;
+  transition: opacity 300ms;
+}
+
+.figure :global(.react-flow__node).outside {
+  border-style: dashed;
+  border-color: var(--color-fd-primary);
+  background: var(--color-fd-accent);
+}
+
+.figure :global(.react-flow__node).dim {
+  opacity: 0.35;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.note {
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+.figure :global(.react-flow__handle) {
+  opacity: 0;
+}
+
+.edgeOn :global(.react-flow__edge-path) {
+  stroke: var(--color-fd-primary);
+  stroke-width: 2;
+}
+
+.edgeOff :global(.react-flow__edge-path) {
+  stroke: var(--color-fd-border);
+}
+
+.figure :global(.react-flow__edge-text) {
+  fill: var(--color-fd-foreground);
+  font-size: 0.75rem;
+}
+
+.figure :global(.react-flow__edge-textbg) {
+  fill: var(--color-fd-card);
+}
+
+.figure :global(.react-flow__arrowhead) polyline {
+  stroke: var(--color-fd-primary);
+  fill: var(--color-fd-primary);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--color-fd-border);
+  font-size: 0.875rem;
+}
+
+.play,
+.stepButton {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid var(--color-fd-border);
+  background: var(--color-fd-background);
+  color: var(--color-fd-foreground);
+}
+
+.play {
+  padding: 0.15rem 0.75rem;
+  border-color: color-mix(in srgb, var(--color-fd-primary) 40%, transparent);
+  color: var(--color-fd-primary);
+  font-weight: 600;
+}
+
+.stepList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stepButton {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.stepButton[aria-current='true'] {
+  background: var(--color-fd-primary);
+  border-color: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
+}
+
+.caption {
+  grid-column: 1 / -1;
+  margin: 0;
+  min-height: 2.6em;
+}

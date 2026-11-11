@@ -1,0 +1,20 @@
+/// A user account. Deleting a user deletes every row that hangs off it (`onDelete: Cascade`), as Apple requires.
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  /// bcrypt hash. Null for accounts created with Apple or Google only.
+  passwordHash  String?
+  name          String?
+  /// Null until the user confirms their email with a code.
+  /// Apple and Google sign-ups are verified on creation, since the provider already checked it.
+  emailVerified DateTime?
+
+  oauthAccounts OAuthAccount[]
+  sessions      Session[]
+  otpCodes      OtpCode[]
+
+  notes Note[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

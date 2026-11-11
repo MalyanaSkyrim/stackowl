@@ -1,0 +1,220 @@
+{
+  "common": {
+    "languages": "Language",
+    "lastUpdated": "Last updated {date}",
+    "illustration": "Illustration: {name}"
+  },
+  "nav": {
+    "label": "Main",
+    "howItWorks": "How it works",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "support": "Support",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "appStore": {
+    "label": "Download on the App Store",
+    "small": "Download on the",
+    "large": "App Store"
+  },
+  "footer": {
+    "label": "Footer",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "support": "Support",
+    "tagline": "{app} keeps your notes on every device, ready when you are.",
+    "copyright": "© {year} {app}"
+  },
+  "home": {
+    "meta": {
+      "title": "{app}: your notes, on every device",
+      "description": "{app} is a simple notes app for iPhone and the web. Write once, find it everywhere."
+    },
+    "hero": {
+      "eyebrow": "For iPhone · English, Français",
+      "title": "Your notes, on every device.",
+      "subtitle": "{app} is a simple place to write things down. Sign in once and your notes follow you from phone to phone.",
+      "note": "Free to start."
+    },
+    "steps": {
+      "title": "Up and running in a minute",
+      "lead": "No setup, no learning curve.",
+      "download": {
+        "title": "Download the app",
+        "body": "Get it from the App Store and open it. Sign in with Apple, Google or your email."
+      },
+      "write": {
+        "title": "Write a note",
+        "body": "A title and a few lines is all it takes. Edit it whenever you like."
+      },
+      "sync": {
+        "title": "Find it everywhere",
+        "body": "Sign in on another phone and your notes are already there."
+      }
+    },
+    "features": {
+      "title": "Everything you need, nothing you don't",
+      "fast": {
+        "title": "Fast",
+        "body": "Opens in a blink and saves as you type."
+      },
+      "everywhere": {
+        "title": "On every device",
+        "body": "Your notes are kept with your account, so a new phone is no trouble."
+      },
+      "private": {
+        "title": "Private by default",
+        "body": "Only you can read your notes. We never sell your data or show ads."
+      },
+      "languages": {
+        "title": "In your language",
+        "badge": "More soon",
+        "body": "English and French today, with more languages on the way."
+      }
+    },
+    "privacy": {
+      "title": "Your data stays yours",
+      "body": "We keep only what the app needs to work, and you can delete it at any time.",
+      "link": "Read the privacy policy",
+      "minimal": "We collect only your email and your notes.",
+      "noAds": "No ads, and we never sell your data.",
+      "delete": "Delete your account from the app, with everything on our servers."
+    },
+    "faq": {
+      "title": "Questions",
+      "account": {
+        "question": "Do I need an account?",
+        "answer": "Yes: your notes are kept with your account so you can find them on any device. Sign in with Apple, Google or your email."
+      },
+      "devices": {
+        "question": "Can I use it on several phones?",
+        "answer": "Yes. Sign in with the same account and your notes are there."
+      },
+      "price": {
+        "question": "How much does it cost?",
+        "answer": "[Confirm before launch: your pricing.]"
+      },
+      "android": {
+        "question": "Is there an Android version?",
+        "answer": "Not yet. {app} is for iPhone for now."
+      }
+    },
+    "cta": {
+      "title": "Write your first note today"
+    }
+  },
+  "privacy": {
+    "meta": {
+      "title": "Privacy policy · {app}",
+      "description": "What {app} collects, why, and how to delete it."
+    },
+    "title": "Privacy policy",
+    "summary": {
+      "label": "In short",
+      "collect": "{app} collects only what it needs to work: your email and the notes you write.",
+      "account": "Your account lets you find your notes on any device.",
+      "noAds": "We do not sell your data or show ads.",
+      "delete": "You can delete your account, and everything we hold about you, from the app."
+    },
+    "who": {
+      "title": "Who we are",
+      "body": "{app} is made by {legalName}, {address}. Questions about this policy: <mail>{email}</mail>."
+    },
+    "account": {
+      "title": "What we keep",
+      "intro": "You can sign in with Apple, Google or an email and password. We then keep:",
+      "email": "Your email address, and your name if Apple or Google shares it.",
+      "password": "A hash of your password (never the password itself), if you use one.",
+      "devices": "Your signed-in devices, with a device name such as “iPhone 15”, so you can see and sign them out.",
+      "content": "The notes you write.",
+      "use": "We use these only to sign you in and to show your notes on your devices."
+    },
+    "services": {
+      "title": "Services we use",
+      "intro": "These companies process data for us, under contract, only to provide their service:",
+      "apple": "<strong>Apple</strong>: App Store and Sign in with Apple.",
+      "google": "<strong>Google</strong>: Sign in with Google, and Google Cloud, which hosts our servers and database in [REGION].",
+      "sentry": "<strong>Sentry</strong>: crash reports (device model, iOS version, what the app was doing), without the content of your notes.",
+      "resend": "<strong>Resend</strong>: sends the sign-up and password codes to your email."
+    },
+    "retention": {
+      "title": "How long we keep it",
+      "body": "We keep your account data until you delete your account. A device you do not use for 90 days is signed out. Crash reports are kept for [PERIOD]."
+    },
+    "deletion": {
+      "title": "Deleting your account",
+      "body": "In the app, open Settings › Account › Delete account. This deletes your account and all your notes from our servers right away. You can also write to us and we will do it for you."
+    },
+    "rights": {
+      "title": "Your rights",
+      "body": "You can ask to see, correct, export or delete your data, and object to how we use it. Write to <mail>{email}</mail>. If you are in the EU, the UK or Morocco, you can also complain to your data protection authority."
+    },
+    "children": {
+      "title": "Children",
+      "body": "{app} is not aimed at children under 13, and we do not knowingly collect their data."
+    },
+    "changes": {
+      "title": "Changes",
+      "body": "If we change this policy we will update the date above, and tell you in the app when the change matters."
+    }
+  },
+  "terms": {
+    "meta": {
+      "title": "Terms of use · {app}",
+      "description": "The terms for using {app}."
+    },
+    "title": "Terms of use",
+    "intro": "These terms are an agreement between you and {legalName} for the {app} app and website. Using the app means you accept them, together with Apple's <eula>Standard End User License Agreement</eula>.",
+    "app": {
+      "title": "What the app does",
+      "body": "{app} lets you write notes and find them on every device where you sign in."
+    },
+    "account": {
+      "title": "Your account",
+      "body": "Keep your password private and tell us if you think someone else used your account. You can delete it at any time in Settings › Account."
+    },
+    "use": {
+      "title": "Acceptable use",
+      "body": "Do not copy, resell or reverse-engineer the app, abuse our servers, or use the app against the law."
+    },
+    "liability": {
+      "title": "Disclaimer and liability",
+      "body": "We work to keep the app correct and available, but it is provided “as is”. Keep a copy of anything you cannot afford to lose. To the extent the law allows, we are not liable for indirect losses, and our total liability is limited to what you paid us in the last 12 months. Nothing here limits rights you have under consumer law."
+    },
+    "ending": {
+      "title": "Ending",
+      "body": "You can stop using the app and delete your account at any time. We may suspend an account that breaks these terms."
+    },
+    "law": {
+      "title": "Changes and law",
+      "body": "We may update these terms and will change the date above. These terms are governed by the law of [COUNTRY]. Contact: <mail>{email}</mail>."
+    }
+  },
+  "support": {
+    "meta": {
+      "title": "Support · {app}",
+      "description": "Get help with {app}: contact us, sign in, move to a new phone, report a problem or delete your account."
+    },
+    "title": "How can we help?",
+    "lead": "Write to us in English or French. We usually answer within two working days.",
+    "emailLabel": "Email",
+    "write": "Write to us",
+    "signIn": {
+      "title": "I can't sign in",
+      "body": "Check your email for the code we sent, including the spam folder. You can ask for a new code after a minute."
+    },
+    "newPhone": {
+      "title": "Moving to a new phone",
+      "body": "Sign in with the same account and your notes come back."
+    },
+    "bug": {
+      "title": "Something doesn't work",
+      "body": "Write to us with your phone model, the app version (Settings › About) and what you did. A screenshot helps."
+    },
+    "delete": {
+      "title": "Delete my account",
+      "body": "In the app: Settings › Account › Delete account. It removes your data from our servers. See the <privacy>privacy policy</privacy>."
+    }
+  }
+}

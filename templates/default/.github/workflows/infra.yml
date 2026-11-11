@@ -1,0 +1,200 @@
+name: Infrastructure
+
+# Plan on pull requests, apply on merge. Each environment follows a branch:
+#   main       -> staging     (merge a PR into main)
+#   production -> production  (merge main into production)
+# Both environments live in one Google Cloud project; infra/shared holds what
+# they share and is applied with staging. A pull request plans what merging it
+# would apply and posts the plan as a comment.
+# See apps/docs/content/architecture/infrastructure.md.
+
+on:
+  pull_request:
+    branches: [main, production]
+    paths:
+      - 'infra/**'
+      - '.github/workflows/infra.yml'
+  push:
+    branches: [main, production]
+    paths:
+      - 'infra/**'
+      - '.github/workflows/infra.yml'
+  # Re-apply by hand: Actions -> Infrastructure -> Run workflow, on main
+  # (staging) or production (production).
+  workflow_dispatch:
+
+env:
+  TOFU_VERSION: '1.12.5'
+  TF_IN_AUTOMATION: 'true'
+  TF_INPUT: 'false'
+
+jobs:
+  check:
+    name: 🧹 Format and validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔍 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🧱 Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+          tofu_wrapper: false
+
+      - name: 🧹 Check formatting
+        run: tofu fmt -check -recursive -diff infra
+
+      - name: ✅ Validate
+        run: |
+          for dir in shared envs/staging envs/production; do
+            tofu -chdir=infra/$dir init -backend=false
+            tofu -chdir=infra/$dir validate
+          done
+
+  plan:
+    name: 📋 Plan ${{ github.base_ref == 'production' && 'production' || 'staging' }}
+    if: github.event_name == 'pull_request'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+    env:
+      ENVIRONMENT: ${{ github.base_ref == 'production' && 'production' || 'staging' }}
+      STACKS: ${{ github.base_ref == 'production' && 'envs/production' || 'shared envs/staging' }}
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      WIF_PROVIDER: ${{ vars.GCP_WIF_PROVIDER }}
+    steps:
+      - name: 🔎 Check the environment is set up
+        id: setup
+        run: |
+          if [ -z "$PROJECT_ID" ] || [ -z "$WIF_PROVIDER" ]; then
+            echo "::notice::Infrastructure is not bootstrapped yet (GCP_PROJECT_ID or GCP_WIF_PROVIDER missing). Skipping the plan."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 🔍 Checkout
+        if: steps.setup.outputs.ready == 'true'
+        uses: actions/checkout@v4
+
+      - name: 🧱 Setup OpenTofu
+        if: steps.setup.outputs.ready == 'true'
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+          tofu_wrapper: false
+
+      - name: 🔐 Auth to Google Cloud (read-only)
+        if: steps.setup.outputs.ready == 'true'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: tofu-plan@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
+
+      - name: 📋 Plan
+        if: steps.setup.outputs.ready == 'true'
+        id: plan
+        env:
+          TF_VAR_project_id: ${{ env.PROJECT_ID }}
+        run: |
+          {
+            echo "### OpenTofu plan: \`$ENVIRONMENT\`"
+            echo
+            echo "Merging this pull request applies it to $ENVIRONMENT."
+          } > comment.md
+          failed=0
+          for stack in $STACKS; do
+            set +e
+            tofu -chdir=infra/$stack init -no-color > plan.txt 2>&1 \
+              && tofu -chdir=infra/$stack plan -lock-timeout=5m -no-color -out=tfplan > plan.txt 2>&1 \
+              && tofu -chdir=infra/$stack show -no-color tfplan > plan.txt 2>&1
+            code=$?
+            set -e
+            if [ $code -eq 0 ]; then
+              summary=$(grep -E '^(Plan:|No changes\.)' plan.txt | head -n 1 || true)
+            else
+              summary="Plan failed"
+              failed=1
+            fi
+            {
+              echo
+              echo "**\`infra/$stack\`: ${summary:-see details}**"
+              echo
+              echo "<details><summary>Full plan</summary>"
+              echo
+              echo '```'
+              head -c 30000 plan.txt
+              echo '```'
+              echo "</details>"
+            } >> comment.md
+          done
+          exit $failed
+
+      - name: 💬 Post the plan on the pull request
+        if: always() && steps.setup.outputs.ready == 'true' && steps.plan.outcome != 'skipped'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: tofu-plan-${{ env.ENVIRONMENT }}
+          path: comment.md
+
+  apply:
+    name: 🚀 Apply ${{ github.ref_name == 'production' && 'production' || 'staging' }}
+    if: github.event_name != 'pull_request' && (github.ref_name == 'main' || github.ref_name == 'production')
+    needs: check
+    runs-on: ubuntu-latest
+    # One apply per environment at a time; a newer merge waits, never cancels.
+    concurrency:
+      group: infra-${{ github.ref_name }}
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      ENVIRONMENT: ${{ github.ref_name == 'production' && 'production' || 'staging' }}
+      STACKS: ${{ github.ref_name == 'production' && 'envs/production' || 'shared envs/staging' }}
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      WIF_PROVIDER: ${{ vars.GCP_WIF_PROVIDER }}
+    steps:
+      - name: 🔎 Check the environment is set up
+        id: setup
+        run: |
+          if [ -z "$PROJECT_ID" ] || [ -z "$WIF_PROVIDER" ]; then
+            echo "::notice::Infrastructure is not bootstrapped yet (GCP_PROJECT_ID or GCP_WIF_PROVIDER missing). Nothing applied."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 🔍 Checkout
+        if: steps.setup.outputs.ready == 'true'
+        uses: actions/checkout@v4
+
+      - name: 🧱 Setup OpenTofu
+        if: steps.setup.outputs.ready == 'true'
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+          tofu_wrapper: false
+
+      - name: 🔐 Auth to Google Cloud
+        if: steps.setup.outputs.ready == 'true'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: tofu-apply@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
+
+      - name: 🚀 Apply
+        if: steps.setup.outputs.ready == 'true'
+        env:
+          TF_VAR_project_id: ${{ env.PROJECT_ID }}
+        run: |
+          for stack in $STACKS; do
+            echo "::group::Apply infra/$stack"
+            tofu -chdir=infra/$stack init -no-color
+            tofu -chdir=infra/$stack apply -auto-approve -lock-timeout=10m -no-color
+            echo "::endgroup::"
+          done

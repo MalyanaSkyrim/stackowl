@@ -1,0 +1,5 @@
+# Files gcloud builds submit leaves out of the upload. Without this file
+# gcloud's default also leaves out .gitignore, which the Dockerfiles copy.
+.gcloudignore
+.git
+#!include:.gitignore

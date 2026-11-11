@@ -1,0 +1,90 @@
+---
+title: 6. Apple
+description: The developer account, the App ID, the App Store Connect key, signing, and the first TestFlight build.
+---
+
+<Callout type="warn" title="Start this phase early">
+  Apple can take a few days to approve a new developer account. Enroll as soon
+  as you start, and do the other phases while you wait.
+</Callout>
+
+<Steps>
+<Step>
+
+### Join the Apple Developer Program
+
+99 USD a year. Your **Team ID** is under Account → Membership details → `APPLE_TEAM_ID` in the root `.env`.
+
+</Step>
+<Step>
+
+### Register the App ID
+
+developer.apple.com → Certificates, Identifiers & Profiles → Identifiers → **+** → App IDs. The bundle id is `APP_BUNDLE_ID` (`com.example.starterapp`), with **Sign in with Apple** turned on. Add Push Notifications or App Groups here later if the app needs them, then run `pnpm mobile:signing` again.
+
+</Step>
+<Step>
+
+### Create the app in App Store Connect
+
+Apps → **+** → New App: the name, the bundle id, the primary language.
+
+</Step>
+<Step>
+
+### Create the App Store Connect API key
+
+Users and Access → Integrations → App Store Connect API → **+**, role **Admin**. Note the Key ID and the Issuer ID, and download the `.p8` (only once).
+
+```sh
+# root .env
+APP_STORE_CONNECT_KEY_ID="…"
+APP_STORE_CONNECT_ISSUER_ID="…"
+APP_STORE_CONNECT_PRIVATE_KEY="$(cat /path/to/AuthKey_XXXX.p8)"
+```
+
+Signing and deploys use this one key, never your Apple ID password.
+
+</Step>
+<Step>
+
+### Set up signing
+
+Fastlane Match keeps the certificates and profiles, encrypted, in a private repository: create it empty (`gh repo create <you>/<repo>-certificates --private`) and choose a Match password, then:
+
+```sh
+pnpm mobile:signing
+```
+
+It creates the GitHub `production` environment, a read-only deploy key for the certificates repository, the signing secrets, the `APP_BUNDLE_ID` variable, and the App Store profile. Run it again after any capability change: an old profile lacks the new capability and the archive fails.
+
+</Step>
+<Step>
+
+### Set the build's repository variables
+
+Phone builds read the API address, the website, Google sign-in ids and Sentry from GitHub variables, listed under `github.variables` in `setupwise.config.ts`. Put the values in the root `.env`, then:
+
+```sh
+pnpm github:vars           # dry run
+pnpm github:vars --apply
+```
+
+A variable missing from `.env` falls back to the `fallback` in the config (the `example.com` addresses until you change them).
+
+</Step>
+<Step>
+
+### First TestFlight build
+
+Actions → **Deploy Mobile (iOS)** → Run workflow on `main`, tick **Deploy even if the mobile app has not changed**. `main` uploads a staging build, `production` a production build. Add yourself as an internal tester in TestFlight.
+
+On a Mac, `pnpm mobile:deploy staging` does the same build locally.
+
+</Step>
+</Steps>
+
+<Callout type="success" title="Check it">
+  `pnpm doctor github` → ✓ secrets of the production environment, ✓ repository
+  variables.
+</Callout>

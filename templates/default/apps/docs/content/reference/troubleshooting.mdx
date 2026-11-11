@@ -1,0 +1,50 @@
+---
+title: Troubleshooting
+description: Problems we already hit while setting the project up, and what fixed them.
+---
+
+<Accordions type="multiple">
+<Accordion title="The first deploy fails at Prisma Migrate with P3018, then every deploy fails with P3009">
+
+**Why:** CockroachDB creates tables schema-locked by default. Prisma's first migration creates a table, then can't add its indexes, and stops halfway. Prisma then refuses every later migration (P3009) until the failed one is resolved.
+
+**Fix:**
+
+1. As an admin on the database: `ALTER ROLE <app user> SET create_table_with_schema_locked = false;`
+2. Drop the half-made tables and `_prisma_migrations` (or drop and recreate the database; it's empty on a first deploy).
+3. Run the deploy again by hand with **Force deploy all services**.
+
+Do step 1 on every new database before its first deploy ([4 Backend services](../setup/4-backend-services.mdx)). The local and CI databases already do it in `docker/cockroach/init.sql`.
+
+</Accordion>
+<Accordion title="A deploy finishes in seconds and the service still runs the old code">
+
+The deploy only builds a service when its code changed since the commit the service runs. If you expected a deploy anyway (new secrets, a first deploy after an infra change), run the workflow by hand with **Force deploy all services** ticked.
+
+</Accordion>
+<Accordion title="Deploy Staging, run from the production branch, fails with 403 on getAccessToken">
+
+Expected. Each environment's deploy account trusts only its own branch: staging only `main`, production only `production`. Run each deploy from its own branch.
+
+</Accordion>
+<Accordion title="The Infrastructure workflow skips with a notice">
+
+The `GCP_PROJECT_ID` and `GCP_WIF_PROVIDER` repository variables don't exist yet. `pnpm infra:init` sets them ([5 Cloud](../setup/5-cloud.mdx)).
+
+</Accordion>
+<Accordion title="The iOS archive fails: Provisioning profile … doesn't include the … capability">
+
+The profile was made before the capability was turned on for that App ID. Run `pnpm mobile:signing` again: it rebuilds all four profiles.
+
+</Accordion>
+<Accordion title="TestFlight builds have no Google button">
+
+The build had no `EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID` or `EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME`, and the app hides the button without them. Put both in the root `.env`, run `pnpm github:vars --apply`, then build again.
+
+</Accordion>
+<Accordion title="Locally, Prisma fails on ALTER TABLE after db:start">
+
+The database volume was made before `init.sql` unlocked table creation. Reset it: `docker compose down -v`, then `pnpm db:start` and `pnpm db:push`.
+
+</Accordion>
+</Accordions>

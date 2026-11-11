@@ -1,0 +1,43 @@
+{
+  "name": "@starter/api",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Starter App API: accounts and the notes example (tRPC)",
+  "main": "./src/trpc/router.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false src/app.ts",
+    "build": "NODE_ENV=production tsup",
+    "start": "node build/app.js",
+    "test": "pnpm exec dotenv -e ../../.env -- sh -c 'DATABASE_URL=$TEST_DATABASE_URL vitest'",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@starter/common": "workspace:*",
+    "@starter/database": "workspace:*",
+    "@fastify/rate-limit": "^10.2.2",
+    "@fastify/sensible": "^6.0.3",
+    "@t3-oss/env-core": "^0.13.11",
+    "@trpc/server": "^11.19.0",
+    "bcryptjs": "^3.0.2",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "fast-redact": "^3.5.0",
+    "fastify": "^5.2.1",
+    "fastify-plugin": "^5.0.1",
+    "ioredis": "^5.11.1",
+    "jose": "^5.10.0",
+    "jsonwebtoken": "^9.0.2",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "resend": "^6.9.4",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@starter/config": "workspace:*",
+    "@types/fast-redact": "^3.0.4",
+    "@types/jsonwebtoken": "^9.0.9"
+  },
+  "types": "./src/trpc/router.ts"
+}

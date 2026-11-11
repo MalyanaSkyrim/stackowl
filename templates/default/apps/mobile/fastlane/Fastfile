@@ -1,0 +1,102 @@
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    # Configure temporary keychain for code signing on CI
+    setup_ci if ENV["CI"]
+  end
+
+  desc "Build and deploy production iOS app to App Store Connect / TestFlight"
+  lane :deploy do
+    # Ensure required environment variables are set
+    UI.user_error!("Missing APP_STORE_CONNECT_KEY_ID") unless ENV["APP_STORE_CONNECT_KEY_ID"]
+    UI.user_error!("Missing APP_STORE_CONNECT_ISSUER_ID") unless ENV["APP_STORE_CONNECT_ISSUER_ID"]
+    UI.user_error!("Missing APP_STORE_CONNECT_PRIVATE_KEY") unless ENV["APP_STORE_CONNECT_PRIVATE_KEY"]
+
+    # Write key content to a temporary file to avoid OpenSSL formatting/curve parsing bugs in Fastlane's key_content parameter
+    key_filepath = File.expand_path("AuthKey.p8")
+    if ENV["APP_STORE_CONNECT_PRIVATE_KEY"]
+      key_content = ENV["APP_STORE_CONNECT_PRIVATE_KEY"]
+      if !key_content.include?("-----BEGIN")
+        require 'base64'
+        key_content = Base64.decode64(key_content)
+      end
+      File.write(key_filepath, key_content)
+    end
+
+    # Set up App Store Connect API Key
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_filepath: key_filepath
+    )
+
+    # Staging and production builds share one app identifier.
+    app_id = ENV["APP_BUNDLE_ID"] || "com.example.starterapp"
+
+    # Xcode targets and their bundle IDs. An app extension adds a target here, and its own
+    # App Store profile in match (tooling/setup-mobile-signing.sh).
+    signing_targets = {
+      "StarterApp" => app_id
+    }
+
+    # 1. Fetch latest build number FROM App Store Connect, then increment
+    latest_build = begin
+      latest_testflight_build_number(
+        api_key:        api_key,
+        app_identifier: app_id
+      )
+    rescue => e
+      UI.message("⚠️ Failed to fetch latest build number for #{app_id}: #{e.message} → Falling back to 0")
+      0  # fallback: no builds exist yet
+    end
+
+    next_build = [latest_build + 1, Time.now.strftime("%Y%m%d%H").to_i].max
+
+    UI.message("📦 Latest TestFlight build for #{app_id}: #{latest_build} → Using: #{next_build}")
+
+    increment_build_number(
+      build_number: next_build,
+      xcodeproj:    "ios/StarterApp.xcodeproj"
+    )
+
+    # 2. Fetch Code Signing Certificates and Profiles via Match
+    # Each target is signed with its own App Store profile, so match fetches one per bundle ID.
+    match(
+      type:           "appstore",
+      app_identifier: signing_targets.values,
+      readonly:       true,
+      api_key:        api_key
+    )
+
+    # Disable automatic code signing and give every target its own profile for the Release build
+    signing_targets.each do |target, bundle_id|
+      update_code_signing_settings(
+        use_automatic_signing: false,
+        path: "ios/StarterApp.xcodeproj",
+        team_id: ENV["APPLE_TEAM_ID"],
+        targets: [target],
+        build_configurations: ["Release"],
+        profile_name: ENV["sigh_#{bundle_id}_appstore_profile-name"],
+        code_sign_identity: "Apple Distribution"
+      )
+    end
+
+    # 3. Build Release IPA
+    build_app(
+      workspace: "ios/StarterApp.xcworkspace",
+      scheme: "StarterApp",
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: "build",
+      output_name: "StarterApp.ipa",
+      clean: true
+    )
+
+    # 4. Upload to TestFlight
+    upload_to_testflight(
+      api_key: api_key,
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.db binary
+*.docx binary
+*.sqlite binary

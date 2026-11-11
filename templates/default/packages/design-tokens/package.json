@@ -1,0 +1,36 @@
+{
+  "name": "@starter/design-tokens",
+  "version": "1.0.0",
+  "description": "Design tokens shared by web and mobile: CSS variables, NativeWind theme and Tailwind preset",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tailwind-preset": "./src/tailwind-preset.ts",
+    "./native": "./src/native.ts",
+    "./tokens.css": "./tokens.css"
+  },
+  "scripts": {
+    "generate": "tsx scripts/generate.ts",
+    "build": "tsx scripts/generate.ts",
+    "check": "tsx scripts/generate.ts --check",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "nativewind": "^4.2.1"
+  },
+  "peerDependenciesMeta": {
+    "nativewind": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@starter/config": "workspace:*",
+    "nativewind": "^4.2.1",
+    "tailwindcss": "^3.4.19"
+  }
+}

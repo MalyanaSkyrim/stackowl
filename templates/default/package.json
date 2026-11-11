@@ -1,0 +1,90 @@
+{
+  "name": "starter-app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "infra:init": "pnpm with-env bash infra/cli.sh init",
+    "infra:describe": "pnpm with-env bash infra/cli.sh describe",
+    "start": "pnpm with-env turbo start",
+    "build": "turbo build",
+    "dev": "pnpm with-env turbo dev",
+    "db:generate": "pnpm --filter=@starter/database db:generate",
+    "db:start": "docker compose up -d --wait --remove-orphans",
+    "db:stop": "docker compose down",
+    "db:migrate": "pnpm --filter=@starter/database db:migrate",
+    "db:push": "pnpm --filter=@starter/database db:push",
+    "db:push:test": "pnpm --filter=@starter/database db:push:test",
+    "db:seed": "pnpm with-env pnpm --filter=@starter/database db:seed",
+    "doctor": "setupwise doctor",
+    "secrets:set": "setupwise secrets set",
+    "github:vars": "setupwise github vars",
+    "mobile:signing": "bash tooling/setup-mobile-signing.sh",
+    "mobile:deploy": "bash tooling/deploy-mobile.sh",
+    "storybook": "pnpm --filter @starter/workshop storybook",
+    "storybook:build": "pnpm --filter @starter/workshop storybook:build",
+    "workshop": "pnpm storybook",
+    "docs": "pnpm --filter=@starter/docs dev",
+    "lint": "turbo lint",
+    "spell": "cspell lint --no-progress --relative",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "postinstall": "pnpm manypkg check",
+    "with-env": "dotenv -e .env --",
+    "format": "prettier --write \"**/*.{ts,tsx,md,js,json}\"",
+    "format:check": "prettier -c .",
+    "ci:checks": "pnpm lint && pnpm typecheck && pnpm spell && pnpm test && pnpm build",
+    "clean": "find . -name node_modules -o -name build -o -name .next -o -name .turbo -o -name dist -o -name .docusaurus -o -name generated -type d -prune | xargs rm -rf",
+    "prepare": "husky",
+    "setupwise": "setupwise"
+  },
+  "packageManager": "pnpm@10.10.0",
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "19.2.0",
+      "react-dom": "19.2.0",
+      "react-native": "0.83.10",
+      "react-native-web": "~0.21.0",
+      "react-native-gesture-handler": "~2.30.0",
+      "react-native-reanimated": "4.2.1",
+      "react-native-safe-area-context": "~5.6.2",
+      "react-native-svg": "15.15.3"
+    }
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tooling/*"
+  ],
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md,yaml,yml}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@cspell/dict-ar": "^1.1.7",
+    "@cspell/dict-fr-fr": "^2.2.5",
+    "@manypkg/cli": "^0.23.0",
+    "@starter/config": "workspace:*",
+    "@types/node": "^24.10.0",
+    "autoprefixer": "^10.4.21",
+    "cross-env": "^10.1.0",
+    "cspell": "^8.17.1",
+    "dotenv": "^16.4.7",
+    "dotenv-cli": "^8.0.0",
+    "eslint": "^9.17.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.4",
+    "pinst": "^3.0.0",
+    "postcss": "^8.4.47",
+    "prettier": "^3.2.5",
+    "setupwise": "^0.1.0",
+    "tsx": "^4.19.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "zod": "^4.4.3"
+  }
+}

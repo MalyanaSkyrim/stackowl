@@ -1,0 +1,204 @@
+---
+title: 5. Cloud
+description: Put the API and the website online, with their secrets, for staging and production.
+---
+
+<Tabs groupId="cloud" persist items={['Google Cloud', 'AWS (planned)']}>
+<Tab value="Google Cloud">
+
+Everything is described with OpenTofu in `infra/`. You run one command to set it up; after that, merging a change to `infra/` applies it. How the stacks fit together: [Infrastructure](../architecture/infrastructure.md).
+
+<FlowDiagram
+  height={300}
+  nodes={[
+    {
+      id: 'mac',
+      label: 'pnpm infra:init',
+      note: 'your Mac, once',
+      x: 0,
+      y: 40,
+    },
+    {
+      id: 'state',
+      label: 'State bucket + KMS key',
+      note: 'infra/bootstrap.sh',
+      x: 260,
+      y: 0,
+    },
+    {
+      id: 'shared',
+      label: 'infra/shared',
+      note: 'APIs, registry, keyless login',
+      x: 260,
+      y: 110,
+    },
+    {
+      id: 'envs',
+      label: 'staging · production',
+      note: 'secrets, Cloud Run services',
+      x: 520,
+      y: 110,
+    },
+    {
+      id: 'gh',
+      label: 'GitHub variables',
+      note: 'GCP_PROJECT_ID, GCP_WIF_PROVIDER',
+      x: 520,
+      y: 0,
+      kind: 'outside',
+    },
+    {
+      id: 'ci',
+      label: 'GitHub Actions',
+      note: 'plan on PR, apply on merge',
+      x: 260,
+      y: 220,
+      kind: 'outside',
+    },
+  ]}
+  edges={[
+    { from: 'mac', to: 'state' },
+    { from: 'mac', to: 'shared' },
+    { from: 'shared', to: 'envs' },
+    { from: 'mac', to: 'gh' },
+    { from: 'ci', to: 'envs', label: 'later changes' },
+  ]}
+  steps={[
+    {
+      caption:
+        'OpenTofu needs somewhere to keep its state first: bootstrap.sh creates an encrypted bucket.',
+      edges: ['mac>state'],
+    },
+    {
+      caption:
+        'Then it applies the shared stack and each environment once. You read each plan and type yes.',
+      edges: ['mac>shared', 'shared>envs'],
+    },
+    {
+      caption:
+        'It saves the two values GitHub Actions needs to log in to Google Cloud without a key.',
+      edges: ['mac>gh'],
+    },
+    {
+      caption:
+        'From then on, a pull request shows the plan and merging applies it.',
+      edges: ['ci>envs'],
+    },
+  ]}
+/>
+
+<Steps>
+<Step>
+
+### Create the project
+
+Google Cloud console → New project, then turn on billing. Put its id in the root `.env`:
+
+```sh
+GCP_PROJECT_ID="starter-app-512122"
+```
+
+</Step>
+<Step>
+
+### Set up the infrastructure
+
+```sh
+pnpm infra:init
+```
+
+It creates the state bucket if missing, applies `shared`, `staging` and `production` once (read each plan, type `yes`), and sets the GitHub variables `GCP_PROJECT_ID` and `GCP_WIF_PROVIDER`. Commit the `.terraform.lock.hcl` files it writes and merge them.
+
+</Step>
+<Step>
+
+### Give the secrets their values
+
+OpenTofu creates each secret with a placeholder. Fill them from the files you wrote in [phase 4](4-backend-services.mdx): a dry run first, then `--apply`.
+
+<Terminal
+  title="pnpm secrets:set"
+  lines={[
+    {
+      command: 'pnpm secrets:set staging',
+      output: `Secrets for staging in starter-app-512122, from .env.staging (dry run: add --apply to change)
+
+Required (the API does not start without them)
+
+- add a new version of DATABASE_URL_STAGING (dry run)
+- add a new version of AUTH_SECRET_STAGING (dry run)
+  ✓ API_KEY_STAGING is up to date
+
+Optional (the API reads one once it is in api_optional_secrets)
+
+- add a new version of RESEND_API_KEY_STAGING (dry run)
+
+Created outside OpenTofu (api_external_secrets)
+
+- create REDIS_URL_STAGING (dry run)
+- add a new version of REDIS_URL_STAGING (dry run)`,
+  },
+  { command: 'pnpm secrets:set staging --apply' },
+  ]}
+  />
+
+An optional secret (`RESEND_API_KEY`, `GOOGLE_OAUTH_CLIENT_IDS`) is read by the API only once its name is in `api_optional_secrets` in `infra/envs/<env>/main.tf`. Plain settings (`RESEND_FROM`, `APPLE_SIGN_IN_IOS_BUNDLE_ID`) go in `api_env` in the same file, through a pull request.
+
+</Step>
+<Step>
+
+### First staging deploy
+
+Merge anything into `main`: **Deploy Staging** migrates the staging database, then builds and ships the API and the website. To deploy without a change, Actions → Deploy Staging → Run workflow, with **Force deploy all services** ticked.
+
+</Step>
+<Step>
+
+### Connect the domains
+
+Map `api-staging.example.com` and `api.example.com` (and the website) to their Cloud Run services, and add the DNS records Google shows in Cloudflare. This is by hand today; OpenTofu will take it over ([What comes next](../bootstrap-tool.mdx)).
+
+</Step>
+<Step>
+
+### Create production
+
+```sh
+git push origin main:production
+```
+
+Then apply production's infrastructure once: Actions → **Infrastructure** → Run workflow on `production`. **Deploy Production** runs on every push to `production` after that. Promote changes with a pull request from `main` into `production`.
+
+</Step>
+</Steps>
+
+<Callout type="success" title="Check it">
+  `pnpm doctor` → **Google Cloud** shows, for each environment, "every secret
+  the API reads has a value" and "api and web run a build of this repository".
+  `https://api-staging.example.com/health` answers.
+</Callout>
+
+</Tab>
+<Tab value="AWS (planned)">
+
+<Callout type="warn" title="Not built yet">
+  The project only runs on Google Cloud today. Another cloud is a planned module
+  of the bootstrap tool, and nothing here has been tested on AWS. The steps
+  below are the plan, not instructions.
+</Callout>
+
+What a second cloud module has to provide, mapped from what Google Cloud does today:
+
+| Job                                      | Google Cloud today           | AWS equivalent to build     |
+| ---------------------------------------- | ---------------------------- | --------------------------- |
+| Run the API and website from a container | Cloud Run                    | App Runner or ECS Fargate   |
+| Store images                             | Artifact Registry            | ECR                         |
+| Secrets                                  | Secret Manager               | Secrets Manager             |
+| Keyless login from GitHub Actions        | Workload Identity Federation | IAM OIDC provider + role    |
+| OpenTofu state                           | GCS bucket + KMS             | S3 bucket + KMS             |
+| Build images                             | Cloud Build                  | GitHub Actions or CodeBuild |
+
+The module would keep the same commands (`infra:init`, `secrets:set`, `doctor`) so the rest of these docs stay the same. See [What comes next](../bootstrap-tool.mdx).
+
+</Tab>
+</Tabs>

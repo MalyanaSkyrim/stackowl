@@ -1,0 +1,71 @@
+{
+  "name": "@starter/ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . --max-warnings 30 && node scripts/check-universal.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@starter/design-tokens": "workspace:*",
+    "@gorhom/bottom-sheet": "^5.2.8",
+    "@react-native-community/datetimepicker": "8.6.0",
+    "@rn-primitives/accordion": "^1.5.2",
+    "@rn-primitives/dialog": "^1.5.2",
+    "@rn-primitives/label": "^1.5.2",
+    "@rn-primitives/portal": "^1.5.3",
+    "@rn-primitives/radio-group": "^1.5.2",
+    "@rn-primitives/slot": "^1.5.2",
+    "@rn-primitives/switch": "^1.5.2",
+    "@rn-primitives/toggle-group": "^1.5.2",
+    "@storybook/react": "^10.6.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react-native": "^0.562.0",
+    "nativewind": "^4.2.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.65.0",
+    "react-native-confirmation-code-field": "^9.0.0",
+    "react-native-svg": "15.15.3",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^3.4.19",
+    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss-radix": "^4.0.2"
+  },
+  "devDependencies": {
+    "@starter/config": "workspace:*",
+    "@turbo/gen": "^2.2.3",
+    "@types/node": "^24.10.0",
+    "@types/react": "~19.2.2",
+    "@types/react-dom": "~19.2.2",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.13.0",
+    "react-native": "0.83.10",
+    "react-native-web": "~0.21.0",
+    "storybook": "^10.6.2",
+    "typescript-eslint": "^8.15.0"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./globals.css": "./src/styles/globals.css",
+    "./postcss.config": "./postcss.config.mjs",
+    "./tailwind.config": "./tailwind.config.ts",
+    "./postcss.config.mjs": "./postcss.config.mjs",
+    "./lib/*": "./src/lib/*.ts",
+    "./emails": "./src/emails/index.ts",
+    "./src/styles/globals.css": "./src/styles/globals.css",
+    "./src/**/*.stories.tsx": "./src/**/*.stories.tsx"
+  },
+  "peerDependencies": {
+    "react-native": "^0.83.0",
+    "react-native-web": "~0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-web": {
+      "optional": true
+    }
+  }
+}

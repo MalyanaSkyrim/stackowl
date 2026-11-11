@@ -1,0 +1,54 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+.bundle/
+vendor/
+
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+key.json
+generated
+generated-images
+dbml
+
+# Local env files
+.env
+.env.local
+# Secret values per environment, for pnpm secrets:set
+.env.staging
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+cockroach-data
+
+# Testing
+coverage
+
+# Turbo
+.turbo
+
+# Vercel
+.vercel
+
+# Build Outputs
+.next/
+out/
+build
+dist
+
+
+# Debug
+npm-debug.log*
+
+# Misc
+.DS_Store
+*.pem
+
+messages/*.d.json.ts
+cache
+
+ai/figma/base
+# Node compile cache (NODE_COMPILE_CACHE), never committed
+node-compile-cache/

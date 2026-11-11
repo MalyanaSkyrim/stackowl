@@ -1,0 +1,33 @@
+{
+  "name": "@starter/workshop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Workshop: one Storybook (react-native-web) for the universal kit, @starter/ui",
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build -o storybook-static"
+  },
+  "dependencies": {
+    "@starter/design-tokens": "workspace:*",
+    "@starter/ui": "workspace:*",
+    "nativewind": "^4.2.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-native": "0.83.10",
+    "react-native-web": "~0.21.0"
+  },
+  "devDependencies": {
+    "@starter/config": "workspace:*",
+    "@expo-google-fonts/ibm-plex-sans": "^0.4.1",
+    "@expo-google-fonts/ibm-plex-sans-arabic": "^0.4.2",
+    "@storybook/react": "^10.6.2",
+    "@storybook/react-native-web-vite": "^10.6.2",
+    "@types/react": "~19.2.2",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.4.47",
+    "storybook": "^10.6.2",
+    "tailwindcss": "^3.4.19",
+    "vite": "^7.1.0"
+  }
+}

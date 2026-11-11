@@ -1,0 +1,95 @@
+name: Continuous Integration
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  ci:
+    name: 'Continuous Integration'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.10.0
+
+      - name: 🌍 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.0'
+          cache: 'pnpm'
+
+      - name: 🚚 Install dependencies
+        run: pnpm install
+
+      - name: Run Spellcheck
+        run: pnpm spell
+
+      - name: Check code formatting
+        run: pnpm format:check
+
+      - name: Lint and typecheck the code
+        run: pnpm typecheck && pnpm lint
+
+      - name: Unit tests
+        run: pnpm --filter @starter/common --filter @starter/web --filter @starter/mobile test
+
+      - name: Build
+        run: SKIP_ENV_VALIDATION=true CI=true NODE_ENV=production pnpm build --color
+
+      - name: Build Storybook (Workshop)
+        run: pnpm storybook:build
+
+  migrations:
+    name: 'Migrations match the Prisma schema'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.10.0
+
+      - name: 🌍 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.0'
+          cache: 'pnpm'
+
+      - name: 🚚 Install dependencies
+        run: pnpm install
+
+      # Same version and init script as docker-compose.yml: the init script
+      # creates the app user and database, with tables created unlocked.
+      - name: 🗄️ Start CockroachDB
+        run: |
+          docker run -d --name cockroach -p 26257:26257 \
+            -v "$PWD/docker/cockroach/init.sql:/docker-entrypoint-initdb.d/init.sql:ro" \
+            cockroachdb/cockroach:v26.2.3 start-single-node --insecure
+          until docker exec cockroach cockroach sql --insecure --database=starter_app --execute='SELECT 1' >/dev/null 2>&1; do sleep 1; done
+
+      # Applies the migrations to this throwaway database, the way the deploys
+      # do, then compares the result with the schema: any difference means a
+      # migration is missing. Only CI runs it; it never touches a real database.
+      - name: 🗄️ Check the migrations match the Prisma schema
+        working-directory: packages/database
+        env:
+          DATABASE_URL: postgresql://starter_app@localhost:26257/starter_app?sslmode=disable
+        run: |
+          npx prisma migrate deploy
+          if ! npx prisma migrate diff --from-config-datasource --to-schema prisma --exit-code; then
+            echo "::error::The Prisma schema has changes that no migration in packages/database/prisma/migrations covers. Write the missing migration."
+            exit 1
+          fi

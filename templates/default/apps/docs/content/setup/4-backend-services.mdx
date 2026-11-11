@@ -1,0 +1,88 @@
+---
+title: 4. Backend services
+description: The database, Redis, email and sign-in services the API uses, one set per environment.
+---
+
+Each service gives you a value. Write each one in a file per environment at the repository root, `.env.staging` and `.env.production` (both gitignored), under the API's own name. Phase 5 sends them to the cloud with one command.
+
+```sh
+# .env.staging (the same names in .env.production)
+DATABASE_URL="postgresql://…"
+REDIS_URL="rediss://…"
+AUTH_SECRET="…"
+API_KEY="…"
+RESEND_API_KEY="re_…"
+GOOGLE_OAUTH_CLIENT_IDS="….apps.googleusercontent.com"
+```
+
+`AUTH_SECRET` and `API_KEY`: a new `openssl rand -base64 32` for each, different in each environment.
+
+<Steps>
+<Step>
+
+### Database (CockroachDB Cloud)
+
+1. Create a cluster, then a database and a SQL user for each environment.
+2. In the SQL shell, as an admin, let the user create tables Prisma can change:
+
+   ```sql
+   ALTER ROLE <user> SET create_table_with_schema_locked = false;
+   ```
+
+   Do this **before the first deploy**. Without it the first migration fails halfway (P3018, then P3009 on every deploy after). The fix if it already happened: [Troubleshooting](../reference/troubleshooting.mdx).
+
+3. Copy the connection string → `DATABASE_URL`.
+
+</Step>
+<Step>
+
+### Redis
+
+Any hosted Redis. The API's instances share their rate-limit counts through it. Create one per environment and copy the URL → `REDIS_URL`. This secret is created outside OpenTofu; `pnpm secrets:set` creates it for you.
+
+</Step>
+<Step>
+
+### Email (Resend)
+
+1. Create the account. Domains → Add domain → your email domain (ours: `example.com`).
+2. Add the DNS records Resend shows in Cloudflare, and wait for **Verified**.
+3. API Keys → Create → `RESEND_API_KEY`.
+4. The sender address isn't secret: it goes in `api_env` as `RESEND_FROM` in `infra/envs/<env>/main.tf` (ours: `Starter App <contact@example.com>`).
+
+</Step>
+<Step>
+
+### Google sign-in
+
+1. Google Cloud Console → APIs & Services → **OAuth consent screen**: External, the app name, a support email and the privacy URL.
+2. **Credentials** → Create credentials → OAuth client ID → **iOS**, with the bundle id.
+3. The client id goes in three places:
+   - `GOOGLE_OAUTH_CLIENT_IDS` in `.env.staging` and `.env.production` (the API accepts tokens for it).
+   - `EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID` in the root `.env` (the app).
+   - Its reversed form, `com.googleusercontent.apps.<the part before .apps…>`, as `EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME` in the root `.env`.
+
+Without the two `EXPO_PUBLIC_…` values the app hides the Google button.
+
+</Step>
+<Step>
+
+### Sign in with Apple
+
+No key. The API checks Apple's tokens against the bundle id, set as `APPLE_SIGN_IN_IOS_BUNDLE_ID` in `api_env` in `infra/envs/<env>/main.tf`. The capability itself is turned on in [6 Apple](6-apple.mdx).
+
+</Step>
+<Step>
+
+### Optional: Sentry and Meta Pixel
+
+- Sentry: create a React Native project → its DSN → `EXPO_PUBLIC_SENTRY_DSN` in the root `.env`. Empty keeps Sentry off.
+- Meta Pixel: `NEXT_PUBLIC_META_PIXEL_ID` for the website. Empty loads no tracking.
+
+</Step>
+</Steps>
+
+<Callout type="success" title="Check it">
+  `.env.staging` and `.env.production` hold every name above. Nothing is checked
+  online yet: phase 5's `pnpm secrets:set` compares them with the cloud.
+</Callout>

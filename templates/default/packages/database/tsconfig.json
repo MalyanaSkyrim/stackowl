@@ -1,0 +1,15 @@
+{
+  "extends": "@starter/config/typescript/server.json",
+  "compilerOptions": {
+    "paths": { "@starter/config/*": ["../config/*"] }
+  },
+  "include": [
+    "src/",
+    "prisma",
+    "generated/**/*",
+    "tsup.config.ts",
+    "prisma.config.ts",
+    "src/env.mjs"
+  ],
+  "exclude": ["**/node_modules", "**/.*/"]
+}

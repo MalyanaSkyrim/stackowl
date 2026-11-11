@@ -1,0 +1,220 @@
+{
+  "common": {
+    "languages": "Langue",
+    "lastUpdated": "Dernière mise à jour : {date}",
+    "illustration": "Illustration : {name}"
+  },
+  "nav": {
+    "label": "Menu principal",
+    "howItWorks": "Comment ça marche",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "support": "Aide",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "appStore": {
+    "label": "Télécharger dans l'App Store",
+    "small": "Télécharger dans",
+    "large": "l'App Store"
+  },
+  "footer": {
+    "label": "Pied de page",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "support": "Aide",
+    "tagline": "{app} garde vos notes sur tous vos appareils, prêtes quand vous l’êtes.",
+    "copyright": "© {year} {app}"
+  },
+  "home": {
+    "meta": {
+      "title": "{app} : vos notes, sur tous vos appareils",
+      "description": "{app} est une application de notes simple pour iPhone et le web. Écrivez une fois, retrouvez-la partout."
+    },
+    "hero": {
+      "eyebrow": "Pour iPhone · English, Français",
+      "title": "Vos notes, sur tous vos appareils.",
+      "subtitle": "{app} est un endroit simple pour tout noter. Connectez-vous une fois et vos notes vous suivent d’un téléphone à l’autre.",
+      "note": "Gratuit pour commencer."
+    },
+    "steps": {
+      "title": "Prêt en une minute",
+      "lead": "Aucune configuration, rien à apprendre.",
+      "download": {
+        "title": "Téléchargez l’app",
+        "body": "Installez-la depuis l’App Store et ouvrez-la. Connectez-vous avec Apple, Google ou votre e-mail."
+      },
+      "write": {
+        "title": "Écrivez une note",
+        "body": "Un titre et quelques lignes suffisent. Modifiez-la quand vous voulez."
+      },
+      "sync": {
+        "title": "Retrouvez-la partout",
+        "body": "Connectez-vous sur un autre téléphone : vos notes y sont déjà."
+      }
+    },
+    "features": {
+      "title": "L’essentiel, rien de plus",
+      "fast": {
+        "title": "Rapide",
+        "body": "S’ouvre en un instant et enregistre pendant que vous écrivez."
+      },
+      "everywhere": {
+        "title": "Sur tous vos appareils",
+        "body": "Vos notes sont gardées avec votre compte : changer de téléphone n’est pas un souci."
+      },
+      "private": {
+        "title": "Privé par défaut",
+        "body": "Vous seul pouvez lire vos notes. Nous ne vendons jamais vos données et n’affichons pas de publicité."
+      },
+      "languages": {
+        "title": "Dans votre langue",
+        "badge": "Bientôt plus",
+        "body": "En anglais et en français aujourd’hui, d’autres langues arrivent."
+      }
+    },
+    "privacy": {
+      "title": "Vos données restent les vôtres",
+      "body": "Nous ne gardons que ce dont l’app a besoin, et vous pouvez tout supprimer à tout moment.",
+      "link": "Lire la politique de confidentialité",
+      "minimal": "Nous ne collectons que votre e-mail et vos notes.",
+      "noAds": "Pas de publicité, et nous ne vendons jamais vos données.",
+      "delete": "Supprimez votre compte depuis l’app, avec tout ce qui est sur nos serveurs."
+    },
+    "faq": {
+      "title": "Questions",
+      "account": {
+        "question": "Faut-il un compte ?",
+        "answer": "Oui : vos notes sont gardées avec votre compte pour que vous les retrouviez sur n’importe quel appareil. Connectez-vous avec Apple, Google ou votre e-mail."
+      },
+      "devices": {
+        "question": "Puis-je l’utiliser sur plusieurs téléphones ?",
+        "answer": "Oui. Connectez-vous avec le même compte et vos notes sont là."
+      },
+      "price": {
+        "question": "Combien ça coûte ?",
+        "answer": "[À confirmer avant le lancement : vos tarifs.]"
+      },
+      "android": {
+        "question": "Existe-t-il une version Android ?",
+        "answer": "Pas encore. {app} est pour iPhone pour l’instant."
+      }
+    },
+    "cta": {
+      "title": "Écrivez votre première note aujourd’hui"
+    }
+  },
+  "privacy": {
+    "meta": {
+      "title": "Politique de confidentialité · {app}",
+      "description": "Ce que {app} collecte, pourquoi, et comment le supprimer."
+    },
+    "title": "Politique de confidentialité",
+    "summary": {
+      "label": "En bref",
+      "collect": "{app} ne collecte que ce dont elle a besoin : votre e-mail et les notes que vous écrivez.",
+      "account": "Votre compte vous permet de retrouver vos notes sur n’importe quel appareil.",
+      "noAds": "Nous ne vendons pas vos données et n'affichons pas de publicité.",
+      "delete": "Vous pouvez supprimer votre compte, et tout ce que nous avons sur vous, depuis l'appli."
+    },
+    "who": {
+      "title": "Qui sommes-nous",
+      "body": "{app} est édité par {legalName}, {address}. Pour toute question sur cette politique : <mail>{email}</mail>."
+    },
+    "account": {
+      "title": "Ce que nous gardons",
+      "intro": "Vous pouvez vous connecter avec Apple, Google, ou un e-mail et un mot de passe. Nous gardons alors :",
+      "email": "Votre adresse e-mail, et votre nom si Apple ou Google le partage.",
+      "password": "Une empreinte (hash) de votre mot de passe, jamais le mot de passe lui-même, si vous en utilisez un.",
+      "devices": "Vos appareils connectés, avec un nom comme « iPhone 15 », pour que vous puissiez les voir et les déconnecter.",
+      "content": "Les notes que vous écrivez.",
+      "use": "Nous les utilisons uniquement pour vous connecter et afficher vos notes sur vos appareils."
+    },
+    "services": {
+      "title": "Services que nous utilisons",
+      "intro": "Ces sociétés traitent des données pour nous, sous contrat, uniquement pour fournir leur service :",
+      "apple": "<strong>Apple</strong> : l’App Store et Se connecter avec Apple.",
+      "google": "<strong>Google</strong> : Se connecter avec Google, et Google Cloud, qui héberge nos serveurs et notre base de données en [RÉGION].",
+      "sentry": "<strong>Sentry</strong> : rapports de plantage (modèle d’appareil, version d’iOS, ce que faisait l’app), sans le contenu de vos notes.",
+      "resend": "<strong>Resend</strong> : envoie les codes d'inscription et de mot de passe à votre e-mail."
+    },
+    "retention": {
+      "title": "Durée de conservation",
+      "body": "Nous gardons les données de votre compte jusqu’à sa suppression. Un appareil inutilisé pendant 90 jours est déconnecté. Les rapports de plantage sont gardés [DURÉE]."
+    },
+    "deletion": {
+      "title": "Supprimer votre compte",
+      "body": "Dans l’app, ouvrez Réglages › Compte › Supprimer le compte. Votre compte et toutes vos notes sont aussitôt supprimés de nos serveurs. Vous pouvez aussi nous écrire et nous le ferons pour vous."
+    },
+    "rights": {
+      "title": "Vos droits",
+      "body": "Vous pouvez demander à voir, corriger, exporter ou supprimer vos données, et vous opposer à leur utilisation. Écrivez à <mail>{email}</mail>. Si vous êtes dans l'UE, au Royaume-Uni ou au Maroc, vous pouvez aussi saisir votre autorité de protection des données."
+    },
+    "children": {
+      "title": "Enfants",
+      "body": "{app} ne s'adresse pas aux enfants de moins de 13 ans, et nous ne collectons pas sciemment leurs données."
+    },
+    "changes": {
+      "title": "Modifications",
+      "body": "Si nous modifions cette politique, nous mettrons à jour la date ci-dessus, et vous préviendrons dans l'appli quand le changement compte."
+    }
+  },
+  "terms": {
+    "meta": {
+      "title": "Conditions d’utilisation · {app}",
+      "description": "Les conditions d’utilisation de {app}."
+    },
+    "title": "Conditions d'utilisation",
+    "intro": "Ces conditions forment un accord entre vous et {legalName} pour l'appli et le site {app}. Utiliser l'appli signifie que vous les acceptez, ainsi que le <eula>Contrat de licence utilisateur final standard</eula> d'Apple.",
+    "app": {
+      "title": "Ce que fait l'appli",
+      "body": "{app} vous permet d’écrire des notes et de les retrouver sur chaque appareil où vous vous connectez."
+    },
+    "account": {
+      "title": "Votre compte",
+      "body": "Gardez votre mot de passe secret et prévenez-nous si vous pensez que quelqu’un d’autre a utilisé votre compte. Vous pouvez le supprimer à tout moment dans Réglages › Compte."
+    },
+    "use": {
+      "title": "Utilisation acceptable",
+      "body": "Ne copiez pas, ne revendez pas et ne décompilez pas l'appli, n'abusez pas de nos serveurs et n'utilisez pas l'appli en violation de la loi."
+    },
+    "liability": {
+      "title": "Garanties et responsabilité",
+      "body": "Nous faisons en sorte que l’app fonctionne et reste disponible, mais elle est fournie « en l’état ». Gardez une copie de ce que vous ne pouvez pas perdre. Dans la mesure permise par la loi, nous ne sommes pas responsables des pertes indirectes, et notre responsabilité totale est limitée à ce que vous nous avez payé au cours des 12 derniers mois. Rien ici ne limite vos droits de consommateur."
+    },
+    "ending": {
+      "title": "Fin de l'utilisation",
+      "body": "Vous pouvez cesser d'utiliser l'appli et supprimer votre compte à tout moment. Nous pouvons suspendre un compte qui enfreint ces conditions."
+    },
+    "law": {
+      "title": "Modifications et droit applicable",
+      "body": "Nous pouvons mettre à jour ces conditions et changerons alors la date ci-dessus. Ces conditions sont régies par le droit de [PAYS]. Contact : <mail>{email}</mail>."
+    }
+  },
+  "support": {
+    "meta": {
+      "title": "Assistance · {app}",
+      "description": "De l’aide avec {app} : nous écrire, se connecter, changer de téléphone, signaler un problème ou supprimer son compte."
+    },
+    "title": "Comment pouvons-nous vous aider ?",
+    "lead": "Écrivez-nous en anglais ou en français. Nous répondons en général sous deux jours ouvrés.",
+    "emailLabel": "E-mail",
+    "write": "Nous écrire",
+    "signIn": {
+      "title": "Je n’arrive pas à me connecter",
+      "body": "Cherchez le code envoyé par e-mail, y compris dans les indésirables. Vous pouvez demander un nouveau code au bout d’une minute."
+    },
+    "newPhone": {
+      "title": "Changer de téléphone",
+      "body": "Connectez-vous avec le même compte et vos notes reviennent."
+    },
+    "bug": {
+      "title": "Quelque chose ne marche pas",
+      "body": "Écrivez-nous avec le modèle de votre téléphone, la version de l’app (Réglages › À propos) et ce que vous avez fait. Une capture d’écran aide."
+    },
+    "delete": {
+      "title": "Supprimer mon compte",
+      "body": "Dans l'appli : Réglages › Compte › Supprimer le compte. Vos données sont supprimées de nos serveurs. Voir la <privacy>politique de confidentialité</privacy>."
+    }
+  }
+}

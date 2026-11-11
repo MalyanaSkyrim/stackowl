@@ -1,0 +1,152 @@
+/**
+ * Marketing type scale.
+ *
+ * Deliberately plain CSS classes rather than Tailwind font-size tokens: the
+ * shared `classMerge` is tailwind-merge, which reads an unrecognised
+ * "text-label" as a text *colour* and silently drops it when a real colour
+ * class sits beside it. A `type-` prefix cannot collide that way, and folding
+ * the desktop step into a media query keeps every call site to one class.
+ *
+ * Sizes come from the design system: one grotesk, weights 500 and 700 only.
+ */
+
+.type-display {
+  font-size: 40px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.type-h1 {
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.type-h2 {
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.type-h3 {
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.type-body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.type-label {
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+  .type-display {
+    font-size: 60px;
+    line-height: 1.02;
+  }
+
+  .type-h1 {
+    font-size: 60px;
+    line-height: 1.02;
+  }
+
+  .type-h2 {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .type-h3 {
+    font-size: 24px;
+  }
+
+  .type-body {
+    font-size: 17px;
+  }
+}
+
+/*
+ * Surfaces and motion.
+ *
+ * These are plain CSS for the same reason the type scale is: they combine a
+ * mask, a gradient and a media query that Tailwind utilities express badly,
+ * and keeping them here holds every call site to one class.
+ */
+
+/** Faint blueprint grid behind the hero. */
+.surface-grid {
+  background-image:
+    linear-gradient(
+      to right,
+      rgb(var(--color-primary-300) / 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(var(--color-primary-300) / 0.05) 1px,
+      transparent 1px
+    );
+  background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #000 40%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #000 40%,
+    transparent 100%
+  );
+}
+
+/** Soft primary bloom behind the hero mockup. */
+.surface-glow {
+  background-image: radial-gradient(
+    circle at 50% 45%,
+    rgb(var(--color-primary-100) / 0.35) 0%,
+    transparent 65%
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /** Cards rise on hover. Paired with `shadow-sm` on the element itself. */
+  .card-lift {
+    transition:
+      transform 0.2s ease-out,
+      box-shadow 0.2s ease-out;
+  }
+
+  .card-lift:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 4px 6px -1px rgb(15 23 42 / 0.08),
+      0 2px 4px -2px rgb(15 23 42 / 0.06);
+  }
+
+  /** Entrance used by `Reveal`. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s ease-out,
+      transform 0.7s ease-out;
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

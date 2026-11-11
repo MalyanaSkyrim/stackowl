@@ -1,0 +1,223 @@
+name: Deploy (reusable)
+
+# The deploy both environments share, called by deploy-staging.yml (push to
+# `main`) and deploy-production.yml (push to `production`). Migrates the
+# environment's database first, so new code never runs on the old schema, then
+# sends each changed service to Cloud Build, which rolls it out on Cloud Run.
+# The services, secrets and identities are created by OpenTofu (infra/, see
+# apps/docs/content/architecture/infrastructure.md). Nothing is deployed while the
+# GCP_PROJECT_ID variable is unset (fresh clone).
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'staging or production'
+        type: string
+        required: true
+      force:
+        description: 'Deploy every service, changed or not'
+        type: boolean
+        default: false
+      skip_label:
+        description: 'A merged pull request with this label is not deployed (empty: never skip)'
+        type: string
+        default: ''
+
+env:
+  REGION: europe-west1
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+  WIF_PROVIDER: ${{ vars.GCP_WIF_PROVIDER }}
+  ARTIFACTS_REPO: starter-app-docker
+  ENVIRONMENT: ${{ inputs.environment }}
+
+jobs:
+  check-deploy:
+    name: 🏷️ Check whether to deploy
+    runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.check.outputs.deploy }}
+    steps:
+      - name: 🏷️ Check the GCP variables and the skip label
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          SKIP_LABEL: ${{ inputs.skip_label }}
+        run: |
+          if [ -z "$PROJECT_ID" ] || [ -z "$WIF_PROVIDER" ]; then
+            echo "::notice::GCP_PROJECT_ID or GCP_WIF_PROVIDER is not set: nothing to deploy to."
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$EVENT" = "push" ] && [ -n "$SKIP_LABEL" ]; then
+            labels="$(gh api "repos/$REPO/commits/$SHA/pulls" --jq '[.[].labels[].name] | join(",")')"
+            if [[ ",$labels," == *",$SKIP_LABEL,"* ]]; then
+              echo "::notice::The merged pull request has the $SKIP_LABEL label: $ENVIRONMENT is not deployed."
+              echo "deploy=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+          echo "deploy=true" >> "$GITHUB_OUTPUT"
+
+  migrate-db:
+    name: 🗄️ Prisma Migrate (${{ inputs.environment }})
+    needs: check-deploy
+    if: needs.check-deploy.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: 🔍 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.10.0
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.0'
+          cache: 'pnpm'
+
+      - name: 📦 Install dependencies
+        run: pnpm install
+
+      - name: 🔐 Auth to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: deploy-${{ inputs.environment }}@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
+
+      - name: ☁️ Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      # 🔐 Fetch DB URL from Secret Manager
+      - name: 🔑 Load DATABASE_URL from Secret Manager
+        id: secrets
+        run: |
+          echo "DATABASE_URL=$(gcloud secrets versions access latest \
+          --secret=DATABASE_URL_${ENVIRONMENT^^} --project=${{ env.PROJECT_ID }})" >> $GITHUB_ENV
+
+      # 🔍 Detect if migrations exist
+      - name: 📂 Check for Prisma migrations
+        id: check-migrations
+        run: |
+          if [ -d "packages/database/prisma/migrations" ] && [ "$(ls -A packages/database/prisma/migrations)" ]; then
+            echo "has_migrations=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_migrations=false" >> $GITHUB_OUTPUT
+          fi
+
+      # 🚀 Run migrations only if needed
+      - name: 🗄️ Run Prisma Migrations
+        if: steps.check-migrations.outputs.has_migrations == 'true'
+        working-directory: packages/database
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+
+  deploy:
+    name: 🚀 Deploy ${{ matrix.service }}
+    # After the migrations, so the new code never runs on the old schema.
+    needs: migrate-db
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    strategy:
+      matrix:
+        include:
+          - service: api
+          - service: web
+
+    steps:
+      - name: 🔍 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Signed in first: the check below asks Cloud Run which commit it runs.
+      - name: 🔐 Auth to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: deploy-${{ inputs.environment }}@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
+
+      - name: ☁️ Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      # Compares with the commit Cloud Run runs now (each image is tagged with its
+      # commit), not with the previous commit: a merge that brings several commits,
+      # a failed deploy or a first deploy (placeholder image) is never skipped.
+      - name: 🔎 Check if ${{ matrix.service }} changed
+        id: turbo-ignore
+        env:
+          SERVICE: ${{ matrix.service }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          if [ ! -f "apps/$SERVICE/cloudbuild.yaml" ]; then
+            echo "::notice::apps/$SERVICE does not exist yet. Skipping it."
+            echo "is_changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$FORCE" = "true" ]; then
+            echo "Force deploy requested."
+            echo "is_changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          image=$(gcloud run services describe "$SERVICE-$ENVIRONMENT" \
+            --region="$REGION" --project="$PROJECT_ID" \
+            --format='value(spec.template.spec.containers[0].image)' 2>/dev/null || true)
+          deployed="${image##*:}"
+          echo "Cloud Run $SERVICE-$ENVIRONMENT runs: ${image:-nothing}"
+
+          if ! [[ "$deployed" =~ ^[0-9a-f]{40}$ ]] || ! git cat-file -e "$deployed^{commit}" 2>/dev/null; then
+            echo "::notice::$SERVICE-$ENVIRONMENT does not run a build of this repository yet. Deploying it."
+            echo "is_changed=true" >> "$GITHUB_OUTPUT"
+          elif [ "$deployed" = "$GITHUB_SHA" ]; then
+            echo "This commit is already deployed."
+            echo "is_changed=false" >> "$GITHUB_OUTPUT"
+          else
+            turbo_version=$(node -p "require('./package.json').devDependencies.turbo")
+            affected=$(npx -y "turbo@$turbo_version" run build \
+              --filter="@starter/$SERVICE...[$deployed]" --dry=json | jq '.packages | length')
+            echo "Packages changed since $deployed that $SERVICE builds from: $affected"
+            if [ "$affected" -gt 0 ]; then
+              echo "is_changed=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "is_changed=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: 📦 Setup pnpm
+        if: steps.turbo-ignore.outputs.is_changed == 'true'
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.10.0
+
+      - name: 🟢 Setup Node.js
+        if: steps.turbo-ignore.outputs.is_changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.0'
+          cache: 'pnpm'
+
+      - name: 🛠️ Install dependencies
+        if: steps.turbo-ignore.outputs.is_changed == 'true'
+        run: pnpm install
+
+      - name: 🚀 Submit to Cloud Build
+        if: steps.turbo-ignore.outputs.is_changed == 'true'
+        run: |
+          gcloud builds submit \
+            --config=apps/${{ matrix.service }}/cloudbuild.yaml \
+            --project=${{ env.PROJECT_ID }} \
+            --region=${{ env.REGION }} \
+            --service-account=projects/${{ env.PROJECT_ID }}/serviceAccounts/cloud-build@${{ env.PROJECT_ID }}.iam.gserviceaccount.com \
+            --gcs-source-staging-dir=gs://${{ env.PROJECT_ID }}-build-source/source \
+            --substitutions=_REGION=${{ env.REGION }},_ARTIFACTS_REPO=${{ env.ARTIFACTS_REPO }},_ENVIRONMENT=${{ env.ENVIRONMENT }},_TAG=${{ github.sha }} \
+            .

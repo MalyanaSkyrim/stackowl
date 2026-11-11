@@ -1,0 +1,179 @@
+name: Deploy Mobile (iOS)
+
+# Manual trigger only: Actions -> Deploy Mobile (iOS) -> Run workflow.
+# Builds the branch it is run from and uploads it to TestFlight with Fastlane:
+#   main        -> staging build (APP_ENV=staging, named "<name> Staging" on the phone)
+#   production  -> production build (APP_ENV=production)
+# Any other branch is refused. Both share one bundle ID, so they are builds of
+# the same TestFlight app; a tester's phone has one or the other installed.
+# Setup (Apple IDs, Fastlane Match, secrets): apps/docs/content/guides/mobile-deployment.md.
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Deploy even if the mobile app has not changed'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  check-mobile:
+    name: 🔍 Check Mobile Changes
+    runs-on: ubuntu-latest
+    # Signing is shared by staging and production builds, so both read the
+    # secrets of the `production` GitHub environment.
+    environment: production
+    outputs:
+      app_env: ${{ steps.app-env.outputs.app_env }}
+      is_changed: ${{ steps.turbo-ignore.outputs.is_changed }}
+    steps:
+      - name: 🏷️ Pick the app environment from the branch
+        id: app-env
+        run: |
+          case "${{ github.ref_name }}" in
+            main) echo "app_env=staging" >> "$GITHUB_OUTPUT" ;;
+            production) echo "app_env=production" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "::error::Run Deploy Mobile from main (staging build) or production (production build), not ${{ github.ref_name }}."
+              exit 1
+              ;;
+          esac
+
+      - name: 🔍 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔎 Check if mobile changed
+        id: turbo-ignore
+        run: |
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            echo "Force deploy requested."
+            echo "is_changed=true" >> $GITHUB_OUTPUT
+          else
+            set +e
+            npx turbo-ignore @starter/mobile
+            exit_code=$?
+            set -e
+
+            if [ $exit_code -eq 1 ]; then
+              echo "is_changed=true" >> $GITHUB_OUTPUT
+            else
+              echo "is_changed=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+  deploy-mobile:
+    name: 📱 Deploy Mobile App (iOS, ${{ needs.check-mobile.outputs.app_env }})
+    needs: check-mobile
+    if: needs.check-mobile.outputs.is_changed == 'true'
+    runs-on: macos-26
+    environment: production
+    env:
+      APP_ENV: ${{ needs.check-mobile.outputs.app_env }}
+
+    steps:
+      - name: 🔍 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.10.0
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.0'
+          cache: 'pnpm'
+
+      - name: 🛠️ Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 📝 Write build environment
+        run: |
+          echo "APP_ENV=$APP_ENV" >> .env
+          echo "ENVIRONMENT=$APP_ENV" >> .env
+          echo "APP_BUNDLE_ID=${{ vars.APP_BUNDLE_ID }}" >> .env
+          echo "EXPO_PUBLIC_SENTRY_DSN=${{ vars.EXPO_PUBLIC_SENTRY_DSN }}" >> .env
+          # Google sign-in: without both, the app hides the Google button.
+          echo "EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID=${{ vars.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID }}" >> .env
+          echo "EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME=${{ vars.EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME }}" >> .env
+          # Repository variables, suffixed: this job always runs in the `production`
+          # environment (for signing), so it can't read the `staging` environment's variables.
+          if [ "$APP_ENV" = "production" ]; then
+            echo "EXPO_PUBLIC_API_URL=${{ vars.API_URL_PRODUCTION }}" >> .env
+            echo "EXPO_PUBLIC_WEB_URL=${{ vars.WEB_URL_PRODUCTION }}" >> .env
+          else
+            echo "EXPO_PUBLIC_API_URL=${{ vars.API_URL_STAGING }}" >> .env
+            echo "EXPO_PUBLIC_WEB_URL=${{ vars.WEB_URL_STAGING }}" >> .env
+          fi
+
+      - name: ⚙️ Generate iOS native directory (Expo Prebuild)
+        working-directory: apps/mobile
+        env:
+          EXPO_USE_PNPM: '1'
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: pnpm exec expo prebuild --platform ios --no-install
+
+      - name: 🔧 Configure Podfile to use modular headers
+        working-directory: apps/mobile/ios
+        run: ruby -e "lines = File.read('Podfile'); File.write('Podfile', \"use_modular_headers!\n\n\" + lines)"
+
+      - name: 💎 Setup Ruby and Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          working-directory: apps/mobile
+          bundler-cache: true
+
+      - name: 🗄️ Cache CocoaPods Spec Repo
+        uses: actions/cache@v4
+        with:
+          path: ~/.cocoapods
+          key: ${{ runner.os }}-cocoapods-${{ hashFiles('apps/mobile/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cocoapods-
+
+      - name: 🗄️ Cache CocoaPods Pods
+        id: pods-cache
+        uses: actions/cache@v4
+        with:
+          path: apps/mobile/ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('apps/mobile/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: 🗄️ Cache Xcode DerivedData
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-derived-data-${{ hashFiles('apps/mobile/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-derived-data-
+
+      - name: 📦 Install CocoaPods
+        working-directory: apps/mobile/ios
+        run: pod install
+
+      - name: 🔑 Set up SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: 🚀 Deploy to App Store Connect / TestFlight via Fastlane
+        working-directory: apps/mobile
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+          MATCH_PASSWORD: ${{ secrets.FASTLANE_MATCH_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          RCT_NO_LAUNCH_PACKAGER: 1
+        run: bundle exec fastlane deploy

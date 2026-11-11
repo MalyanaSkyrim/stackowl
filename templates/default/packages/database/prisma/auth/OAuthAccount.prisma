@@ -1,0 +1,16 @@
+/// Links a user to their Sign in with Apple or Google identity.
+/// `providerAccountId` is the provider's stable user id (the token's `sub`).
+model OAuthAccount {
+  id                String @id @default(cuid())
+  userId            String
+  user              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// [OAuthProvider]
+  provider          String
+  providerAccountId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@unique([userId, provider])
+}

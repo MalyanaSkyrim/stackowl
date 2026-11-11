@@ -1,0 +1,41 @@
+'use client'
+
+import * as LabelPrimitive from '@rn-primitives/label'
+import * as React from 'react'
+import { Platform } from 'react-native'
+
+import { cn } from '../../lib/utils'
+import { useFontClasses } from '../Text'
+
+function Label({
+  className,
+  onPress,
+  onLongPress,
+  onPressIn,
+  onPressOut,
+  disabled,
+  ...props
+}: LabelPrimitive.TextProps & { disabled?: boolean }) {
+  const textClass = useFontClasses(
+    cn('text-foreground text-body-sm font-medium', className),
+  )
+  return (
+    <LabelPrimitive.Root
+      className={cn(
+        'flex select-none flex-row items-center gap-2',
+        Platform.select({
+          web: 'cursor-default leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50',
+        }),
+        disabled && 'opacity-50',
+      )}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      disabled={disabled}>
+      <LabelPrimitive.Text className={textClass} {...props} />
+    </LabelPrimitive.Root>
+  )
+}
+
+export { Label }

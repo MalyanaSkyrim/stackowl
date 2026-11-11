@@ -1,0 +1,32 @@
+{
+  "extends": "@starter/config/typescript/nextjs.json",
+  "compilerOptions": {
+    "strict": true,
+    "declaration": false,
+    "declarationMap": false,
+    "strictNullChecks": true,
+    "allowArbitraryExtensions": true,
+    "jsxImportSource": "nativewind",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@starter/ui/*": ["../../packages/ui/src/*"],
+      "@starter/ui": ["../../packages/ui/src/index.ts"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "global.d.ts",
+    "nativewind-env.d.ts",
+    "next-env.d.ts",
+    "next.config.mjs",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

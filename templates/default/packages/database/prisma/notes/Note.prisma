@@ -1,0 +1,14 @@
+/// The notes example (apps/docs/content/architecture/adding-a-feature.md): one user's notes.
+/// Copy it for your first real model, then delete it.
+model Note {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title  String
+  body   String @default("")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, updatedAt])
+}

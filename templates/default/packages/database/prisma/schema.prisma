@@ -1,0 +1,23 @@
+// The schema is split by module: `auth/` (accounts) and `notes/` (the example feature).
+// Prisma reads every `.prisma` file in this folder. Each file holds one model and is named
+// after it, e.g. `auth/User.prisma`.
+//
+// No Prisma enums: a column with a fixed set of values is a `String`, its values are a zod
+// enum in `@starter/common`, imported into `json-types.ts`, and a `/// [<Type>]` comment
+// above the column types it.
+//
+// Migrations are written by hand: change the models here, then create the migration
+// yourself (`pnpm db:migrate`). The first local run uses `pnpm db:push`.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
+datasource db {
+  provider = "cockroachdb"
+}

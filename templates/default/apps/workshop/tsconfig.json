@@ -1,0 +1,9 @@
+{
+  "extends": "@starter/config/typescript/react-library.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "nativewind",
+    "noEmit": true
+  },
+  "include": [".storybook/**/*", "*.ts", "nativewind-env.d.ts"]
+}

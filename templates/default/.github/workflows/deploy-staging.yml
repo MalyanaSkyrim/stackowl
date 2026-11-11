@@ -1,0 +1,35 @@
+name: Deploy Staging
+
+# Runs on every push to `main`, merges included, and by hand from the Actions
+# tab (with "Force deploy all services"). Only `main` may log in to the
+# staging environment. The steps live in deploy.yml, shared with production.
+# A merged pull request with the `skip-staging-deploy` label is not deployed
+# (the infra workflow still applies its OpenTofu changes).
+# The iOS app ships separately, with deploy-mobile.yml.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force deploy all services'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: read # to read the merged pull request's labels
+
+# One deploy at a time; a newer push waits for the running one.
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: staging
+      force: ${{ inputs.force == true }}
+      skip_label: skip-staging-deploy
