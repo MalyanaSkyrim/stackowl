@@ -61,20 +61,20 @@ All workspaces read the single `.env` at the repo root. Without Resend configure
 
 ## Scripts
 
-| Command                           | What it does                                                                 |
-| --------------------------------- | ---------------------------------------------------------------------------- |
-| `pnpm dev`                        | Start every app in watch mode                                                |
-| `pnpm doctor`                     | Check tools, keys, GitHub and Google Cloud; changes nothing                  |
-| `pnpm setupwise setup --apply`    | Set up what can be scripted (GitHub variables and labels, cloud secrets)     |
-| `pnpm secrets:set <env> --apply`  | Give the API's cloud secrets their values from `.env.<env>`                  |
-| `pnpm infra:init`                 | Create the Google Cloud infrastructure (OpenTofu)                            |
-| `pnpm mobile:signing`             | One-time iOS signing setup for the deploy workflow                           |
-| `pnpm db:start` / `db:stop`       | Start or stop the local CockroachDB and Redis (Docker)                       |
-| `pnpm db:push`                    | Apply the Prisma schema to the local database, without a migration           |
-| `pnpm db:migrate`                 | Apply the migrations to the local database (`prisma migrate dev`)            |
-| `pnpm db:seed`                    | Add the demo user and its notes                                              |
-| `pnpm workshop`                   | Open the Workshop (Storybook) for the UI kit                                 |
-| `pnpm build` / `typecheck` / `lint` / `test` | Build, type-check, lint and test the monorepo                     |
+| Command                                      | What it does                                                             |
+| -------------------------------------------- | ------------------------------------------------------------------------ |
+| `pnpm dev`                                   | Start every app in watch mode                                            |
+| `pnpm doctor`                                | Check tools, keys, GitHub and Google Cloud; changes nothing              |
+| `pnpm setupwise setup --apply`               | Set up what can be scripted (GitHub variables and labels, cloud secrets) |
+| `pnpm secrets:set <env> --apply`             | Give the API's cloud secrets their values from `.env.<env>`              |
+| `pnpm infra:init`                            | Create the Google Cloud infrastructure (OpenTofu)                        |
+| `pnpm mobile:signing`                        | One-time iOS signing setup for the deploy workflow                       |
+| `pnpm db:start` / `db:stop`                  | Start or stop the local CockroachDB and Redis (Docker)                   |
+| `pnpm db:push`                               | Apply the Prisma schema to the local database, without a migration       |
+| `pnpm db:migrate`                            | Apply the migrations to the local database (`prisma migrate dev`)        |
+| `pnpm db:seed`                               | Add the demo user and its notes                                          |
+| `pnpm workshop`                              | Open the Workshop (Storybook) for the UI kit                             |
+| `pnpm build` / `typecheck` / `lint` / `test` | Build, type-check, lint and test the monorepo                            |
 
 Run a script in one workspace with `pnpm --filter=@starter/<name> <script>`.
 

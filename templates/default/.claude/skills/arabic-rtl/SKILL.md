@@ -28,11 +28,11 @@ Every visible string uses `Text` from `@starter/ui`, never `Text` from `react-na
 
 ```tsx
 // ✅
-import { Text } from '@starter/ui';
-<Text className="text-2xl font-bold">{t('welcome')}</Text>
+import { Text } from '@starter/ui'
+;<Text className="text-2xl font-bold">{t('welcome')}</Text>
 
 // ❌ left-aligned and Latin font in Arabic
-import { Text } from 'react-native';
+import { Text } from 'react-native'
 ```
 
 Use the kit `Input`, `Button`, `Label` and the other kit components for the same reason.

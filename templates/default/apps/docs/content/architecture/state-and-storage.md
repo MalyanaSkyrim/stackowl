@@ -3,11 +3,11 @@ title: 'State and storage'
 description: 'Where the mobile app keeps its state, and what is saved on the phone.'
 ---
 
-| What                                   | Where                                   | Why                                                    |
-| -------------------------------------- | --------------------------------------- | ------------------------------------------------------ |
-| Settings (language, theme)             | Jotai atoms saved in the key-value store | Small values, read synchronously on launch            |
-| The session (user and tokens)          | The iOS Keychain (expo-secure-store)    | Secrets never sit in plain storage                     |
-| The user's data (notes)                | The API's database, cached by TanStack Query | Shared across the user's phones, behind sign-in   |
+| What                          | Where                                        | Why                                             |
+| ----------------------------- | -------------------------------------------- | ----------------------------------------------- |
+| Settings (language, theme)    | Jotai atoms saved in the key-value store     | Small values, read synchronously on launch      |
+| The session (user and tokens) | The iOS Keychain (expo-secure-store)         | Secrets never sit in plain storage              |
+| The user's data (notes)       | The API's database, cached by TanStack Query | Shared across the user's phones, behind sign-in |
 
 Server data is never copied into an atom: the screen reads it with `useQuery(trpc.notes.list.queryOptions())`, and a change refreshes the query (`invalidateQueries`), as `app/notes/[id].tsx` does.
 
@@ -44,4 +44,3 @@ export const unlockMinutesAtom = atomWithDeviceStorage(
 **Secrets go to the Keychain instead**, through `atomWithSecureStorage` (`src/lib/store/secureStorage.ts`, keys in `SECURE_STORAGE_KEYS`). It works the same way, with synchronous reads from expo-secure-store. Today it holds one value, the session (`src/lib/store/session.ts`): the signed-in user and the access and refresh tokens. The API client reads and refreshes it through `appStore`.
 
 Alternatives we looked at: `react-native-mmkv` is faster but needs a development build and one more native module, for no visible gain with values this small; `@react-native-async-storage/async-storage` is async only, which brings back the flash of default state.
-

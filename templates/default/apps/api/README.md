@@ -13,7 +13,7 @@ pnpm --filter=@starter/api build
 | `src/trpc/`           | tRPC setup: context, procedures, the app router and its type, `AppError` → HTTP status     |
 | `src/errors.ts`       | `AppError`, the base class of every failure the app explains                               |
 | `src/modules/auth/`   | Accounts: the procedures, and in `utils/` tokens, passwords, email codes, Apple and Google |
-| `src/modules/notes/`  | The notes example: list, get, create, update, delete. Copy it for your first feature      |
+| `src/modules/notes/`  | The notes example: list, get, create, update, delete. Copy it for your first feature       |
 | `src/modules/health/` | `GET /health` for Cloud Run                                                                |
 | `src/plugins/`        | Fastify plugins: request logging, rate limiting, HTTP errors                               |
 

@@ -32,12 +32,12 @@ In words:
 
 ## What is built
 
-| Area                | State                                                              |
-| ------------------- | ------------------------------------------------------------------ |
-| Mobile app          | Sign-in, the notes example, settings, English/French/Arabic        |
+| Area                | State                                                                 |
+| ------------------- | --------------------------------------------------------------------- |
+| Mobile app          | Sign-in, the notes example, settings, English/French/Arabic           |
 | API and database    | Server, schema, accounts (email, Apple, Google) and the notes example |
-| Website             | Landing page, privacy policy, terms and support, English/French    |
-| UI kit and Workshop | One universal kit, every component has a story                     |
+| Website             | Landing page, privacy policy, terms and support, English/French       |
+| UI kit and Workshop | One universal kit, every component has a story                        |
 
 ## The tools
 
@@ -52,4 +52,3 @@ In words:
 | Storybook 10                           | The Workshop                                                 |
 | GitHub Actions, Fastlane, TestFlight   | CI and iOS releases                                          |
 | OpenTofu, Google Cloud Run             | Backend infrastructure ([Infrastructure](infrastructure.md)) |
-

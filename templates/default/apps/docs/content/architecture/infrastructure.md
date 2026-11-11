@@ -15,19 +15,19 @@ Staging and production live in one Google Cloud project, each with its own servi
 | `web-<environment>`     | `apps/web`: the marketing site                                                           | None                                                                              |
 | The database (Postgres) | Not managed here. `DATABASE_URL` points at it.                                           |                                                                                   |
 | Redis                   | Not managed here. `REDIS_URL` points at it; the API shares rate-limit counts through it. |                                                                                   |
-| The iOS app             | TestFlight and the App Store, not Google Cloud.                                          | See [Mobile deployment](../setup/6-apple.mdx)                           |
+| The iOS app             | TestFlight and the App Store, not Google Cloud.                                          | See [Mobile deployment](../setup/6-apple.mdx)                                     |
 
 Both services are on Cloud Run and scale to zero when nobody uses them.
 
 ## The stacks
 
-| Folder                            | What it creates                                                                                                       | Applied                          |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Folder                            | What it creates                                                                                                         | Applied                          |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | `infra/shared`                    | APIs, the image registry `starter-app-docker`, keyless login from GitHub Actions, the OpenTofu and Cloud Build accounts | With staging, on merge to `main` |
-| `infra/envs/staging`              | Staging secrets, the `api-staging` and `web-staging` services, the `deploy-staging` account                           | On merge to `main`               |
-| `infra/envs/production`           | The same for production                                                                                               | On merge to `production`         |
-| `infra/modules/environment`       | What one environment holds; both environments use it                                                                  |                                  |
-| `infra/modules/cloud-run-service` | One public Cloud Run service and its runtime account                                                                  |                                  |
+| `infra/envs/staging`              | Staging secrets, the `api-staging` and `web-staging` services, the `deploy-staging` account                             | On merge to `main`               |
+| `infra/envs/production`           | The same for production                                                                                                 | On merge to `production`         |
+| `infra/modules/environment`       | What one environment holds; both environments use it                                                                    |                                  |
+| `infra/modules/cloud-run-service` | One public Cloud Run service and its runtime account                                                                    |                                  |
 
 OpenTofu owns each service's size, environment variables, secrets and public access. The deploy workflows only change the image it runs.
 

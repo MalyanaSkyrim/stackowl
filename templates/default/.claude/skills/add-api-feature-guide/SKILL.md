@@ -21,7 +21,7 @@ Each module in `src/modules/<module>/` has these files:
 
 | File                            | Holds                                                                                                                         |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `<module>.router.ts`            | Procedures only: `publicProcedure` / `protectedProcedure`, the `.input()` zod schema from `@starter/common`, the handler.   |
+| `<module>.router.ts`            | Procedures only: `publicProcedure` / `protectedProcedure`, the `.input()` zod schema from `@starter/common`, the handler.     |
 | `<module>.handlers.ts`          | One handler per procedure: reads `ctx` and `input`, calls a service, returns its data.                                        |
 | `<module>.services.ts`          | The work: business rules and database calls. Returns the data itself and throws a `<module>.errors.ts` class on a failure.    |
 | `<module>.errors.ts`            | One `AppError` subclass per failure, with its reason and HTTP status set in the class.                                        |

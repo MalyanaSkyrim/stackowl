@@ -15,10 +15,10 @@ The notes feature is the worked example: copy its files for your feature, rename
 
 ## Guides for each part
 
-| Building                    | Read                                                                                                                                          |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Building                    | Read                                                                                                                                               |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | A mobile feature            | [`add-app-feature-guide`](https://github.com/your-github-user/starter-app/blob/main/.claude/skills/add-app-feature-guide/SKILL.md)                 |
 | A mobile screen's structure | [`react-native-component-layers`](https://github.com/your-github-user/starter-app/blob/main/.claude/skills/react-native-component-layers/SKILL.md) |
 | A mobile form               | [`react-native-forms`](https://github.com/your-github-user/starter-app/blob/main/.claude/skills/react-native-forms/SKILL.md)                       |
 | A website page              | [`add-web-feature-guide`](https://github.com/your-github-user/starter-app/blob/main/.claude/skills/add-web-feature-guide/SKILL.md)                 |
-| A UI kit component          | [UI conventions](../conventions/ui.md) and `packages/ui/README.md`                                                                            |
+| A UI kit component          | [UI conventions](../conventions/ui.md) and `packages/ui/README.md`                                                                                 |

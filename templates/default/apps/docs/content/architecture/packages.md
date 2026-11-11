@@ -5,8 +5,8 @@ description: 'The code in packages/ that the apps share.'
 
 Packages are not run on their own: apps import them. Each one is named `@starter/<name>`.
 
-| Package                    | What it holds                                                                                           |
-| -------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Package                  | What it holds                                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `@starter/ui`            | The universal UI kit (React Native + NativeWind) and the email templates                                |
 | `@starter/design-tokens` | Colors, radii, spacing, type and shadows; generates the Tailwind preset, CSS variables and native theme |
 | `@starter/common`        | Shared zod schemas and models, the brand, currency and logging helpers                                  |
@@ -31,10 +31,10 @@ See [UI kit](ui-kit.md). The email templates in `src/emails` use React Email and
 
 The CockroachDB schema (Prisma provider `cockroachdb`), in `prisma/`, split by API module. Each `.prisma` file holds one model and is named after it (`auth/User.prisma`):
 
-| Folder  | Models                                                                                                                 |
-| ------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `auth/` | `User`, `OAuthAccount` (Apple and Google ids), `Session` (hashed refresh tokens), `OtpCode` (hashed codes, by purpose) |
-| `notes/` | `Note`, the example feature                                                                                          |
+| Folder   | Models                                                                                                                 |
+| -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `auth/`  | `User`, `OAuthAccount` (Apple and Google ids), `Session` (hashed refresh tokens), `OtpCode` (hashed codes, by purpose) |
+| `notes/` | `Note`, the example feature                                                                                            |
 
 - No Prisma `enum`s: columns such as `OAuthAccount.provider` and `OtpCode.purpose` are `String`s whose values are zod enums in `@starter/common` (`oauthProviderSchema`, `otpPurposeSchema`). Each type is imported into the `PrismaJson` namespace in `prisma/json-types.ts`, and the `/// [<Type>]` comment above the column types it in the Prisma client.
 - Every table hangs off `User` with `onDelete: Cascade`, so deleting an account deletes all of its data.

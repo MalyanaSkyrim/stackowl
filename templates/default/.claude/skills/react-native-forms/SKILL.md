@@ -102,7 +102,8 @@ const isBusy = form.formState.isSubmitting || signUp.isPending
 ;<Button
   disabled={!canSubmit || isBusy}
   loading={isBusy}
-  onPress={form.handleSubmit((data) => signUp.mutate(data))}>
+  onPress={form.handleSubmit((data) => signUp.mutate(data))}
+>
   <Text>{t('submit')}</Text>
 </Button>
 ```

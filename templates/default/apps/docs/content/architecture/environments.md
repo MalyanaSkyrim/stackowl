@@ -23,26 +23,26 @@ pnpm dev                    # web on :3003, Metro on :8083
 
 Every app reads the single `.env` at the root of the repository. Each variable is declared once in `.env.example`; the web app checks its own in `env.ts`. When you add one, update both.
 
-| Group                  | Variables                                                    |
-| ---------------------- | ------------------------------------------------------------ |
-| Mobile build           | `EXPO_PUBLIC_APP_NAME`, `APP_BUNDLE_ID`, `APPLE_TEAM_ID`     |
-| Monitoring             | `EXPO_PUBLIC_SENTRY_DSN`                                     |
-| Web                    | `NEXT_PUBLIC_META_PIXEL_ID`                                  |
-| Infra                  | `GCP_PROJECT_ID`                                             |
-| Tooling                | `TURBO_TOKEN`, `TURBO_TEAM`                                  |
+| Group        | Variables                                                |
+| ------------ | -------------------------------------------------------- |
+| Mobile build | `EXPO_PUBLIC_APP_NAME`, `APP_BUNDLE_ID`, `APPLE_TEAM_ID` |
+| Monitoring   | `EXPO_PUBLIC_SENTRY_DSN`                                 |
+| Web          | `NEXT_PUBLIC_META_PIXEL_ID`                              |
+| Infra        | `GCP_PROJECT_ID`                                         |
+| Tooling      | `TURBO_TOKEN`, `TURBO_TEAM`                              |
 
 ## Setup scripts
 
 Run from the repository root, with the values in the root `.env`. Each one is a dry run unless given `--apply`, and safe to run again.
 
-| Command                                                | What it does                                                                                                                                                                    |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm doctor`                                          | Checks tools, root `.env` keys, GitHub (variables, signing secrets, labels, the production branch) and Google Cloud (placeholder secrets, placeholder images). Changes nothing. |
-| `pnpm infra:init`                                      | First setup of Google Cloud with OpenTofu ([Infrastructure](infrastructure.md)).                                                                                                |
-| `pnpm secrets:set <staging\|production>`               | Gives the API's secrets their values from `.env.staging` / `.env.production` ([Infrastructure](infrastructure.md)).                                                             |
-| `pnpm github:vars`                                     | Sets the repository variables Deploy Mobile writes into the build ([Mobile deployment](../setup/6-apple.mdx)).                                                        |
-| `pnpm mobile:signing`                                  | iOS signing: GitHub `production` environment, deploy key, signing secrets, App Store profiles ([Mobile deployment](../setup/6-apple.mdx)).                            |
-| `pnpm mobile:deploy [staging\|production]`             | Builds the iPhone app on this Mac and uploads it to TestFlight, like the Deploy Mobile workflow.                                                                                |
+| Command                                    | What it does                                                                                                                                                                    |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm doctor`                              | Checks tools, root `.env` keys, GitHub (variables, signing secrets, labels, the production branch) and Google Cloud (placeholder secrets, placeholder images). Changes nothing. |
+| `pnpm infra:init`                          | First setup of Google Cloud with OpenTofu ([Infrastructure](infrastructure.md)).                                                                                                |
+| `pnpm secrets:set <staging\|production>`   | Gives the API's secrets their values from `.env.staging` / `.env.production` ([Infrastructure](infrastructure.md)).                                                             |
+| `pnpm github:vars`                         | Sets the repository variables Deploy Mobile writes into the build ([Mobile deployment](../setup/6-apple.mdx)).                                                                  |
+| `pnpm mobile:signing`                      | iOS signing: GitHub `production` environment, deploy key, signing secrets, App Store profiles ([Mobile deployment](../setup/6-apple.mdx)).                                      |
+| `pnpm mobile:deploy [staging\|production]` | Builds the iPhone app on this Mac and uploads it to TestFlight, like the Deploy Mobile workflow.                                                                                |
 
 They read keys through `scripts/lib/env.ts`: the root `.env` first, then `SIGNING_ENV_SOURCE` for the Apple values `pnpm mobile:signing` shares.
 

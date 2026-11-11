@@ -31,7 +31,8 @@ An icon-only button is the kit `Button` with `variant="ghost" size="icon"` (44px
   variant="ghost"
   size="icon"
   accessibilityLabel={t('close')}
-  onPress={onClose}>
+  onPress={onClose}
+>
   <Icon as={X} size={20} className="text-foreground" />
 </Button>
 ```

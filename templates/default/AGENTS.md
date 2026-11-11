@@ -22,18 +22,18 @@ pnpm test --filter=@starter/common
 
 Package names follow the `@starter/<name>` convention and match the `name` field in each `package.json`.
 
-| Workspace                | Name                       | What it is                                                          |
-| ------------------------ | -------------------------- | ------------------------------------------------------------------- |
-| `apps/api`               | `@starter/api`           | API: accounts and the notes example (Fastify + tRPC, Prisma)        |
-| `apps/mobile`            | `@starter/mobile`        | The Starter App app: Expo / React Native (expo-router, NativeWind)  |
-| `apps/web`               | `@starter/web`           | Next.js website: landing page, privacy policy, terms                |
-| `apps/workshop`          | `@starter/workshop`      | Workshop: browser Storybook (react-native-web)                      |
-| `apps/docs`              | `@starter/docs`          | Docs site (Fumadocs): setup step by step, reference, architecture   |
-| `packages/ui`            | `@starter/ui`            | Universal UI kit (React Native + NativeWind), email kit             |
-| `packages/design-tokens` | `@starter/design-tokens` | Shared tokens, Tailwind preset, CSS + native theme                  |
-| `packages/common`        | `@starter/common`        | Shared zod schemas, models, brand and utilities                     |
-| `packages/database`      | `@starter/database`      | Prisma schema and database client                                   |
-| `packages/config`        | `@starter/config`        | Shared ESLint, Prettier and TypeScript configs                      |
+| Workspace                | Name                     | What it is                                                         |
+| ------------------------ | ------------------------ | ------------------------------------------------------------------ |
+| `apps/api`               | `@starter/api`           | API: accounts and the notes example (Fastify + tRPC, Prisma)       |
+| `apps/mobile`            | `@starter/mobile`        | The Starter App app: Expo / React Native (expo-router, NativeWind) |
+| `apps/web`               | `@starter/web`           | Next.js website: landing page, privacy policy, terms               |
+| `apps/workshop`          | `@starter/workshop`      | Workshop: browser Storybook (react-native-web)                     |
+| `apps/docs`              | `@starter/docs`          | Docs site (Fumadocs): setup step by step, reference, architecture  |
+| `packages/ui`            | `@starter/ui`            | Universal UI kit (React Native + NativeWind), email kit            |
+| `packages/design-tokens` | `@starter/design-tokens` | Shared tokens, Tailwind preset, CSS + native theme                 |
+| `packages/common`        | `@starter/common`        | Shared zod schemas, models, brand and utilities                    |
+| `packages/database`      | `@starter/database`      | Prisma schema and database client                                  |
+| `packages/config`        | `@starter/config`        | Shared ESLint, Prettier and TypeScript configs                     |
 
 > **Always check the `scripts` field of the relevant `package.json` before running a command** — not every package has `build`, `test`, `typecheck`, etc.
 
@@ -136,4 +136,3 @@ How to apply these: the `add-api-feature-guide` skill.
 - Never use a Prisma `enum`. Store the value in a `String` column and declare its allowed values as a zod enum in `packages/common/src/schemas` (e.g. `oauthProviderSchema`). Import its type into the `PrismaJson` namespace in `packages/database/prisma/json-types.ts`, then type the column with `/// [OAuthProvider]` above it so the Prisma client returns the enum type. Validate input with the schema.
 - Each `.prisma` file holds a single model and is named after it (`packages/database/prisma/auth/User.prisma`).
 - Environment variables are declared once in the root `.env.example` (and validated in `apps/web/env.ts` for the website and `apps/api/src/env.ts` for the API). When you add a variable, update both.
-

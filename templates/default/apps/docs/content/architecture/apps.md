@@ -5,13 +5,13 @@ description: 'Each app in apps/, what it is for and how it is organized.'
 
 Everything under `apps/` is something you can run.
 
-| App             | Package               | Runs on               | Start it                                                           |
-| --------------- | --------------------- | --------------------- | ------------------------------------------------------------------ |
-| `apps/api`      | `@starter/api`      | http://localhost:4000 | `pnpm dev` (with the others)                                       |
+| App             | Package             | Runs on               | Start it                                                         |
+| --------------- | ------------------- | --------------------- | ---------------------------------------------------------------- |
+| `apps/api`      | `@starter/api`      | http://localhost:4000 | `pnpm dev` (with the others)                                     |
 | `apps/mobile`   | `@starter/mobile`   | Metro on port 8083    | `pnpm dev` (iOS), or `pnpm --filter=@starter/mobile dev:android` |
-| `apps/web`      | `@starter/web`      | http://localhost:3003 | `pnpm dev` (with the others)                                       |
-| `apps/workshop` | `@starter/workshop` | http://localhost:6006 | `pnpm workshop`                                                    |
-| `apps/docs`     | `@starter/docs`     | http://localhost:3004 | `pnpm docs`                                                        |
+| `apps/web`      | `@starter/web`      | http://localhost:3003 | `pnpm dev` (with the others)                                     |
+| `apps/workshop` | `@starter/workshop` | http://localhost:6006 | `pnpm workshop`                                                  |
+| `apps/docs`     | `@starter/docs`     | http://localhost:3004 | `pnpm docs`                                                      |
 
 ## API (`apps/api`)
 

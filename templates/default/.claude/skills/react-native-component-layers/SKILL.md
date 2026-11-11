@@ -176,7 +176,8 @@ Use the kit `Button` with `variant="ghost" size="icon"` and a kit `Icon` inside,
   variant="ghost"
   size="icon"
   accessibilityLabel={t('close')}
-  onPress={onClose}>
+  onPress={onClose}
+>
   <Icon as={X} size={20} className="text-foreground" />
 </Button>
 ```
