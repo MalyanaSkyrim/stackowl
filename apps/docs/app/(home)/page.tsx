@@ -89,8 +89,8 @@ export default function HomePage() {
         <Logo size={88} />
         <h1 className={styles.title}>Skip the setup. Ship the app.</h1>
         <p className={styles.lead}>
-          {site.name} creates a full app (website, API, iPhone app, docs and cloud) in one command, then
-          checks every step until you publish.
+          One command gives you a production-ready website, API, iPhone app, docs and cloud. Then{' '}
+          {site.name} guides every step, from your first commit to the App Store.
         </p>
         <CopyCommand command={INSTALL} />
         <p className={styles.note}>
