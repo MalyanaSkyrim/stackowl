@@ -1,0 +1,31 @@
+---
+title: Run it in CI
+description: Fail a workflow when the project's setup drifts.
+---
+
+`doctor` exits with 1 when something must be fixed, so it can guard a deploy:
+
+```yaml title=".github/workflows/doctor.yml"
+name: Doctor
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
+
+jobs:
+  doctor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npx setupwise doctor tools github
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+- Name the modules CI can reach. A local `.env` doesn't exist in CI, so leave `env` out, or pass the keys as environment variables.
+- `GITHUB_TOKEN` reads variables and labels. Reading environment secrets needs a token with admin access to the repository.
+- For Google Cloud, authenticate first, for example with `google-github-actions/auth`, then run `doctor gcp`.
+- `--json` writes a report another step can read.

@@ -1,0 +1,37 @@
+---
+title: gcp
+description: Secret Manager values per environment, none missing and none left on a placeholder.
+---
+
+On when the config has a `gcp` section. Drives `gcloud`.
+
+```ts title="setupwise.config.ts"
+environments: ['staging', 'production'],
+gcp: {
+  projectEnv: 'GCP_PROJECT_ID',
+  secrets: {
+    required: ['DATABASE_URL', 'AUTH_SECRET'],
+    optional: ['REDIS_URL'],
+  },
+  secretId: (name, environment) => `${name}_${environment.toUpperCase()}`,
+  placeholder: 'placeholder-set-a-real-value',
+},
+```
+
+| Field           | Effect                                                                 |
+| --------------- | ---------------------------------------------------------------------- |
+| `project`       | The project id. Leave it out to read it from `projectEnv`              |
+| `projectEnv`    | The env variable holding the project id. `GCP_PROJECT_ID` by default   |
+| `secrets`       | The names your app reads. `required` ones fail the check when empty    |
+| `secretId`      | The Secret Manager id for a name and environment. `NAME_ENVIRONMENT` by default |
+| `placeholder`   | A value meaning "never set", such as what your infrastructure code writes first |
+| `createMissing` | Create a secret that doesn't exist yet. `true` by default; set `false` when your infrastructure code owns them |
+
+`doctor` checks every environment. `setup --apply` runs [`secrets set`](../cli/secrets.mdx) for each environment, from `.env.staging`, `.env.production` and so on.
+
+## Before it runs
+
+1. Install the Google Cloud CLI: [cloud.google.com/sdk/docs/install](https://cloud.google.com/sdk/docs/install).
+2. Log in: `gcloud auth login`.
+3. Set the project id in the env file (`GCP_PROJECT_ID=…`).
+4. Your account needs the Secret Manager Admin role to set values, or Secret Manager Secret Accessor to check them.

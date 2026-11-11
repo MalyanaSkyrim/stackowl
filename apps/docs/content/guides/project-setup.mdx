@@ -1,0 +1,87 @@
+---
+title: Set up a project, step by step
+description: The phases from an empty folder to a deployed app, and where setupwise takes over.
+---
+
+A template for your project's own setup guide. Copy this page into your docs, keep the phases that apply, and fill in your names. Each phase ends with a check.
+
+| Phase                    | What you get                                   | By hand or command                     |
+| ------------------------ | ---------------------------------------------- | -------------------------------------- |
+| 1 Basics                 | Name, ids, domains, region, written down       | By hand                                |
+| 2 Your machine           | Tools installed and logged in                  | By hand, checked by `doctor tools`     |
+| 3 Repository             | GitHub repository, labels, branches            | `setup github --apply`                 |
+| 4 Local development      | Everything running on your computer            | Your scripts, checked by `doctor env`  |
+| 5 Backend services       | Database, email, sign-in providers             | By hand, keys checked by `doctor env`  |
+| 6 Cloud                  | Secrets set, services deployed                 | `secrets set <env> --apply`            |
+| 7 Release                | CI variables set, first deploy                 | `github vars --apply`, your workflows  |
+
+<Steps>
+<Step>
+
+### Basics
+
+Decide once, before anything else, and write it in the config and your docs: the project's name, the bundle or package id, the domains, the cloud region, and the environments (`staging`, `production`). Changing them later touches many places.
+
+</Step>
+<Step>
+
+### Your machine
+
+List every tool in `tools`, with `why` and `install`. Then each new developer runs:
+
+```sh
+npx setupwise doctor tools
+```
+
+</Step>
+<Step>
+
+### Repository
+
+Create the repository on GitHub, push, and log in with `gh auth login`. Labels your workflows read and the variables they need are set by:
+
+```sh
+npx setupwise setup github --apply
+```
+
+Branch protection and the GitHub environments (`production`) are set by hand in Settings.
+
+</Step>
+<Step>
+
+### Local development
+
+Keep `.env.example` complete: every key the code reads, with no values. Each developer copies it to `.env`. Put the keys nothing works without in `env.required`, and the rest in `env.groups` by feature.
+
+</Step>
+<Step>
+
+### Backend services
+
+For each service (database, email, sign-in providers, payments): create the account, get the key, add it to `.env`, and add the key to the right group. `doctor env` tells you which feature is still missing a key.
+
+</Step>
+<Step>
+
+### Cloud
+
+Write each environment's secret values in `.env.staging` and `.env.production` (gitignored), list the names in `gcp.secrets`, then:
+
+```sh
+npx setupwise secrets set staging --apply
+npx setupwise secrets set production --apply
+```
+
+</Step>
+<Step>
+
+### Release
+
+Set the variables your deploy workflows read (`github.variables`), the secrets they need (`github.environmentSecrets`, set by hand or by your own module), and run `doctor` one last time. It should end with `Nothing to fix.`
+
+</Step>
+</Steps>
+
+## What stays by hand, on purpose
+
+Some steps need a person: paying for developer programs, accepting agreements and tax forms, store privacy answers, legal permissions for content, and writing database migrations. Mark them in your guide so nobody waits on a script that doesn't exist.

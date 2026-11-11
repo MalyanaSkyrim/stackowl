@@ -1,0 +1,53 @@
+{
+  "name": "setupwise",
+  "version": "0.1.0",
+  "description": "Check and set up everything a project needs outside its code: tools, keys, GitHub and cloud secrets. Dry run first, safe to repeat.",
+  "keywords": [
+    "setup",
+    "doctor",
+    "boilerplate",
+    "secrets",
+    "github",
+    "gcp",
+    "cli",
+    "devops"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "setupwise": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/api.d.ts",
+      "import": "./dist/api.js"
+    }
+  },
+  "types": "./dist/api.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm typecheck && pnpm test && pnpm build"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "dotenv": "^16.4.7",
+    "jiti": "^2.4.2",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

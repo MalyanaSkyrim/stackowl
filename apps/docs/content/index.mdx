@@ -1,0 +1,49 @@
+---
+title: Introduction
+description: Check and set up everything a project needs outside its code, from one config file.
+---
+
+A project needs more than its code to run: tools on each developer's machine, keys in an env file, variables and secrets on GitHub, and secret values in the cloud. These are set up by hand, once, and then forgotten until something breaks. **setupwise** writes down what the project needs in one typed file, checks it with one command and sets up what it can.
+
+<Terminal
+  title="One command tells you what is missing"
+  lines={[
+    {
+      command: 'npx setupwise doctor',
+      output: `my-app: doctor
+
+Tools
+  ✓ Node 22.11.0
+  ✓ git
+  ✓ docker
+  ! gcloud is not installed: needed for Google Cloud
+
+Env file
+  ✓ required keys
+  ! Sign-in: GOOGLE_CLIENT_ID not set
+
+GitHub
+  ✓ repository acme/my-app
+  ✖ variables missing: API_URL_STAGING (setupwise github vars --apply)
+
+1 problem to fix (✖ above).`,
+    },
+  ]}
+/>
+
+## What you get
+
+<Cards>
+  <Card title="Quick start" href="/start-here/quick-start" description="Add setupwise to a project in five minutes." />
+  <Card title="How it works" href="/start-here/how-it-works" description="Modules, dry runs, and the four output marks." />
+  <Card title="Configuration" href="/reference/configuration" description="Every field of setupwise.config.ts." />
+  <Card title="Write a module" href="/guides/writing-a-module" description="Check and set up a service of your own." />
+</Cards>
+
+## The rules every command follows
+
+- **Dry run first.** A command that changes something only prints what it would do (`+ … (dry run)`) until you add `--apply`.
+- **Safe to run again.** What is already right is skipped, so re-running after a failure picks up where it stopped.
+- **Values are never printed.** Secrets are compared, not shown. Errors name the variable, never its content.
+- **One place for keys.** Everything reads the same env file, and the process environment wins over it.
+- **CI friendly.** `doctor` exits with 1 when something must be fixed, and `--json` gives a machine-readable report.

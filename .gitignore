@@ -1,0 +1,14 @@
+node_modules
+dist
+.next
+.source
+.turbo
+coverage
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+
+# Local env files, never committed
+.env
+.env.*
+!.env.example

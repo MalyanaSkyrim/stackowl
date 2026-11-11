@@ -1,0 +1,32 @@
+---
+title: setupwise doctor
+description: Checks everything the project needs and changes nothing.
+---
+
+```sh
+setupwise doctor [module...] [--json] [--config <file>]
+```
+
+Runs the check of every module the project uses, in order: `tools`, `env`, `github`, `gcp`, then your own. Name modules to check only those:
+
+```sh
+setupwise doctor github gcp
+```
+
+A part it can't reach is reported with `!` and skipped: `gh` not logged in, no GitHub remote, no Google Cloud project. Fix the `!` to get the full report.
+
+When a module reports a problem, `doctor` prints the link to its page in these docs.
+
+## Exit code
+
+`0` when nothing must be fixed, `1` when there is at least one `✖`. Notes (`!`) never fail the run.
+
+## In CI
+
+```yaml title=".github/workflows/doctor.yml"
+- run: npx setupwise doctor github --json > doctor.json
+  env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+`--json` prints one object, `{ problems, modules: [{ id, lines: [{ kind, text }] }] }`, and nothing else.

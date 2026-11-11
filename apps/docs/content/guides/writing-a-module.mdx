@@ -1,0 +1,64 @@
+---
+title: Write a module
+description: Check and set up a service setupwise doesn't know about.
+---
+
+A module is an object with an `id`, a `title`, a `check` and, optionally, a `setup`. Add it to `modules` in the config. It runs after the built-in ones and can be named on the command line like them: `setupwise doctor stripe`.
+
+```ts title="setupwise/stripe.ts"
+import { defineModule, run } from 'setupwise'
+
+export const stripe = defineModule({
+  id: 'stripe',
+  title: 'Stripe',
+  description: 'The webhook endpoint for each environment.',
+  docs: 'https://example.com/docs/payments',
+
+  check({ env, report }) {
+    if (!env.STRIPE_SECRET_KEY) {
+      report.note('STRIPE_SECRET_KEY is not set: Stripe skipped')
+      return
+    }
+    const result = run('stripe', ['webhook_endpoints', 'list', '--api-key', env.STRIPE_SECRET_KEY])
+    if (!result.ok) report.problem("can't list webhook endpoints")
+    else if (result.stdout.includes(env.API_URL ?? '')) report.ok('webhook endpoint')
+    else report.problem('no webhook endpoint for this API (setupwise setup stripe --apply)')
+  },
+
+  async setup({ env, report }) {
+    await report.change('create the webhook endpoint', () =>
+      run('stripe', ['webhook_endpoints', 'create', '--url', `${env.API_URL}/webhooks/stripe`]).ok,
+    )
+  },
+})
+```
+
+```ts title="setupwise.config.ts"
+import { defineConfig } from 'setupwise'
+import { stripe } from './setupwise/stripe'
+
+export default defineConfig({
+  name: 'my-app',
+  modules: [stripe],
+})
+```
+
+## The context
+
+| Field    | What it is                                                                 |
+| -------- | -------------------------------------------------------------------------- |
+| `config` | The resolved config, with `root` (the config's folder) and the defaults filled in |
+| `env`    | The env file's values, with the process environment taking precedence      |
+| `report` | `ok`, `note`, `problem`, `heading` and `change`                            |
+| `apply`  | `true` with `--apply`                                                      |
+
+## The rules to keep
+
+- **`check` changes nothing.** Not even a cache.
+- **Every change goes through `report.change(text, fn)`.** In a dry run it prints `+ text (dry run)` and doesn't call `fn`. With `--apply` it calls `fn` and counts a `false` as a problem.
+- **Skip what is already right**, so the step is safe to repeat.
+- **Never print a value.** Pass secrets to commands on stdin: `run(cmd, args, { input: value })`.
+- **Say how to fix it.** A problem names the command or the setting that fixes it.
+- **Skip with a note when a prerequisite is missing** (a CLI not installed, not logged in), instead of failing.
+
+Use `enabled: (config) => Boolean(...)` to run the module only when the project needs it.

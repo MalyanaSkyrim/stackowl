@@ -1,0 +1,26 @@
+---
+title: tools
+description: The Node.js version and the command-line tools the project uses.
+---
+
+Always on. Checks that each tool is on `PATH`; it never installs anything, it says how.
+
+```ts title="setupwise.config.ts"
+node: '22.11',
+tools: [
+  { command: 'git', required: true },
+  { command: 'docker', why: 'the local database', install: 'https://docs.docker.com/get-docker/' },
+  { command: 'xcodebuild', why: 'iPhone builds', platform: 'darwin' },
+  'pnpm',
+],
+```
+
+| Field      | Effect                                                         |
+| ---------- | -------------------------------------------------------------- |
+| `command`  | The command to look for                                        |
+| `why`      | Shown when it's missing                                        |
+| `install`  | How to install it, shown when it's missing                     |
+| `platform` | Only check on `darwin`, `linux` or `win32`                     |
+| `required` | Missing is a problem (`✖`) instead of a note (`!`)             |
+
+`node` is a minimum: `20`, `22.11` and `>=22.11.0` all work. Below it is a problem.

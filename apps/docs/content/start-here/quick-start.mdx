@@ -1,0 +1,116 @@
+---
+title: Quick start
+description: Add setupwise to an existing project, write its config, and run the first check.
+---
+
+<Steps>
+<Step>
+
+### Install
+
+Run it without installing, or add it to the project so everyone gets the same version:
+
+<Tabs items={['npx', 'pnpm', 'npm', 'yarn']}>
+  <Tab value="npx">
+
+```sh
+npx setupwise --help
+```
+
+  </Tab>
+  <Tab value="pnpm">
+
+```sh
+pnpm add -D setupwise
+```
+
+  </Tab>
+  <Tab value="npm">
+
+```sh
+npm install -D setupwise
+```
+
+  </Tab>
+  <Tab value="yarn">
+
+```sh
+yarn add -D setupwise
+```
+
+  </Tab>
+</Tabs>
+
+Node.js 20 or newer is needed.
+
+</Step>
+<Step>
+
+### Write the config
+
+At the root of the project:
+
+```sh
+npx setupwise init
+```
+
+It asks for the project's name, its deploy environments and which services to check, then writes `setupwise.config.ts` and adds `.env` and `.env.*` to `.gitignore`. Add `--yes` to skip the questions.
+
+</Step>
+<Step>
+
+### Say what the project needs
+
+Open `setupwise.config.ts` and fill in the tools, env keys, GitHub variables and cloud secrets. Each field is described in [Configuration](../reference/configuration.mdx).
+
+```ts title="setupwise.config.ts"
+import { defineConfig } from 'setupwise'
+
+export default defineConfig({
+  name: 'my-app',
+  node: '20',
+  tools: [{ command: 'docker', why: 'the local database' }],
+  env: {
+    required: ['DATABASE_URL'],
+    groups: { 'Sign-in': ['GOOGLE_CLIENT_ID'] },
+  },
+  github: {
+    variables: { API_URL_STAGING: { why: 'the API staging builds call' } },
+  },
+})
+```
+
+</Step>
+<Step>
+
+### Check
+
+```sh
+npx setupwise doctor
+```
+
+`doctor` changes nothing. `✖` lines must be fixed; `!` lines are worth a look, usually a service you haven't set up yet.
+
+</Step>
+<Step>
+
+### Set up what can be scripted
+
+```sh
+npx setupwise setup            # what would change
+npx setupwise setup --apply    # make the changes
+```
+
+</Step>
+</Steps>
+
+Add the commands to `package.json` so nobody has to remember them:
+
+```json title="package.json"
+{
+  "scripts": {
+    "doctor": "setupwise doctor",
+    "setup": "setupwise setup"
+  }
+}
+```

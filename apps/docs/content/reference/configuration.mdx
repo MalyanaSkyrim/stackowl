@@ -1,0 +1,63 @@
+---
+title: Configuration
+description: Every field of setupwise.config.ts.
+---
+
+setupwise reads the nearest `setupwise.config.ts`, `.mts`, `.js`, `.mjs` or `.json`, walking up from the current folder, or the file given with `--config`. Every relative path starts at the config's folder.
+
+```ts title="setupwise.config.ts"
+import { defineConfig } from 'setupwise'
+
+export default defineConfig({
+  name: 'my-app',
+  envFile: '.env',
+  environments: ['staging', 'production'],
+  node: '22.11',
+
+  tools: [{ command: 'docker', why: 'the local database' }],
+
+  env: {
+    required: ['DATABASE_URL'],
+    groups: { 'Sign-in': ['GOOGLE_CLIENT_ID'] },
+    example: '.env.example',
+  },
+
+  github: {
+    variables: { API_URL_STAGING: { why: 'the API staging builds call' } },
+    secrets: [],
+    environmentSecrets: { production: ['DEPLOY_KEY'] },
+    labels: ['migration'],
+    branches: ['production'],
+  },
+
+  gcp: {
+    projectEnv: 'GCP_PROJECT_ID',
+    secrets: { required: ['DATABASE_URL', 'AUTH_SECRET'], optional: [] },
+  },
+
+  modules: [],
+})
+```
+
+| Field          | Default                       | See                                  |
+| -------------- | ----------------------------- | ------------------------------------ |
+| `name`         | The config folder's name      | Shown in the output                  |
+| `envFile`      | `.env`                        | [env](../modules/env.mdx)            |
+| `environments` | `['staging', 'production']`   | [gcp](../modules/gcp.mdx), [secrets set](../cli/secrets.mdx) |
+| `node`         | No minimum                    | [tools](../modules/tools.mdx)        |
+| `tools`        | `[]`                          | [tools](../modules/tools.mdx)        |
+| `env`          | No required keys or groups    | [env](../modules/env.mdx)            |
+| `github`       | Off                           | [github](../modules/github.mdx)      |
+| `gcp`          | Off                           | [gcp](../modules/gcp.mdx)            |
+| `modules`      | `[]`                          | [Write a module](../guides/writing-a-module.mdx) |
+
+The config is code, so it can read files: import your infrastructure's list of secrets instead of keeping a second copy.
+
+```ts
+import { readFileSync } from 'node:fs'
+
+const tf = readFileSync('infra/modules/environment/main.tf', 'utf8')
+const required = [...(tf.match(/required_secrets\s*=\s*\[([^\]]*)\]/)?.[1] ?? '').matchAll(/"([^"]+)"/g)].map((m) => m[1]!)
+
+export default defineConfig({ gcp: { secrets: { required } } })
+```

@@ -1,0 +1,21 @@
+{
+  "name": "setupwise-monorepo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev:docs": "pnpm --filter docs dev",
+    "dev:cli": "pnpm --filter setupwise dev",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "sw": "node packages/cli/dist/index.js"
+  },
+  "packageManager": "pnpm@10.10.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,19 @@
+---
+title: setupwise modules
+description: Lists the modules and whether this project uses them.
+---
+
+```sh
+setupwise modules
+```
+
+```txt
+● tools      Node.js version and the command-line tools the project uses. (check)
+● env        Keys in the env file: required ones, groups by feature, and what .env.example lists. (check)
+● github     Repository variables, secrets, environment secrets, labels and branches. (check + setup)
+○ gcp        Secret Manager values per environment: none missing, none left on a placeholder. (check + setup)
+
+● used by this project  ○ not configured
+```
+
+A module is used when its section is in the config. Your own modules from `modules` are listed after the built-in ones.

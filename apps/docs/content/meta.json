@@ -1,0 +1,16 @@
+{
+  "title": "Docs",
+  "pages": [
+    "index",
+    "---Start here---",
+    "...start-here",
+    "---Commands---",
+    "...cli",
+    "---Modules---",
+    "...modules",
+    "---Guides---",
+    "...guides",
+    "---Reference---",
+    "...reference"
+  ]
+}

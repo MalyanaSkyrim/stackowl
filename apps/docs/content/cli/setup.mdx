@@ -1,0 +1,42 @@
+---
+title: setupwise setup
+description: Runs every module's setup step. A dry run until you add --apply.
+---
+
+```sh
+setupwise setup [module...] [--apply] [--config <file>]
+```
+
+Runs the setup step of every module that has one, in order. Without `--apply` it only prints what it would change:
+
+<Terminal
+  title="A dry run, then the real thing"
+  lines={[
+    {
+      command: 'npx setupwise setup github',
+      output: `my-app: setup (dry run: add --apply to change)
+
+GitHub
+  ✓ repository acme/my-app
+  ✓ API_URL_PRODUCTION is up to date
+  + set API_URL_STAGING (the API staging builds call) (dry run)
+  + create label migration (dry run)
+
+Nothing was changed. Run again with --apply to make the + changes.`,
+    },
+    {
+      command: 'npx setupwise setup github --apply',
+      output: `my-app: setup
+
+GitHub
+  ✓ repository acme/my-app
+  ✓ API_URL_PRODUCTION is up to date
+  + set API_URL_STAGING (the API staging builds call)
+  + create label migration`,
+    },
+  ]}
+/>
+
+Each step skips what is already right, so it is safe to run again, for example after fixing a failure. It never deletes anything.
+
+For one step on its own, use [`secrets set`](secrets.mdx) or [`github vars`](github-vars.mdx).
