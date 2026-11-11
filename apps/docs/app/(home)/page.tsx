@@ -8,7 +8,7 @@ import Link from 'next/link'
 import styles from './Landing.module.css'
 
 export const metadata: Metadata = {
-  title: { absolute: `${site.name}: from an empty computer to an app in the App Store` },
+  title: { absolute: `${site.name}: skip the setup, ship the app` },
   description: site.description,
 }
 
@@ -87,7 +87,7 @@ export default function HomePage() {
     <main className={styles.page}>
       <section className={styles.hero}>
         <Logo size={88} />
-        <h1 className={styles.title}>From an empty computer to an app in the App Store.</h1>
+        <h1 className={styles.title}>Skip the setup. Ship the app.</h1>
         <p className={styles.lead}>
           {site.name} creates a full app (website, API, iPhone app, docs and cloud) in one command, then
           checks every step until you publish.
