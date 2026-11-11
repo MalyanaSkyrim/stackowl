@@ -15,7 +15,15 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <RootProvider>{children}</RootProvider>
+        <RootProvider
+          search={{
+            options: {
+              type: 'static',
+              api: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/api/search`,
+            },
+          }}>
+          {children}
+        </RootProvider>
       </body>
     </html>
   )

@@ -6,11 +6,14 @@ import { selectModules } from '../modules'
 import type { Context } from '../types'
 
 export const DOCS_BASE =
-  'https://github.com/MalyanaSkyrim/setupwise/tree/main/apps/docs/content'
+  'https://malyanaskyrim.github.io/setupwise'
 
-/** Turns a module's `docs` into a full link: a path is read against the docs site. */
+/**
+ * Turns a module's `docs` into a full link. A path is the page's file in apps/docs/content
+ * (`modules/tools.mdx`), read against the published docs (`…/modules/tools/`).
+ */
 export const docsLink = (docs: string) =>
-  /^https?:\/\//.test(docs) ? docs : `${DOCS_BASE}/${docs}`
+  /^https?:\/\//.test(docs) ? docs : `${DOCS_BASE}/${docs.replace(/\.mdx?$/, '/')}`
 
 type Options = {
   ids: string[]

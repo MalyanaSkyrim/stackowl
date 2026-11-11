@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "next dev --port 3010",
     "build": "next build",
-    "start": "next start --port 3010",
     "typecheck": "fumadocs-mdx && tsc --noEmit",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx",
+    "preview": "DOCS_BASE_PATH= next build && npx --yes serve out"
   },
   "dependencies": {
     "fumadocs-core": "15.8.5",
