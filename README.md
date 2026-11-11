@@ -7,7 +7,7 @@ A CLI that creates a full app (website, API, iPhone app, docs, infra) and checks
 | Folder           | What                                                          |
 | ---------------- | ------------------------------------------------------------- |
 | `packages/cli`   | The `stackowl` npm package (CLI and `defineConfig` API)      |
-| `apps/docs`      | The website: landing page at `/` and docs at `/docs` (Fumadocs, light and dark), live at https://malyanaskyrim.github.io/stackowl/ |
+| `apps/docs`      | The website: landing page at `/` and docs at `/docs` (Fumadocs, light and dark), live at https://stackowl.dev |
 | `examples/basic` | A sample `stackowl.config.ts`                                |
 
 ## Develop
@@ -50,3 +50,19 @@ On a new computer:
 ```sh
 curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.sh | bash -s my-app
 ```
+
+## Custom domain (stackowl.dev)
+
+The code already links to https://stackowl.dev. To switch the live site to it:
+
+1. At the registrar, add for `stackowl.dev` four `A` records to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`, and a `CNAME` record for `www` to `malyanaskyrim.github.io` (on Cloudflare: "DNS only").
+2. Then:
+
+```sh
+gh api -X PUT repos/MalyanaSkyrim/stackowl/pages -f cname=stackowl.dev
+gh variable set DOCS_DOMAIN --body stackowl.dev -R MalyanaSkyrim/stackowl
+gh workflow run docs.yml -R MalyanaSkyrim/stackowl
+```
+
+3. Once GitHub has issued the certificate: `gh api -X PUT repos/MalyanaSkyrim/stackowl/pages -F https_enforced=true`.
+

@@ -164,7 +164,7 @@ export async function preflight(options: {
     if (still.some((req) => req.id === 'node'))
       console.log(
         pc.dim(
-          `  Easiest on a new computer: the installer does all of it.\n  https://malyanaskyrim.github.io/stackowl/docs/start-here/create-an-app/`,
+          `  Easiest on a new computer: the installer does all of it.\n  https://stackowl.dev/docs/start-here/create-an-app/`,
         ),
       )
   }

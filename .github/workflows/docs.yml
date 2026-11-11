@@ -1,5 +1,9 @@
-# Builds the docs (apps/docs) as a static site and publishes them on GitHub Pages:
-# https://malyanaskyrim.github.io/stackowl/
+# Builds the website and docs (apps/docs) as a static site and publishes them on GitHub Pages.
+#
+# Where it is served is set by the repository variable DOCS_DOMAIN:
+#   - unset:              https://malyanaskyrim.github.io/stackowl/ (pages under /stackowl)
+#   - DOCS_DOMAIN=stackowl.dev: https://stackowl.dev/ (pages at the root)
+# Switch only once the domain's DNS points at GitHub Pages (see README, "Custom domain").
 name: Docs
 
 on:
@@ -34,9 +38,12 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter docs build
+      # On the custom domain the site lives at the root; on github.io under /stackowl.
+      - run: |
+          if [ -n "$DOCS_DOMAIN" ]; then export DOCS_BASE_PATH=""; else export DOCS_BASE_PATH="/stackowl"; fi
+          pnpm --filter docs build
         env:
-          DOCS_BASE_PATH: /stackowl
+          DOCS_DOMAIN: ${{ vars.DOCS_DOMAIN }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/docs/out

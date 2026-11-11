@@ -3,9 +3,10 @@ import { createMDX } from 'fumadocs-mdx/next'
 const withMDX = createMDX()
 
 /**
- * `DOCS_BASE_PATH=/stackowl` builds the static site GitHub Pages serves
- * (https://malyanaskyrim.github.io/stackowl/): every page and the search index become plain
- * files in `out/`. Without it, `next dev` and `next build` work as a normal Next app.
+ * Builds the static site GitHub Pages serves: every page and the search index become plain files
+ * in `out/`. On https://stackowl.dev the site lives at the root (no base path); on
+ * https://malyanaskyrim.github.io/stackowl/ it needs `DOCS_BASE_PATH=/stackowl`. The deploy
+ * workflow picks one from the DOCS_DOMAIN repository variable.
  */
 const basePath = process.env.DOCS_BASE_PATH ?? ''
 

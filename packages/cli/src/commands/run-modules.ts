@@ -6,7 +6,7 @@ import { selectModules } from '../modules'
 import type { Context } from '../types'
 
 export const DOCS_BASE =
-  'https://malyanaskyrim.github.io/stackowl/docs'
+  'https://stackowl.dev/docs'
 
 /**
  * Turns a module's `docs` into a full link. A path is the page's file in apps/docs/content
