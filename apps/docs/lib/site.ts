@@ -4,7 +4,7 @@ export const site = {
   description:
     'Check and set up everything a project needs outside its code: tools, keys, GitHub and cloud secrets.',
   repository: {
-    owner: 'your-github-user',
+    owner: 'MalyanaSkyrim',
     name: 'setupwise',
     branch: 'main',
   },

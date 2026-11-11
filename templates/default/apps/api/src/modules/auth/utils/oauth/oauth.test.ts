@@ -32,25 +32,25 @@ afterAll(async () => {
 
 describe('Apple name', () => {
   test('a new account takes the name Apple gave the app', async () => {
-    const user = await signInWithApple('Mohamed Malyana')
-    expect(user.name).toBe('Mohamed Malyana')
+    const user = await signInWithApple('Jane Appleseed')
+    expect(user.name).toBe('Jane Appleseed')
   })
 
   test('a later sign-in fills a name the first one lost', async () => {
     const first = await signInWithApple()
     expect(first.name).toBeNull()
 
-    const later = await signInWithApple('Mohamed Malyana')
+    const later = await signInWithApple('Jane Appleseed')
 
     expect(later.id).toBe(first.id)
-    expect(later.name).toBe('Mohamed Malyana')
+    expect(later.name).toBe('Jane Appleseed')
     const saved = await db.user.findUniqueOrThrow({ where: { id: first.id } })
-    expect(saved.name).toBe('Mohamed Malyana')
+    expect(saved.name).toBe('Jane Appleseed')
   })
 
   test('never replaces a name the account already has', async () => {
-    await signInWithApple('Mohamed')
+    await signInWithApple('Jane')
     const later = await signInWithApple('Someone else')
-    expect(later.name).toBe('Mohamed')
+    expect(later.name).toBe('Jane')
   })
 })

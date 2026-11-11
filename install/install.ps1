@@ -1,8 +1,8 @@
 # setupwise installer for Windows: from a computer with nothing installed to a new project
 # running locally. In PowerShell:
 #
-#   irm <url>/install.ps1 | iex
-#   & ([scriptblock]::Create((irm <url>/install.ps1))) my-app --name "My App"
+#   irm https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.ps1 | iex
+#   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.ps1))) my-app --name "My App"
 #
 # Installs only what is missing, with winget: Git, Node.js 24 LTS, pnpm (corepack) and Docker
 # Desktop; with -Cloud also the GitHub CLI, the Google Cloud CLI and OpenTofu. Then runs

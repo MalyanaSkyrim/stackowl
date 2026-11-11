@@ -95,7 +95,7 @@ Everything is described with OpenTofu in `infra/`. You run one command to set it
 Google Cloud console → New project, then turn on billing. Put its id in the root `.env`:
 
 ```sh
-GCP_PROJECT_ID="starter-app-512122"
+GCP_PROJECT_ID="starter-app-123456"
 ```
 
 </Step>
@@ -121,7 +121,7 @@ OpenTofu creates each secret with a placeholder. Fill them from the files you wr
   lines={[
     {
       command: 'pnpm secrets:set staging',
-      output: `Secrets for staging in starter-app-512122, from .env.staging (dry run: add --apply to change)
+      output: `Secrets for staging in starter-app-123456, from .env.staging (dry run: add --apply to change)
 
 Required (the API does not start without them)
 

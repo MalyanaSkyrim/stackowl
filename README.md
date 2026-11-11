@@ -33,14 +33,18 @@ cd ~/some-project && setupwise doctor
 
 ## Publish to npm
 
-Not published yet. When ready:
+Published as [`setupwise`](https://www.npmjs.com/package/setupwise). To release a new version:
 
 ```sh
 cd packages/cli
-npm login
+npm version patch
 pnpm publish --access public    # runs typecheck, tests and build first
 ```
 
 `pnpm publish` copies `templates/default` into the package first (`prepack`). The installers in `install/` run `npx setupwise@latest`, so they work once the package is published and the repository is public; test them before with `SETUPWISE_CLI=/path/to/setupwise-0.1.0.tgz bash install/install.sh my-app`.
 
-Before the first publish, set `repository`, `homepage` and `author` in `packages/cli/package.json`, and `DOCS_BASE` in `packages/cli/src/commands/run-modules.ts` to where the docs are hosted. Set the docs' GitHub owner in `apps/docs/lib/site.ts`.
+On a new computer:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.sh | bash -s my-app
+```

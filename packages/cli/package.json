@@ -20,6 +20,16 @@
     "trpc"
   ],
   "license": "MIT",
+  "author": "MalyanaSkyrim (https://github.com/MalyanaSkyrim)",
+  "homepage": "https://github.com/MalyanaSkyrim/setupwise#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MalyanaSkyrim/setupwise.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/MalyanaSkyrim/setupwise/issues"
+  },
   "type": "module",
   "bin": {
     "setupwise": "./dist/index.js"

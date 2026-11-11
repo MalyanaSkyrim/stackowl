@@ -2,8 +2,8 @@
 # setupwise installer for macOS and Linux: from a computer with nothing installed to a new
 # project running locally.
 #
-#   curl -fsSL <url>/install.sh | bash -s my-app
-#   curl -fsSL <url>/install.sh | bash -s -- my-app --name "My App" --bundle-id com.me.myapp
+#   curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.sh | bash -s my-app
+#   curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.sh | bash -s -- my-app --name "My App" --bundle-id com.me.myapp
 #
 # Installs only what is missing, and says what it installs before it does:
 #   - macOS: the Xcode command line tools (git), Homebrew

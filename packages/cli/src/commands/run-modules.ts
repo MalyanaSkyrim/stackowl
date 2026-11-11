@@ -6,7 +6,7 @@ import { selectModules } from '../modules'
 import type { Context } from '../types'
 
 export const DOCS_BASE =
-  'https://github.com/setupwise/setupwise/tree/main/apps/docs/content'
+  'https://github.com/MalyanaSkyrim/setupwise/tree/main/apps/docs/content'
 
 /** Turns a module's `docs` into a full link: a path is read against the docs site. */
 export const docsLink = (docs: string) =>
