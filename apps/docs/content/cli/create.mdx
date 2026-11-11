@@ -12,6 +12,7 @@ setupwise create [folder] [options]
 | Asks | The folder, the app's name, the bundle id and the domain (or pass them as options) |
 | Copies | The bundled starter, or `--from` a GitHub repository or a local folder. Never copies `.git`, `node_modules`, build output or `.env` files |
 | Renames | Every token of the template in every text file: `Starter App`, `starter-app`, `@starter/`, `com.example.starterapp` and the rest become your app's |
+| Checks this computer | Node.js new enough for the template, git, pnpm and a running Docker. Each missing one is explained, and `create` offers to install it (Homebrew on macOS, winget on Windows, corepack for pnpm, or starts Docker Desktop). What is still missing only skips the steps that need it |
 | `.env` | From `.env.example`, with generated local secrets, your bundle id, and free ports when another project already uses the defaults |
 | git | `git init` on `main`, and a first commit once installed |
 | Installs | `pnpm install` (with corepack or npx when pnpm isn't installed) |

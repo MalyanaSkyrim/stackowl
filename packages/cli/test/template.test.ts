@@ -67,3 +67,12 @@ describe('env', () => {
     expect(setEnvValues(text, { A: 'x/y+z', C: '1' })).toBe('# comment\nA="x/y+z"\nB="keep"\n\nC="1"')
   })
 })
+
+describe('preflight', () => {
+  it('reads the minimum Node.js version from engines', async () => {
+    const { templateNode } = await import('../src/lib/preflight')
+    expect(templateNode('>=24.11.0')).toBe('24.11')
+    expect(templateNode('^20')).toBe('20')
+    expect(templateNode(undefined)).toBeNull()
+  })
+})

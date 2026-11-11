@@ -10,6 +10,7 @@ import * as p from '@clack/prompts'
 import pc from 'picocolors'
 
 import { fail } from '../lib/output'
+import { preflight, templateNode } from '../lib/preflight'
 import { has, run } from '../lib/run'
 import {
   applyTokens,
@@ -165,6 +166,15 @@ export async function create(options: CreateOptions): Promise<number> {
   if (moved.length > 0)
     console.log(`${pc.yellow('!')} ports in use by another project, moved in .env: ${moved.join(', ')}`)
 
+  // --- This computer ---------------------------------------------------------------------
+  // Node.js new enough for the template, git, pnpm and a running Docker: explained, and
+  // installed when the user agrees and a package manager can.
+  const engines = existsSync(pkgFile)
+    ? (JSON.parse(readFileSync(pkgFile, 'utf8')) as { engines?: { node?: string } }).engines?.node
+    : undefined
+  const requirements = await preflight({ nodeMinimum: templateNode(engines), interactive })
+  const nodeOk = requirements.find((req) => req.id === 'node')?.ok ?? true
+
   // --- Git -------------------------------------------------------------------------------
   if (options.git && has('git')) {
     run('git', ['init', '-q', '-b', 'main'], { cwd: target })
@@ -173,7 +183,11 @@ export async function create(options: CreateOptions): Promise<number> {
   // --- Install and local setup -----------------------------------------------------------
   const pnpm = pnpmCommand()
   let installed = false
-  if (options.install) {
+  if (options.install && !nodeOk) {
+    console.log(
+      `${pc.yellow('!')} skipped installing: the project needs a newer Node.js. Install it, then run pnpm install in ${dir}`,
+    )
+  } else if (options.install) {
     if (!pnpm) console.log(`${pc.yellow('!')} pnpm isn't installed: run corepack enable, then pnpm install`)
     else installed = step('Install dependencies', pnpm[0], [...pnpm[1], 'install'], target)
   }
