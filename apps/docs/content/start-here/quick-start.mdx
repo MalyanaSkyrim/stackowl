@@ -1,6 +1,6 @@
 ---
 title: Add it to your project
-description: Add SetupWise to a project you already have, write its config, and run the first check.
+description: Add StackOwl to a project you already have, write its config, and run the first check.
 ---
 
 <Steps>
@@ -14,28 +14,28 @@ Run it without installing, or add it to the project so everyone gets the same ve
   <Tab value="npx">
 
 ```sh
-npx setupwise --help
+npx stackowl --help
 ```
 
   </Tab>
   <Tab value="pnpm">
 
 ```sh
-pnpm add -D setupwise
+pnpm add -D stackowl
 ```
 
   </Tab>
   <Tab value="npm">
 
 ```sh
-npm install -D setupwise
+npm install -D stackowl
 ```
 
   </Tab>
   <Tab value="yarn">
 
 ```sh
-yarn add -D setupwise
+yarn add -D stackowl
 ```
 
   </Tab>
@@ -51,20 +51,20 @@ Node.js 20 or newer is needed.
 At the root of the project:
 
 ```sh
-npx setupwise init
+npx stackowl init
 ```
 
-It asks for the project's name, its deploy environments and which services to check, then writes `setupwise.config.ts` and adds `.env` and `.env.*` to `.gitignore`. Add `--yes` to skip the questions.
+It asks for the project's name, its deploy environments and which services to check, then writes `stackowl.config.ts` and adds `.env` and `.env.*` to `.gitignore`. Add `--yes` to skip the questions.
 
 </Step>
 <Step>
 
 ### Say what the project needs
 
-Open `setupwise.config.ts` and fill in the tools, env keys, GitHub variables and cloud secrets. Each field is described in [Configuration](../reference/configuration.mdx).
+Open `stackowl.config.ts` and fill in the tools, env keys, GitHub variables and cloud secrets. Each field is described in [Configuration](../reference/configuration.mdx).
 
-```ts title="setupwise.config.ts"
-import { defineConfig } from 'setupwise'
+```ts title="stackowl.config.ts"
+import { defineConfig } from 'stackowl'
 
 export default defineConfig({
   name: 'my-app',
@@ -86,7 +86,7 @@ export default defineConfig({
 ### Check
 
 ```sh
-npx setupwise doctor
+npx stackowl doctor
 ```
 
 `doctor` changes nothing. `✖` lines must be fixed; `!` lines are worth a look, usually a service you haven't set up yet.
@@ -97,8 +97,8 @@ npx setupwise doctor
 ### Set up what can be scripted
 
 ```sh
-npx setupwise setup            # what would change
-npx setupwise setup --apply    # make the changes
+npx stackowl setup            # what would change
+npx stackowl setup --apply    # make the changes
 ```
 
 </Step>
@@ -109,8 +109,8 @@ Add the commands to `package.json` so nobody has to remember them:
 ```json title="package.json"
 {
   "scripts": {
-    "doctor": "setupwise doctor",
-    "setup": "setupwise setup"
+    "doctor": "stackowl doctor",
+    "setup": "stackowl setup"
   }
 }
 ```

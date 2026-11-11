@@ -9,7 +9,7 @@ Follow the phases in order. Each page lists what you need first, then numbered s
 | ---------------------------------------------- | ------------------------------------------------ | --------------------- | ------------------------------------- |
 | [0 Basics](0-basics.mdx)                       | Name, bundle id, domains, region                 | 1 hour                | By hand                               |
 | [1 Your machine](1-your-machine.mdx)           | Tools installed and logged in                    | 1 hour                | By hand, checked by `pnpm doctor`     |
-| [2 Repository](2-repository.mdx)               | GitHub repo, labels, branch rules                | 30 min                | Half: `setupwise setup github`        |
+| [2 Repository](2-repository.mdx)               | GitHub repo, labels, branch rules                | 30 min                | Half: `stackowl setup github`        |
 | [3 Local development](3-local-development.mdx) | Everything running on your computer              | 30 min                | Scripts (`db:*`)                      |
 | [4 Backend services](4-backend-services.mdx)   | Database, Redis, email, Google and Apple sign-in | 2 hours               | By hand                               |
 | [5 Cloud](5-cloud.mdx)                         | API and website live on Google Cloud             | 2 hours               | `infra:init`, `secrets:set`           |
@@ -19,7 +19,7 @@ Follow the phases in order. Each page lists what you need first, then numbered s
 
 ## How the scripts behave
 
-The setup checks and steps come from [setupwise](https://www.npmjs.com/package/setupwise), configured in `setupwise.config.ts`. Every one is built the same way, so you can run any of them without fear:
+The setup checks and steps come from [stackowl](https://www.npmjs.com/package/stackowl), configured in `stackowl.config.ts`. Every one is built the same way, so you can run any of them without fear:
 
 - **Dry run first.** Without `--apply` a command only prints what it would change, with a `+` in front.
 - **Safe to run again.** A step skips what already exists, so re-running it after a failure picks up where it stopped.

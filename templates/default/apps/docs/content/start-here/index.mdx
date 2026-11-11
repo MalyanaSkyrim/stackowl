@@ -12,7 +12,7 @@ Press **Play** to walk through it, or pick a step. Solid boxes are ours; dashed 
 <FlowDiagram
   height={440}
   nodes={[
-    { id: 'mac', label: 'Your Mac', note: 'setupwise, infra', x: 0, y: 0, kind: 'ours' },
+    { id: 'mac', label: 'Your Mac', note: 'stackowl, infra', x: 0, y: 0, kind: 'ours' },
     { id: 'app', label: 'iPhone app', note: 'Expo', x: 0, y: 170, kind: 'ours' },
     { id: 'gh', label: 'GitHub Actions', note: 'CI and deploys', x: 0, y: 360, kind: 'ours' },
     { id: 'secrets', label: 'Secret Manager', note: 'Google Cloud', x: 230, y: 0, kind: 'ours' },
@@ -71,7 +71,7 @@ Press **Play** to walk through it, or pick a step. Solid boxes are ours; dashed 
 | `packages/common`        | Shared schemas and the brand                                               |
 | `packages/database`      | The Prisma schema and database client                                      |
 | `infra/`                 | Google Cloud, described with OpenTofu                                      |
-| `setupwise.config.ts`    | What the project needs outside its code, checked by `pnpm doctor`          |
+| `stackowl.config.ts`    | What the project needs outside its code, checked by `pnpm doctor`          |
 | `.github/workflows/`     | CI and the deploys                                                         |
 
 More detail: [Architecture](../architecture/index.md).

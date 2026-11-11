@@ -1,5 +1,5 @@
 {
-  "$comment": "How setupwise create turns this template into a new project. Each token is replaced in every text file, in this order. The file is deleted from the new project.",
+  "$comment": "How stackowl create turns this template into a new project. Each token is replaced in every text file, in this order. The file is deleted from the new project.",
   "name": "Starter: web, API, iPhone app, docs and infra",
   "tokens": [
     {

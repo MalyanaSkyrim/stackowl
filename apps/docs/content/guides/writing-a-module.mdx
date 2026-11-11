@@ -1,12 +1,12 @@
 ---
 title: Write a module
-description: Check and set up a service SetupWise doesn't know about.
+description: Check and set up a service StackOwl doesn't know about.
 ---
 
-A module is an object with an `id`, a `title`, a `check` and, optionally, a `setup`. Add it to `modules` in the config. It runs after the built-in ones and can be named on the command line like them: `setupwise doctor stripe`.
+A module is an object with an `id`, a `title`, a `check` and, optionally, a `setup`. Add it to `modules` in the config. It runs after the built-in ones and can be named on the command line like them: `stackowl doctor stripe`.
 
-```ts title="setupwise/stripe.ts"
-import { defineModule, run } from 'setupwise'
+```ts title="stackowl/stripe.ts"
+import { defineModule, run } from 'stackowl'
 
 export const stripe = defineModule({
   id: 'stripe',
@@ -22,7 +22,7 @@ export const stripe = defineModule({
     const result = run('stripe', ['webhook_endpoints', 'list', '--api-key', env.STRIPE_SECRET_KEY])
     if (!result.ok) report.problem("can't list webhook endpoints")
     else if (result.stdout.includes(env.API_URL ?? '')) report.ok('webhook endpoint')
-    else report.problem('no webhook endpoint for this API (setupwise setup stripe --apply)')
+    else report.problem('no webhook endpoint for this API (stackowl setup stripe --apply)')
   },
 
   async setup({ env, report }) {
@@ -33,9 +33,9 @@ export const stripe = defineModule({
 })
 ```
 
-```ts title="setupwise.config.ts"
-import { defineConfig } from 'setupwise'
-import { stripe } from './setupwise/stripe'
+```ts title="stackowl.config.ts"
+import { defineConfig } from 'stackowl'
+import { stripe } from './stackowl/stripe'
 
 export default defineConfig({
   name: 'my-app',

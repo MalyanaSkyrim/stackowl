@@ -69,7 +69,7 @@ function pnpmCommand(): [string, string[]] | null {
 
 export async function create(options: CreateOptions): Promise<number> {
   const interactive = !options.yes && process.stdin.isTTY
-  if (interactive) p.intro(pc.bold('SetupWise · create'))
+  if (interactive) p.intro(pc.bold('StackOwl · create'))
 
   // --- Answers ---------------------------------------------------------------------------
   let dir = options.dir
@@ -83,7 +83,7 @@ export async function create(options: CreateOptions): Promise<number> {
     if (p.isCancel(answer)) fail('Cancelled.')
     dir = answer
   }
-  if (!dir) fail('Usage: setupwise create <folder> [--from <template>] [--yes]')
+  if (!dir) fail('Usage: stackowl create <folder> [--from <template>] [--yes]')
   const target = path.resolve(dir)
   if (existsSync(target) && readdirSync(target).length > 0)
     fail(`${dir} already exists and isn't empty. Pick another folder.`)
@@ -131,13 +131,13 @@ export async function create(options: CreateOptions): Promise<number> {
   const changed = applyTokens(target, manifest, values)
   rmSync(path.join(target, MANIFEST), { force: true })
 
-  // setupwise itself: the published version, or this checkout while developing setupwise.
+  // stackowl itself: the published version, or this checkout while developing stackowl.
   const pkgFile = path.join(target, 'package.json')
   if (existsSync(pkgFile)) {
     const pkg = JSON.parse(readFileSync(pkgFile, 'utf8'))
-    if (pkg.devDependencies?.setupwise) {
+    if (pkg.devDependencies?.stackowl) {
       const checkout = localCheckout()
-      pkg.devDependencies.setupwise = checkout ? `link:${checkout}` : `^${version()}`
+      pkg.devDependencies.stackowl = checkout ? `link:${checkout}` : `^${version()}`
       writeFileSync(pkgFile, `${JSON.stringify(pkg, null, 2)}\n`)
     }
   }
@@ -194,7 +194,7 @@ export async function create(options: CreateOptions): Promise<number> {
 
   if (installed && options.git && has('git')) {
     run('git', ['add', '-A'], { cwd: target })
-    const commit = run('git', ['commit', '-q', '-m', `Create ${values.displayName} with setupwise`], {
+    const commit = run('git', ['commit', '-q', '-m', `Create ${values.displayName} with stackowl`], {
       cwd: target,
     })
     if (!commit.ok)

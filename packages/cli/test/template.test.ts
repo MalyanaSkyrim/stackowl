@@ -46,7 +46,7 @@ describe('tokens', () => {
   })
 
   it('creates a project from the bundled template with no token left', async () => {
-    const target = path.join(mkdtempSync(path.join(tmpdir(), 'setupwise-create-')), 'app')
+    const target = path.join(mkdtempSync(path.join(tmpdir(), 'stackowl-create-')), 'app')
     await fetchTemplate(undefined, target)
     restoreDotfiles(target)
     applyTokens(target, readManifest(target), values)

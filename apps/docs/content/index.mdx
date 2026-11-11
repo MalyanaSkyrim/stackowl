@@ -3,16 +3,16 @@ title: Introduction
 description: Check and set up everything a project needs outside its code, from one config file.
 ---
 
-**SetupWise** starts a full app from nothing, and keeps everything it needs outside its code in check.
+**StackOwl** starts a full app from nothing, and keeps everything it needs outside its code in check.
 
-- `setupwise create my-app` gives you a website, an API with accounts, an iPhone app, a docs site, cloud infrastructure and CI, renamed for your app and running locally. On a new computer, one line installs the tools first: [Create an app from nothing](start-here/create-an-app.mdx).
-- `setupwise doctor` checks what a project needs outside its code: tools on each machine, keys in the env file, GitHub variables and secrets, cloud secret values. `setup` sets up what it can. All of it is written down in one typed file, `setupwise.config.ts`.
+- `stackowl create my-app` gives you a website, an API with accounts, an iPhone app, a docs site, cloud infrastructure and CI, renamed for your app and running locally. On a new computer, one line installs the tools first: [Create an app from nothing](start-here/create-an-app.mdx).
+- `stackowl doctor` checks what a project needs outside its code: tools on each machine, keys in the env file, GitHub variables and secrets, cloud secret values. `setup` sets up what it can. All of it is written down in one typed file, `stackowl.config.ts`.
 
 <Terminal
   title="One command tells you what is missing"
   lines={[
     {
-      command: 'npx setupwise doctor',
+      command: 'npx stackowl doctor',
       output: `my-app: doctor
 
 Tools
@@ -27,7 +27,7 @@ Env file
 
 GitHub
   ✓ repository acme/my-app
-  ✖ variables missing: API_URL_STAGING (setupwise github vars --apply)
+  ✖ variables missing: API_URL_STAGING (stackowl github vars --apply)
 
 1 problem to fix (✖ above).`,
     },
@@ -38,9 +38,9 @@ GitHub
 
 <Cards>
   <Card title="Create an app" href="/start-here/create-an-app" description="From an empty computer to a running app." />
-  <Card title="Quick start" href="/start-here/quick-start" description="Add SetupWise to a project you already have." />
+  <Card title="Quick start" href="/start-here/quick-start" description="Add StackOwl to a project you already have." />
   <Card title="How it works" href="/start-here/how-it-works" description="Modules, dry runs, and the four output marks." />
-  <Card title="Configuration" href="/reference/configuration" description="Every field of setupwise.config.ts." />
+  <Card title="Configuration" href="/reference/configuration" description="Every field of stackowl.config.ts." />
   <Card title="Write a module" href="/guides/writing-a-module" description="Check and set up a service of your own." />
 </Cards>
 

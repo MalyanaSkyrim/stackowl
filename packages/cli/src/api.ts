@@ -1,7 +1,7 @@
 /**
- * What a project imports from `setupwise`: helpers to write a typed config and your own modules.
+ * What a project imports from `stackowl`: helpers to write a typed config and your own modules.
  *
- *   import { defineConfig, defineModule } from 'setupwise'
+ *   import { defineConfig, defineModule } from 'stackowl'
  */
 import type { Config, Module } from './types'
 
@@ -18,7 +18,7 @@ export type {
   Tool,
 } from './types'
 
-/** Types your `setupwise.config.ts`; returns the config unchanged. */
+/** Types your `stackowl.config.ts`; returns the config unchanged. */
 export const defineConfig = (config: Config): Config => config
 
 /** Types one of your own modules; returns it unchanged. */

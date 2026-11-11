@@ -1,5 +1,5 @@
 /**
- * The shapes a project's `setupwise.config.ts` uses, and the module contract every check and
+ * The shapes a project's `stackowl.config.ts` uses, and the module contract every check and
  * setup step follows.
  */
 
@@ -122,11 +122,11 @@ export type Context = {
  * may have a setup step (dry run unless `--apply`, safe to repeat, run by `setup`).
  */
 export type Module = {
-  /** Short id used on the command line: `setupwise doctor github`. */
+  /** Short id used on the command line: `stackowl doctor github`. */
   id: string
   /** The section heading in the output. */
   title: string
-  /** One line on what it covers, shown by `setupwise modules`. */
+  /** One line on what it covers, shown by `stackowl modules`. */
   description?: string
   /** A link to the page explaining how to fix what it reports. */
   docs?: string

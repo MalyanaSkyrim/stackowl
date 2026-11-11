@@ -4,9 +4,9 @@ description: What a line in the report means, and what to do about it.
 ---
 
 <Accordions>
-<Accordion title="No setupwise.config found: checking the basics only">
+<Accordion title="No stackowl.config found: checking the basics only">
 
-There is no config in this folder or any folder above it. Run `npx setupwise init` at the project's root, or pass `--config path/to/setupwise.config.ts`.
+There is no config in this folder or any folder above it. Run `npx stackowl init` at the project's root, or pass `--config path/to/stackowl.config.ts`.
 
 </Accordion>
 <Accordion title="gh is not logged in: GitHub skipped">
@@ -31,17 +31,17 @@ Add the project id to the env file, or set `gcp.project` in the config.
 </Accordion>
 <Accordion title="… has no value (or no access)">
 
-Either the secret was never given a value, or your account can't read it. Check with `gcloud secrets versions list <id>`, then run `setupwise secrets set <environment> --apply`.
+Either the secret was never given a value, or your account can't read it. Check with `gcloud secrets versions list <id>`, then run `stackowl secrets set <environment> --apply`.
 
 </Accordion>
 <Accordion title="… still holds the placeholder">
 
-Your infrastructure code created the secret with the placeholder value. Add the real value to `.env.<environment>` and run `setupwise secrets set <environment> --apply`.
+Your infrastructure code created the secret with the placeholder value. Add the real value to `.env.<environment>` and run `stackowl secrets set <environment> --apply`.
 
 </Accordion>
 <Accordion title="Unknown or disabled module">
 
-The module's section isn't in the config, so it doesn't run. `setupwise modules` lists what this project uses.
+The module's section isn't in the config, so it doesn't run. `stackowl modules` lists what this project uses.
 
 </Accordion>
 </Accordions>

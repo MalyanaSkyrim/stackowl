@@ -1,8 +1,8 @@
 # Tooling
 
 Scripts for the iOS release. The setup checks (`pnpm doctor`, `pnpm secrets:set`,
-`pnpm github:vars`) come from the `setupwise` package, configured in the root
-`setupwise.config.ts`.
+`pnpm github:vars`) come from the `stackowl` package, configured in the root
+`stackowl.config.ts`.
 
 ## Mobile
 

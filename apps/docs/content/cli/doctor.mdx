@@ -1,16 +1,16 @@
 ---
-title: setupwise doctor
+title: stackowl doctor
 description: Checks everything the project needs and changes nothing.
 ---
 
 ```sh
-setupwise doctor [module...] [--json] [--config <file>]
+stackowl doctor [module...] [--json] [--config <file>]
 ```
 
 Runs the check of every module the project uses, in order: `tools`, `env`, `github`, `gcp`, then your own. Name modules to check only those:
 
 ```sh
-setupwise doctor github gcp
+stackowl doctor github gcp
 ```
 
 A part it can't reach is reported with `!` and skipped: `gh` not logged in, no GitHub remote, no Google Cloud project. Fix the `!` to get the full report.
@@ -24,7 +24,7 @@ When a module reports a problem, `doctor` prints the link to its page in these d
 ## In CI
 
 ```yaml title=".github/workflows/doctor.yml"
-- run: npx setupwise doctor github --json > doctor.json
+- run: npx stackowl doctor github --json > doctor.json
   env:
     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```

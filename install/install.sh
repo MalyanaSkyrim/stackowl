@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# SetupWise installer for macOS and Linux: from a computer with nothing installed to a new
+# StackOwl installer for macOS and Linux: from a computer with nothing installed to a new
 # project running locally.
 #
-#   curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.sh | bash -s my-app
-#   curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.sh | bash -s -- my-app --name "My App" --bundle-id com.me.myapp
+#   curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.sh | bash -s my-app
+#   curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.sh | bash -s -- my-app --name "My App" --bundle-id com.me.myapp
 #
 # Installs only what is missing, and says what it installs before it does:
 #   - macOS: the Xcode command line tools (git), Homebrew
 #   - Node.js 24 (Homebrew on macOS, fnm on Linux) and pnpm (corepack)
 #   - Docker (Docker Desktop on macOS; on Linux it points you to Docker's own script)
 #   - optional, with --cloud: GitHub CLI, Google Cloud CLI, OpenTofu
-# Then runs `npx setupwise@latest create` with the arguments you passed.
+# Then runs `npx stackowl@latest create` with the arguments you passed.
 #
 # Safe to run again. Nothing runs with sudo except Homebrew's own installer, which asks.
 
@@ -18,7 +18,7 @@ set -euo pipefail
 
 NODE_MAJOR=24
 # The CLI to run; point it at a local tarball to test this script before publishing.
-SETUPWISE_CLI="${SETUPWISE_CLI:-setupwise@latest}"
+STACKOWL_CLI="${STACKOWL_CLI:-stackowl@latest}"
 WITH_CLOUD=false
 ARGS=()
 for arg in "$@"; do
@@ -35,7 +35,7 @@ warn() { printf '  \033[33m!\033[0m %s\n' "$*"; }
 has() { command -v "$1" > /dev/null 2>&1; }
 
 OS="$(uname -s)"
-bold "SetupWise: getting this computer ready"
+bold "StackOwl: getting this computer ready"
 
 # --- macOS basics -------------------------------------------------------------------------
 if [ "$OS" = "Darwin" ]; then
@@ -136,7 +136,7 @@ echo
 bold "Creating the project"
 # Reads answers from the terminal even when this script itself comes through a pipe.
 if [ -t 1 ] && [ -r /dev/tty ] && [ -w /dev/tty ]; then
-  npx --yes --package "$SETUPWISE_CLI" setupwise create "${ARGS[@]}" < /dev/tty
+  npx --yes --package "$STACKOWL_CLI" stackowl create "${ARGS[@]}" < /dev/tty
 else
-  npx --yes --package "$SETUPWISE_CLI" setupwise create --yes "${ARGS[@]}"
+  npx --yes --package "$STACKOWL_CLI" stackowl create --yes "${ARGS[@]}"
 fi

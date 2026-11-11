@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** The `setupwise` command. */
+/** The `stackowl` command. */
 import { readFileSync } from 'node:fs'
 import { parseArgs } from 'node:util'
 import pc from 'picocolors'
@@ -12,23 +12,23 @@ import { loadConfig } from './config'
 import { CliError } from './lib/output'
 import { builtInModules, projectModules } from './modules'
 
-const HELP = `${pc.bold('SetupWise')}: check and set up everything your project needs outside its code.
+const HELP = `${pc.bold('StackOwl')}: check and set up everything your project needs outside its code.
 
 ${pc.bold('Usage')}
-  setupwise create [folder]              a new project from the starter (web, API, iPhone app, docs, infra)
+  stackowl create [folder]              a new project from the starter (web, API, iPhone app, docs, infra)
       --from <template>                  github:owner/repo[/folder][#ref] or a local folder instead
       --name <name> --bundle-id <id> --domain <domain> --owner <github user>
       --github                           also create the private GitHub repository and push
       --no-install --no-db --no-git      skip those steps
-  setupwise init [--yes] [--force]       write setupwise.config.ts for an existing project
-  setupwise doctor [module...] [--json]  check everything, change nothing (exit 1 on ✖)
-  setupwise setup [module...] [--apply]  run the setup steps (dry run without --apply)
-  setupwise secrets set <env> [--apply]  give cloud secrets their values from .env.<env>
-  setupwise github vars [--apply]        set GitHub repository variables from the env file
-  setupwise modules                      list the modules and whether this project uses them
+  stackowl init [--yes] [--force]       write stackowl.config.ts for an existing project
+  stackowl doctor [module...] [--json]  check everything, change nothing (exit 1 on ✖)
+  stackowl setup [module...] [--apply]  run the setup steps (dry run without --apply)
+  stackowl secrets set <env> [--apply]  give cloud secrets their values from .env.<env>
+  stackowl github vars [--apply]        set GitHub repository variables from the env file
+  stackowl modules                      list the modules and whether this project uses them
 
 ${pc.bold('Options')}
-  -c, --config <file>   use this config instead of the nearest setupwise.config.*
+  -c, --config <file>   use this config instead of the nearest stackowl.config.*
   --apply               make the changes (every command that changes things is a dry run without it)
   -h, --help            show this help
   -v, --version         show the version
@@ -104,14 +104,14 @@ async function main(argv: string[]): Promise<number> {
     case 'secrets':
       if (rest[0] !== 'set')
         throw new CliError(
-          'Usage: setupwise secrets set <environment> [--apply]',
+          'Usage: stackowl secrets set <environment> [--apply]',
         )
       return secretsSet(rest[1], common)
     case 'secrets:set':
       return secretsSet(rest[0], common)
     case 'github':
       if (rest[0] !== 'vars')
-        throw new CliError('Usage: setupwise github vars [--apply]')
+        throw new CliError('Usage: stackowl github vars [--apply]')
       return githubVars(common)
     case 'github:vars':
       return githubVars(common)
@@ -131,7 +131,7 @@ async function main(argv: string[]): Promise<number> {
       return 0
     }
     default:
-      throw new CliError(`Unknown command "${command}". Run setupwise --help.`)
+      throw new CliError(`Unknown command "${command}". Run stackowl --help.`)
   }
 }
 

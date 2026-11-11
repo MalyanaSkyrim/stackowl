@@ -3,9 +3,9 @@ title: tools
 description: The Node.js version and the command-line tools the project uses.
 ---
 
-Always on. Checks that each tool is on `PATH`. `setupwise setup tools --apply` installs a missing one when its `install` hint is a package manager command (`brew install opentofu`, `winget install …`, `corepack enable`); otherwise it says how.
+Always on. Checks that each tool is on `PATH`. `stackowl setup tools --apply` installs a missing one when its `install` hint is a package manager command (`brew install opentofu`, `winget install …`, `corepack enable`); otherwise it says how.
 
-```ts title="setupwise.config.ts"
+```ts title="stackowl.config.ts"
 node: '22.11',
 tools: [
   { command: 'git', required: true },

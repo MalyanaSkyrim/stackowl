@@ -3,7 +3,7 @@ title: Create an app from nothing
 description: One line on a new computer gives you a web app, an API, an iPhone app, docs and infrastructure, running locally.
 ---
 
-The starter is a full product skeleton: a website, an API with accounts, an iPhone app, a docs site, the cloud infrastructure and the CI that deploys them. `setupwise create` copies it, gives every name and id your app's own, installs it and starts the local database.
+The starter is a full product skeleton: a website, an API with accounts, an iPhone app, a docs site, the cloud infrastructure and the CI that deploys them. `stackowl create` copies it, gives every name and id your app's own, installs it and starts the local database.
 
 ## On a computer with nothing installed
 
@@ -11,16 +11,16 @@ The starter is a full product skeleton: a website, an API with accounts, an iPho
   <Tab value="macOS">
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.sh | bash -s my-app
+curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.sh | bash -s my-app
 ```
 
-It installs what is missing (the Xcode command line tools, Homebrew, Node.js 24, pnpm and Docker Desktop), says each one before it installs it, then runs `setupwise create my-app`. Add `--cloud` to also install the GitHub CLI, the Google Cloud CLI and OpenTofu.
+It installs what is missing (the Xcode command line tools, Homebrew, Node.js 24, pnpm and Docker Desktop), says each one before it installs it, then runs `stackowl create my-app`. Add `--cloud` to also install the GitHub CLI, the Google Cloud CLI and OpenTofu.
 
   </Tab>
   <Tab value="Linux">
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.sh | bash -s my-app
+curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.sh | bash -s my-app
 ```
 
 It installs Node.js 24 with fnm and pnpm with corepack. Install git and Docker with your package manager first.
@@ -29,7 +29,7 @@ It installs Node.js 24 with fnm and pnpm with corepack. Install git and Docker w
   <Tab value="Windows">
 
 ```powershell
-irm https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.ps1 | iex
+irm https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.ps1 | iex
 ```
 
 It installs Git, Node.js 24, pnpm and Docker Desktop with winget. The iPhone app needs a Mac to build; everything else works on Windows.
@@ -42,14 +42,14 @@ It installs Git, Node.js 24, pnpm and Docker Desktop with winget. The iPhone app
 `create` checks the rest (git, pnpm, Docker, a new enough Node.js), says what each one is for, and offers to install what is missing.
 
 ```sh
-npx setupwise create my-app
+npx stackowl create my-app
 ```
 
 <Terminal
-  title="setupwise create"
+  title="stackowl create"
   lines={[
     {
-      command: 'npx setupwise create habit-tracker',
+      command: 'npx stackowl create habit-tracker',
       output: `◇  App name (shown under the icon)
 │  Habit Tracker
 ◇  Bundle id (iOS and Android, never changes after the first upload)
@@ -98,16 +98,16 @@ Sign in with `demo@example.com` / `password123`.
 | `packages/*`       | Shared UI kit, design tokens, schemas, database (Prisma)               |
 | `infra/`           | OpenTofu for Google Cloud: Cloud Run, Secret Manager, deploy access    |
 | `.github/`         | CI, staging and production deploys, TestFlight builds                  |
-| `setupwise.config.ts` | What `pnpm doctor` checks and `setup` sets up                       |
+| `stackowl.config.ts` | What `pnpm doctor` checks and `setup` sets up                       |
 
 The **notes** feature goes through every layer, from the Prisma model to the API module to the app's screens. Copy it for your first real feature, then delete it.
 
 ## From a template of your own
 
 ```sh
-npx setupwise create my-app --from github:acme/starter        # a GitHub repository
-npx setupwise create my-app --from github:acme/mono/starter#v2 # a folder, at a tag
-npx setupwise create my-app --from ../my-starter              # a local folder
+npx stackowl create my-app --from github:acme/starter        # a GitHub repository
+npx stackowl create my-app --from github:acme/mono/starter#v2 # a folder, at a tag
+npx stackowl create my-app --from ../my-starter              # a local folder
 ```
 
-A template says which words to replace in a `setupwise.template.json`: [Templates](../reference/templates.mdx).
+A template says which words to replace in a `stackowl.template.json`: [Templates](../reference/templates.mdx).

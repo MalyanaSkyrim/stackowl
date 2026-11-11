@@ -6,7 +6,7 @@ import { selectModules } from '../modules'
 import type { Context } from '../types'
 
 export const DOCS_BASE =
-  'https://malyanaskyrim.github.io/setupwise'
+  'https://malyanaskyrim.github.io/stackowl'
 
 /**
  * Turns a module's `docs` into a full link. A path is the page's file in apps/docs/content
@@ -34,7 +34,7 @@ export async function doctor(options: Options): Promise<number> {
     if (!config.file)
       console.log(
         pc.dim(
-          'No setupwise.config found: checking the basics only. Run setupwise init.',
+          'No stackowl.config found: checking the basics only. Run stackowl init.',
         ),
       )
   }

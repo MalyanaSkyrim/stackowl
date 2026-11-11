@@ -1,12 +1,12 @@
 ---
 title: Configuration
-description: Every field of setupwise.config.ts.
+description: Every field of stackowl.config.ts.
 ---
 
-setupwise reads the nearest `setupwise.config.ts`, `.mts`, `.js`, `.mjs` or `.json`, walking up from the current folder, or the file given with `--config`. Every relative path starts at the config's folder.
+stackowl reads the nearest `stackowl.config.ts`, `.mts`, `.js`, `.mjs` or `.json`, walking up from the current folder, or the file given with `--config`. Every relative path starts at the config's folder.
 
-```ts title="setupwise.config.ts"
-import { defineConfig } from 'setupwise'
+```ts title="stackowl.config.ts"
+import { defineConfig } from 'stackowl'
 
 export default defineConfig({
   name: 'my-app',

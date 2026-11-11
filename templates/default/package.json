@@ -15,9 +15,9 @@
     "db:push": "pnpm --filter=@starter/database db:push",
     "db:push:test": "pnpm --filter=@starter/database db:push:test",
     "db:seed": "pnpm with-env pnpm --filter=@starter/database db:seed",
-    "doctor": "setupwise doctor",
-    "secrets:set": "setupwise secrets set",
-    "github:vars": "setupwise github vars",
+    "doctor": "stackowl doctor",
+    "secrets:set": "stackowl secrets set",
+    "github:vars": "stackowl github vars",
     "mobile:signing": "bash tooling/setup-mobile-signing.sh",
     "mobile:deploy": "bash tooling/deploy-mobile.sh",
     "storybook": "pnpm --filter @starter/workshop storybook",
@@ -35,7 +35,7 @@
     "ci:checks": "pnpm lint && pnpm typecheck && pnpm spell && pnpm test && pnpm build",
     "clean": "find . -name node_modules -o -name build -o -name .next -o -name .turbo -o -name dist -o -name .docusaurus -o -name generated -type d -prune | xargs rm -rf",
     "prepare": "husky",
-    "setupwise": "setupwise"
+    "stackowl": "stackowl"
   },
   "packageManager": "pnpm@10.10.0",
   "engines": {
@@ -80,7 +80,7 @@
     "pinst": "^3.0.0",
     "postcss": "^8.4.47",
     "prettier": "^3.2.5",
-    "setupwise": "^0.1.0",
+    "stackowl": "^0.1.0",
     "tsx": "^4.19.2",
     "turbo": "^2.3.3",
     "typescript": "^5.9.3",

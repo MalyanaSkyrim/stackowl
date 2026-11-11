@@ -11,21 +11,21 @@ import { selectModules } from '../src/modules'
 import { defaultSecretId } from '../src/modules/gcp'
 import { satisfies } from '../src/modules/tools'
 
-const tempProject = () => mkdtempSync(path.join(tmpdir(), 'setupwise-'))
+const tempProject = () => mkdtempSync(path.join(tmpdir(), 'stackowl-'))
 
 describe('config', () => {
   it('finds the nearest config walking up', () => {
     const root = tempProject()
-    writeFileSync(path.join(root, 'setupwise.config.json'), '{"name":"demo"}')
+    writeFileSync(path.join(root, 'stackowl.config.json'), '{"name":"demo"}')
     const nested = path.join(root, 'apps', 'api')
     mkdirSync(nested, { recursive: true })
-    expect(findConfig(nested)).toBe(path.join(root, 'setupwise.config.json'))
+    expect(findConfig(nested)).toBe(path.join(root, 'stackowl.config.json'))
   })
 
-  it('loads a TypeScript config that imports setupwise, with defaults', async () => {
+  it('loads a TypeScript config that imports stackowl, with defaults', async () => {
     const root = tempProject()
     writeFileSync(
-      path.join(root, 'setupwise.config.ts'),
+      path.join(root, 'stackowl.config.ts'),
       renderConfig({
         name: 'demo',
         environments: ['dev', 'prod'],
@@ -58,7 +58,7 @@ describe('env module', () => {
     writeFileSync(path.join(root, '.env'), 'A=1\nC=3\n')
     writeFileSync(path.join(root, '.env.example'), 'A=\nB=\nC=\nD=\n')
     writeFileSync(
-      path.join(root, 'setupwise.config.json'),
+      path.join(root, 'stackowl.config.json'),
       JSON.stringify({
         env: { required: ['A', 'B'], groups: { Mail: ['C'] } },
       }),

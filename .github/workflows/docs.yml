@@ -1,5 +1,5 @@
 # Builds the docs (apps/docs) as a static site and publishes them on GitHub Pages:
-# https://malyanaskyrim.github.io/setupwise/
+# https://malyanaskyrim.github.io/stackowl/
 name: Docs
 
 on:
@@ -36,7 +36,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter docs build
         env:
-          DOCS_BASE_PATH: /setupwise
+          DOCS_BASE_PATH: /stackowl
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/docs/out

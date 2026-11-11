@@ -1,6 +1,6 @@
 # Starter App
 
-An iPhone app, its API, a website and one UI kit they share, in one monorepo. Created with [setupwise](https://www.npmjs.com/package/setupwise): every layer works from the first run, and the **notes** feature shows how a feature goes through all of them (database, API, app). Copy it for your first real feature, then delete it.
+An iPhone app, its API, a website and one UI kit they share, in one monorepo. Created with [stackowl](https://www.npmjs.com/package/stackowl): every layer works from the first run, and the **notes** feature shows how a feature goes through all of them (database, API, app). Copy it for your first real feature, then delete it.
 
 **Start with the docs:** `pnpm docs` opens the docs site at http://localhost:3004 (pages in [`apps/docs/content/`](apps/docs/content)): setup step by step, architecture, coding conventions and guides.
 
@@ -22,7 +22,7 @@ starter-app/
 │   └── config/           # Shared ESLint, Prettier and TypeScript configs
 ├── infra/                # OpenTofu: Google Cloud (Cloud Run, Secret Manager, deploy access)
 ├── tooling/              # iOS signing and deploy scripts
-├── setupwise.config.ts   # What the project needs outside its code, checked by `pnpm doctor`
+├── stackowl.config.ts   # What the project needs outside its code, checked by `pnpm doctor`
 ├── .claude/skills/       # Task guides (skills) for AI agents
 └── .github/workflows/    # CI, deploys and the iOS release
 ```
@@ -36,7 +36,7 @@ starter-app/
 
 ## Getting started
 
-`setupwise create` already ran these for you. On a fresh clone:
+`stackowl create` already ran these for you. On a fresh clone:
 
 ```bash
 pnpm install
@@ -65,7 +65,7 @@ All workspaces read the single `.env` at the repo root. Without Resend configure
 | -------------------------------------------- | ------------------------------------------------------------------------ |
 | `pnpm dev`                                   | Start every app in watch mode                                            |
 | `pnpm doctor`                                | Check tools, keys, GitHub and Google Cloud; changes nothing              |
-| `pnpm setupwise setup --apply`               | Set up what can be scripted (GitHub variables and labels, cloud secrets) |
+| `pnpm stackowl setup --apply`               | Set up what can be scripted (GitHub variables and labels, cloud secrets) |
 | `pnpm secrets:set <env> --apply`             | Give the API's cloud secrets their values from `.env.<env>`              |
 | `pnpm infra:init`                            | Create the Google Cloud infrastructure (OpenTofu)                        |
 | `pnpm mobile:signing`                        | One-time iOS signing setup for the deploy workflow                       |

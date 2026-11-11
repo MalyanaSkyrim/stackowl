@@ -1,11 +1,11 @@
 {
-  "name": "setupwise-monorepo",
+  "name": "stackowl-monorepo",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
     "dev:docs": "pnpm --filter docs dev",
-    "dev:cli": "pnpm --filter setupwise dev",
+    "dev:cli": "pnpm --filter stackowl dev",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck",
     "sw": "node packages/cli/dist/index.js"

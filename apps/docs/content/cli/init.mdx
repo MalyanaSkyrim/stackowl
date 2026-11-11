@@ -1,15 +1,15 @@
 ---
-title: setupwise init
-description: Writes setupwise.config.ts from a few questions.
+title: stackowl init
+description: Writes stackowl.config.ts from a few questions.
 ---
 
 ```sh
-setupwise init [--yes] [--force]
+stackowl init [--yes] [--force]
 ```
 
 Asks for the project's name, its deploy environments and the services to check (GitHub, Google Cloud), then:
 
-- writes `setupwise.config.ts` in the current folder, with every section commented;
+- writes `stackowl.config.ts` in the current folder, with every section commented;
 - adds `.env`, `.env.*` and `!.env.example` to `.gitignore` if they aren't there.
 
 | Option    | Effect                                                   |
@@ -17,4 +17,4 @@ Asks for the project's name, its deploy environments and the services to check (
 | `--yes`   | Skip the questions: the folder's name, `staging` and `production`, GitHub and Google Cloud |
 | `--force` | Overwrite an existing config in this folder              |
 
-The config imports `defineConfig` from `setupwise` for types. It works under `npx` too: SetupWise resolves that import to itself when it loads the file.
+The config imports `defineConfig` from `stackowl` for types. It works under `npx` too: StackOwl resolves that import to itself when it loads the file.

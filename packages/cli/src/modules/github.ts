@@ -108,11 +108,11 @@ export const githubModule: Module = {
           report.ok('repository variables')
         if (missing.length > 0)
           report.problem(
-            `variables missing: ${missing.join(', ')} (setupwise github vars --apply)`,
+            `variables missing: ${missing.join(', ')} (stackowl github vars --apply)`,
           )
         if (stale.length > 0)
           report.note(
-            `variables differ from ${config.envFile}: ${stale.join(', ')} (setupwise github vars --apply)`,
+            `variables differ from ${config.envFile}: ${stale.join(', ')} (stackowl github vars --apply)`,
           )
       }
     }
@@ -165,7 +165,7 @@ export const githubModule: Module = {
         if (missing.length === 0) report.ok('labels')
         else
           report.note(
-            `labels missing: ${missing.join(', ')} (setupwise setup github --apply)`,
+            `labels missing: ${missing.join(', ')} (stackowl setup github --apply)`,
           )
       }
     }

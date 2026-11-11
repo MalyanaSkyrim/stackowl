@@ -28,9 +28,9 @@ export async function secretsSet(
   const ctx = await context(options.apply, options.configFile)
   const { environments } = ctx.config
   if (!environment || !environments.includes(environment))
-    fail(`Usage: setupwise secrets set <${environments.join('|')}> [--apply]`)
+    fail(`Usage: stackowl secrets set <${environments.join('|')}> [--apply]`)
   if (!ctx.config.gcp)
-    fail('No gcp section in setupwise.config: nothing to set.')
+    fail('No gcp section in stackowl.config: nothing to set.')
   console.log(pc.bold(`Secrets for ${environment}`) + dryRunHint(options.apply))
   await setSecrets(ctx, environment)
   if (options.apply)

@@ -1,7 +1,7 @@
 /**
- * Finds and loads `setupwise.config.{ts,mts,js,mjs,json}`, walking up from the current folder,
- * and fills in the defaults. TypeScript configs load through jiti, with `setupwise` aliased to
- * this package, so `import { defineConfig } from 'setupwise'` works under `npx` too.
+ * Finds and loads `stackowl.config.{ts,mts,js,mjs,json}`, walking up from the current folder,
+ * and fills in the defaults. TypeScript configs load through jiti, with `stackowl` aliased to
+ * this package, so `import { defineConfig } from 'stackowl'` works under `npx` too.
  */
 import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
@@ -13,11 +13,11 @@ import { fail } from './lib/output'
 import type { Config, ResolvedConfig } from './types'
 
 export const CONFIG_FILES = [
-  'setupwise.config.ts',
-  'setupwise.config.mts',
-  'setupwise.config.js',
-  'setupwise.config.mjs',
-  'setupwise.config.json',
+  'stackowl.config.ts',
+  'stackowl.config.mts',
+  'stackowl.config.js',
+  'stackowl.config.mjs',
+  'stackowl.config.json',
 ]
 
 /** The nearest config file at or above `from`, or null. */
@@ -34,7 +34,7 @@ export function findConfig(from: string): string | null {
   }
 }
 
-/** This package's public entry, for the `setupwise` alias inside config files. */
+/** This package's public entry, for the `stackowl` alias inside config files. */
 function apiEntry(): string {
   const here = path.dirname(fileURLToPath(import.meta.url))
   for (const candidate of ['api.js', 'api.ts']) {
@@ -48,7 +48,7 @@ export async function loadConfigFile(file: string): Promise<Config> {
   if (file.endsWith('.json'))
     return JSON.parse(readFileSync(file, 'utf8')) as Config
   const jiti = createJiti(import.meta.url, {
-    alias: { setupwise: apiEntry() },
+    alias: { stackowl: apiEntry() },
     interopDefault: true,
     moduleCache: false,
   })

@@ -1,8 +1,8 @@
-import { defineConfig } from 'setupwise'
+import { defineConfig } from 'stackowl'
 
 /**
- * What this project needs outside its code. `npx setupwise doctor` checks it,
- * `npx setupwise setup --apply` sets up what it can. Docs: modules and config reference.
+ * What this project needs outside its code. `npx stackowl doctor` checks it,
+ * `npx stackowl setup --apply` sets up what it can. Docs: modules and config reference.
  */
 export default defineConfig({
   name: 'basic',

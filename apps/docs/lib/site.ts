@@ -1,11 +1,11 @@
 /** The docs' name, and where "Edit on GitHub" points. Change these once the repository exists. */
 export const site = {
-  name: 'SetupWise',
+  name: 'StackOwl',
   description:
     'Check and set up everything a project needs outside its code: tools, keys, GitHub and cloud secrets.',
   repository: {
     owner: 'MalyanaSkyrim',
-    name: 'SetupWise',
+    name: 'StackOwl',
     branch: 'main',
   },
 }

@@ -1,15 +1,15 @@
 ---
-title: setupwise github vars
+title: stackowl github vars
 description: Sets the repository variables your workflows read, from the env file.
 ---
 
 ```sh
-setupwise github vars [--apply]
+stackowl github vars [--apply]
 ```
 
 Instead of typing them in GitHub → Settings → Secrets and variables → Actions, list the variables in the config:
 
-```ts title="setupwise.config.ts"
+```ts title="stackowl.config.ts"
 github: {
   variables: {
     API_URL_STAGING: { why: 'the API staging builds call' },
@@ -20,6 +20,6 @@ github: {
 
 Each value comes from the env file under the variable's own name, else from `fallback`. A variable with no value anywhere is reported and left alone. A variable set on GitHub but not locally is left as it is.
 
-Variables are readable by anyone with access to the repository. Never put a secret in one: use GitHub secrets, which SetupWise checks but doesn't set.
+Variables are readable by anyone with access to the repository. Never put a secret in one: use GitHub secrets, which StackOwl checks but doesn't set.
 
 Needs `gh` logged in (`gh auth login`). It reads through `gh api`, so any `gh` version works.

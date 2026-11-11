@@ -3,8 +3,8 @@ import { createMDX } from 'fumadocs-mdx/next'
 const withMDX = createMDX()
 
 /**
- * `DOCS_BASE_PATH=/setupwise` builds the static site GitHub Pages serves
- * (https://malyanaskyrim.github.io/setupwise/): every page and the search index become plain
+ * `DOCS_BASE_PATH=/stackowl` builds the static site GitHub Pages serves
+ * (https://malyanaskyrim.github.io/stackowl/): every page and the search index become plain
  * files in `out/`. Without it, `next dev` and `next build` work as a normal Next app.
  */
 const basePath = process.env.DOCS_BASE_PATH ?? ''

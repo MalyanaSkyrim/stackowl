@@ -1,7 +1,7 @@
 /**
  * Copies the starter (templates/default) into this package as `template/` before `npm pack` or
  * `npm publish`. npm drops `.gitignore` and `.npmrc` from packages, so they are stored as
- * `_dot_gitignore` and `_dot_npmrc`; `setupwise create` renames them back.
+ * `_dot_gitignore` and `_dot_npmrc`; `stackowl create` renames them back.
  */
 import { cpSync, existsSync, readdirSync, renameSync, rmSync } from 'node:fs'
 import path from 'node:path'

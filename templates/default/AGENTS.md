@@ -2,7 +2,7 @@
 
 Rules all AI agents must follow when working in this repository.
 
-This repo holds Starter App: an iPhone app (Expo), an API (Fastify + tRPC), a website for the landing page and legal pages, and one universal UI kit the app and the website share. It was created with `setupwise create`; the notes feature is the example every layer is built around. See `README.md` for the layout, and the docs site (`apps/docs`, `pnpm docs`) for setup, architecture and coding conventions.
+This repo holds Starter App: an iPhone app (Expo), an API (Fastify + tRPC), a website for the landing page and legal pages, and one universal UI kit the app and the website share. It was created with `stackowl create`; the notes feature is the example every layer is built around. See `README.md` for the layout, and the docs site (`apps/docs`, `pnpm docs`) for setup, architecture and coding conventions.
 
 ---
 

@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url'
 import { fail } from './output'
 import { has, run } from './run'
 
-/** What a template's `setupwise.template.json` declares. */
+/** What a template's `stackowl.template.json` declares. */
 export type TemplateManifest = {
   name?: string
   tokens: { find: string; value: keyof ProjectValues }[]
@@ -48,7 +48,7 @@ export type ProjectValues = {
   domain: string
 }
 
-export const MANIFEST = 'setupwise.template.json'
+export const MANIFEST = 'stackowl.template.json'
 
 /** npm drops these from a package, so the bundled template stores them under another name. */
 export const PACKED_DOTFILES = ['.gitignore', '.npmrc']
@@ -116,7 +116,7 @@ export function bundledTemplate(): string {
     path.resolve(here, '../../../../templates/default'),
   ])
     if (existsSync(path.join(candidate, MANIFEST))) return candidate
-  return fail('The bundled template is missing from this install of setupwise.')
+  return fail('The bundled template is missing from this install of stackowl.')
 }
 
 /** The folder this package runs from, when it is a checkout rather than an npm install. */
@@ -159,7 +159,7 @@ export async function fetchTemplate(from: string | undefined, target: string): P
 }
 
 async function downloadGithub(owner: string, repo: string, ref?: string): Promise<string> {
-  const folder = mkdtempSync(path.join(tmpdir(), 'setupwise-'))
+  const folder = mkdtempSync(path.join(tmpdir(), 'stackowl-'))
   const archive = path.join(folder, 'template.tar.gz')
   const url = `https://codeload.github.com/${owner}/${repo}/tar.gz/${ref ?? 'HEAD'}`
   const response = await fetch(url).catch(() => null)

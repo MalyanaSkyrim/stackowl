@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs'
 
-import { defineConfig } from 'setupwise'
+import { defineConfig } from 'stackowl'
 
 /**
- * Everything this project needs outside its code. `pnpm doctor` checks it, `pnpm setupwise
+ * Everything this project needs outside its code. `pnpm doctor` checks it, `pnpm stackowl
  * setup --apply` sets up what it can, `pnpm secrets:set <env> --apply` gives the API's cloud
  * secrets their values from `.env.<env>`. Docs: apps/docs/content/setup/.
  */

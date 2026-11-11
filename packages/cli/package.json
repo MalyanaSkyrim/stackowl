@@ -1,6 +1,6 @@
 {
-  "name": "setupwise",
-  "version": "0.1.2",
+  "name": "stackowl",
+  "version": "0.1.0",
   "description": "Create a full app (web, API, iPhone app, docs, infra) and check and set up everything it needs outside its code: tools, keys, GitHub and cloud secrets.",
   "keywords": [
     "boilerplate",
@@ -21,18 +21,18 @@
   ],
   "license": "MIT",
   "author": "MalyanaSkyrim (https://github.com/MalyanaSkyrim)",
-  "homepage": "https://github.com/MalyanaSkyrim/setupwise#readme",
+  "homepage": "https://github.com/MalyanaSkyrim/stackowl#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MalyanaSkyrim/setupwise.git",
+    "url": "git+https://github.com/MalyanaSkyrim/stackowl.git",
     "directory": "packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/MalyanaSkyrim/setupwise/issues"
+    "url": "https://github.com/MalyanaSkyrim/stackowl/issues"
   },
   "type": "module",
   "bin": {
-    "setupwise": "./dist/index.js"
+    "stackowl": "./dist/index.js"
   },
   "exports": {
     ".": {

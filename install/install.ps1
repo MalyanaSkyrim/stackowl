@@ -1,12 +1,12 @@
-# SetupWise installer for Windows: from a computer with nothing installed to a new project
+# StackOwl installer for Windows: from a computer with nothing installed to a new project
 # running locally. In PowerShell:
 #
-#   irm https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.ps1 | iex
-#   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.ps1))) my-app --name "My App"
+#   irm https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.ps1 | iex
+#   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.ps1))) my-app --name "My App"
 #
 # Installs only what is missing, with winget: Git, Node.js 24 LTS, pnpm (corepack) and Docker
 # Desktop; with -Cloud also the GitHub CLI, the Google Cloud CLI and OpenTofu. Then runs
-# `npx setupwise@latest create` with the arguments you passed. The iPhone app needs a Mac to
+# `npx stackowl@latest create` with the arguments you passed. The iPhone app needs a Mac to
 # build; everything else works on Windows.
 
 param(
@@ -17,7 +17,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $NodeMajor = 24
 # The CLI to run; point it at a local tarball to test this script before publishing.
-$Cli = if ($env:SETUPWISE_CLI) { $env:SETUPWISE_CLI } else { 'setupwise@latest' }
+$Cli = if ($env:STACKOWL_CLI) { $env:STACKOWL_CLI } else { 'stackowl@latest' }
 
 function Ok($text) { Write-Host "  ✓ $text" -ForegroundColor Green }
 function Doing($text) { Write-Host "  + $text" -ForegroundColor Cyan }
@@ -33,7 +33,7 @@ function Install-Winget($id, $name) {
   Refresh-Path
 }
 
-Write-Host 'SetupWise: getting this computer ready' -ForegroundColor White
+Write-Host 'StackOwl: getting this computer ready' -ForegroundColor White
 
 if (-not (Has 'winget')) {
   Warn 'winget is missing: install "App Installer" from the Microsoft Store, then run this again'
@@ -67,4 +67,4 @@ if ($Cloud) {
 
 Write-Host ''
 Write-Host 'Creating the project' -ForegroundColor White
-npx --yes --package $Cli setupwise create @CreateArgs
+npx --yes --package $Cli stackowl create @CreateArgs

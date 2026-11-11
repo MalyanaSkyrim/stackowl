@@ -67,7 +67,7 @@ function ready(ctx: Context): string | null {
 
 /**
  * Gives every secret of one environment its value from `.env.<environment>`. Dry run unless
- * `ctx.apply`. Values are compared, never printed. Shared with `setupwise secrets set`.
+ * `ctx.apply`. Values are compared, never printed. Shared with `stackowl secrets set`.
  */
 export async function setSecrets(
   ctx: Context,
@@ -180,11 +180,11 @@ export const gcpModule: Module = {
         report.ok(`${environment}: every required secret has a value`)
       if (placeholders.length > 0)
         report.problem(
-          `${environment}: still the placeholder in ${placeholders.join(', ')} (setupwise secrets set ${environment})`,
+          `${environment}: still the placeholder in ${placeholders.join(', ')} (stackowl secrets set ${environment})`,
         )
       if (empty.length > 0)
         report.problem(
-          `${environment}: no value (or no access) in ${empty.join(', ')} (setupwise secrets set ${environment})`,
+          `${environment}: no value (or no access) in ${empty.join(', ')} (stackowl secrets set ${environment})`,
         )
       if (emptyOptional.length > 0)
         report.note(

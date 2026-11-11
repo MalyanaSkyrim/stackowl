@@ -1,4 +1,4 @@
-/** `init`: writes a commented `setupwise.config.ts` from a few questions. */
+/** `init`: writes a commented `stackowl.config.ts` from a few questions. */
 import {
   appendFileSync,
   existsSync,
@@ -52,11 +52,11 @@ export function renderConfig(answers: InitAnswers): string {
 `
     : ''
 
-  return `import { defineConfig } from 'setupwise'
+  return `import { defineConfig } from 'stackowl'
 
 /**
- * What this project needs outside its code. \`npx setupwise doctor\` checks it,
- * \`npx setupwise setup --apply\` sets up what it can. Docs: modules and config reference.
+ * What this project needs outside its code. \`npx stackowl doctor\` checks it,
+ * \`npx stackowl setup --apply\` sets up what it can. Docs: modules and config reference.
  */
 export default defineConfig({
   name: ${JSON.stringify(answers.name)},
@@ -89,7 +89,7 @@ export function ensureGitignore(root: string): boolean {
   if (wanted.length === 0) return false
   appendFileSync(
     file,
-    `${current && !current.endsWith('\n') ? '\n' : ''}\n# Local env files (setupwise)\n${wanted.join('\n')}\n`,
+    `${current && !current.endsWith('\n') ? '\n' : ''}\n# Local env files (stackowl)\n${wanted.join('\n')}\n`,
   )
   return true
 }
@@ -99,7 +99,7 @@ export async function init(options: {
   force: boolean
 }): Promise<number> {
   const root = process.cwd()
-  const target = path.join(root, 'setupwise.config.ts')
+  const target = path.join(root, 'stackowl.config.ts')
   const existing = findConfig(root)
   if (existing && path.dirname(existing) === root && !options.force)
     fail(
@@ -114,7 +114,7 @@ export async function init(options: {
 
   let answers = defaults
   if (!options.yes && process.stdin.isTTY) {
-    p.intro('SetupWise · init')
+    p.intro('StackOwl · init')
     const result = await p.group(
       {
         name: () =>
@@ -160,7 +160,7 @@ export async function init(options: {
   const ignored = ensureGitignore(root)
   console.log(`✓ wrote ${path.relative(root, target)}`)
   if (ignored) console.log('✓ added .env and .env.* to .gitignore')
-  console.log('\nNext: fill in the config, then run  npx setupwise doctor')
+  console.log('\nNext: fill in the config, then run  npx stackowl doctor')
   if (!options.yes && process.stdin.isTTY) p.outro('Done')
   return 0
 }

@@ -1,6 +1,6 @@
 ---
 title: Set up a project, step by step
-description: The phases from an empty folder to a deployed app, and where SetupWise takes over.
+description: The phases from an empty folder to a deployed app, and where StackOwl takes over.
 ---
 
 A template for your project's own setup guide. Copy this page into your docs, keep the phases that apply, and fill in your names. Each phase ends with a check.
@@ -30,7 +30,7 @@ Decide once, before anything else, and write it in the config and your docs: the
 List every tool in `tools`, with `why` and `install`. Then each new developer runs:
 
 ```sh
-npx setupwise doctor tools
+npx stackowl doctor tools
 ```
 
 </Step>
@@ -41,7 +41,7 @@ npx setupwise doctor tools
 Create the repository on GitHub, push, and log in with `gh auth login`. Labels your workflows read and the variables they need are set by:
 
 ```sh
-npx setupwise setup github --apply
+npx stackowl setup github --apply
 ```
 
 Branch protection and the GitHub environments (`production`) are set by hand in Settings.
@@ -68,8 +68,8 @@ For each service (database, email, sign-in providers, payments): create the acco
 Write each environment's secret values in `.env.staging` and `.env.production` (gitignored), list the names in `gcp.secrets`, then:
 
 ```sh
-npx setupwise secrets set staging --apply
-npx setupwise secrets set production --apply
+npx stackowl secrets set staging --apply
+npx stackowl secrets set production --apply
 ```
 
 </Step>

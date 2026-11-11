@@ -1,10 +1,10 @@
 ---
-title: setupwise setup
+title: stackowl setup
 description: Runs every module's setup step. A dry run until you add --apply.
 ---
 
 ```sh
-setupwise setup [module...] [--apply] [--config <file>]
+stackowl setup [module...] [--apply] [--config <file>]
 ```
 
 Runs the setup step of every module that has one, in order. Without `--apply` it only prints what it would change:
@@ -13,7 +13,7 @@ Runs the setup step of every module that has one, in order. Without `--apply` it
   title="A dry run, then the real thing"
   lines={[
     {
-      command: 'npx setupwise setup github',
+      command: 'npx stackowl setup github',
       output: `my-app: setup (dry run: add --apply to change)
 
 GitHub
@@ -25,7 +25,7 @@ GitHub
 Nothing was changed. Run again with --apply to make the + changes.`,
     },
     {
-      command: 'npx setupwise setup github --apply',
+      command: 'npx stackowl setup github --apply',
       output: `my-app: setup
 
 GitHub
