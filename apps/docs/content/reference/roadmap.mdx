@@ -5,11 +5,12 @@ description: Where setupwise is going after the first release.
 
 The first release checks and sets up tools, env keys, GitHub and Google Cloud secrets. Next, in order:
 
+Done: `setupwise create`, the starter template and the installers.
+
 1. **More modules.** Apple (App IDs, capabilities, signing), App Store products and listing, RevenueCat, Cloudflare R2 storage, Resend domains, database migrations applied.
 2. **AWS and other clouds**, behind the same `secrets set` command: AWS Secrets Manager, Azure Key Vault, Doppler.
-3. **`setupwise create <name>`**: copies a starter repository and writes the config from a few questions.
-4. **`setupwise docs`**: fills a setup guide like [this one](../guides/project-setup.mdx) with the project's own names, ids and domains.
-5. **Modules as packages**: `setupwise-module-stripe`, loaded by name from the config.
+3. **`setupwise docs`**: fills a setup guide like [this one](../guides/project-setup.mdx) with the project's own names, ids and domains.
+4. **Modules as packages**: `setupwise-module-stripe`, loaded by name from the config.
 
 ## What stays project-specific
 

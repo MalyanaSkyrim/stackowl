@@ -17,7 +17,7 @@ flowchart LR
 
 | Module                            | Checks                                                  | Sets up                       |
 | --------------------------------- | ------------------------------------------------------- | ----------------------------- |
-| [tools](../modules/tools.mdx)     | Node.js version, command-line tools                     | Nothing: it says what to install |
+| [tools](../modules/tools.mdx)     | Node.js version, command-line tools                     | Tools whose hint is a `brew`, `winget` or `corepack` command |
 | [env](../modules/env.mdx)         | Required keys, keys by feature, what `.env.example` lists | Nothing                     |
 | [github](../modules/github.mdx)   | Variables, secrets, environment secrets, labels, branches | Variables and labels        |
 | [gcp](../modules/gcp.mdx)         | Secret Manager values per environment                   | Secret values from `.env.<environment>` |

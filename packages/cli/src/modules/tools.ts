@@ -1,4 +1,4 @@
-import { has } from '../lib/run'
+import { has, run } from '../lib/run'
 import type { Module, Tool } from '../types'
 
 /** `20`, `22.11` or `>=22.11.0` → [major, minor]. */
@@ -18,6 +18,18 @@ export function satisfies(current: string, minimum: string): boolean {
 
 const normalize = (tool: Tool) =>
   typeof tool === 'string' ? { command: tool } : tool
+
+/** Package managers `setup tools` may run an `install` hint with. */
+const INSTALLERS = ['brew', 'winget', 'corepack', 'npm']
+
+/** The install command to run for a tool, when its hint is one (`brew install opentofu`). */
+export function installCommand(install: string | undefined): string[] | null {
+  if (!install) return null
+  const parts = install.trim().split(/\s+/)
+  const [command] = parts
+  if (!command || !INSTALLERS.includes(command) || !has(command)) return null
+  return parts
+}
 
 export const toolsModule: Module = {
   id: 'tools',
@@ -46,5 +58,25 @@ export const toolsModule: Module = {
       if (tool.required) report.problem(text)
       else report.note(text)
     }
+  },
+  async setup({ config, report }) {
+    let missing = 0
+    for (const tool of (config.tools ?? []).map(normalize)) {
+      if (tool.platform && tool.platform !== process.platform) continue
+      if (has(tool.command)) continue
+      missing++
+      const command = installCommand(tool.install)
+      if (!command) {
+        report.note(
+          `${tool.command} is not installed${tool.install ? `: ${tool.install}` : ''} (by hand)`,
+        )
+        continue
+      }
+      await report.change(`install ${tool.command} (${command.join(' ')})`, () => {
+        const [bin, ...args] = command
+        return run(bin!, args).ok
+      })
+    }
+    if (missing === 0) report.ok('every tool is installed')
   },
 }

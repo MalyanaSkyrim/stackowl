@@ -101,7 +101,8 @@
       "OAUTH_NO_EMAIL": "Apple ou Google n’a pas partagé votre e-mail. Autorisez-le et réessayez.",
       "OAUTH_NOT_CONFIGURED": "Cette option de connexion n’est pas disponible pour le moment.",
       "NETWORK": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.",
-      "UNKNOWN": "Une erreur est survenue. Veuillez réessayer."
+      "UNKNOWN": "Une erreur est survenue. Veuillez réessayer.",
+      "NOT_FOUND": "Cet élément n’existe plus."
     }
   },
   "profile": {

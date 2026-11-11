@@ -3,7 +3,10 @@ title: Introduction
 description: Check and set up everything a project needs outside its code, from one config file.
 ---
 
-A project needs more than its code to run: tools on each developer's machine, keys in an env file, variables and secrets on GitHub, and secret values in the cloud. These are set up by hand, once, and then forgotten until something breaks. **setupwise** writes down what the project needs in one typed file, checks it with one command and sets up what it can.
+**setupwise** starts a full app from nothing, and keeps everything it needs outside its code in check.
+
+- `setupwise create my-app` gives you a website, an API with accounts, an iPhone app, a docs site, cloud infrastructure and CI, renamed for your app and running locally. On a new computer, one line installs the tools first: [Create an app from nothing](start-here/create-an-app.mdx).
+- `setupwise doctor` checks what a project needs outside its code: tools on each machine, keys in the env file, GitHub variables and secrets, cloud secret values. `setup` sets up what it can. All of it is written down in one typed file, `setupwise.config.ts`.
 
 <Terminal
   title="One command tells you what is missing"
@@ -34,7 +37,8 @@ GitHub
 ## What you get
 
 <Cards>
-  <Card title="Quick start" href="/start-here/quick-start" description="Add setupwise to a project in five minutes." />
+  <Card title="Create an app" href="/start-here/create-an-app" description="From an empty computer to a running app." />
+  <Card title="Quick start" href="/start-here/quick-start" description="Add setupwise to a project you already have." />
   <Card title="How it works" href="/start-here/how-it-works" description="Modules, dry runs, and the four output marks." />
   <Card title="Configuration" href="/reference/configuration" description="Every field of setupwise.config.ts." />
   <Card title="Write a module" href="/guides/writing-a-module" description="Check and set up a service of your own." />

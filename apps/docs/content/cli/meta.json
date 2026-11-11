@@ -1,4 +1,1 @@
-{
-  "title": "Commands",
-  "pages": ["init", "doctor", "setup", "secrets", "github-vars", "modules"]
-}
+{ "title": "Commands", "pages": ["create", "init", "doctor", "setup", "secrets", "github-vars", "modules"] }

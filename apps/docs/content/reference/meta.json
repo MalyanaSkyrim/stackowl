@@ -1,4 +1,1 @@
-{
-  "title": "Reference",
-  "pages": ["configuration", "troubleshooting", "roadmap"]
-}
+{ "title": "Reference", "pages": ["configuration", "templates", "troubleshooting", "roadmap"] }

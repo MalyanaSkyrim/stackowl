@@ -1,0 +1,96 @@
+{
+  "$comment": "How setupwise create turns this template into a new project. Each token is replaced in every text file, in this order. The file is deleted from the new project.",
+  "name": "Starter: web, API, iPhone app, docs and infra",
+  "tokens": [
+    {
+      "find": "com.example.starterapp",
+      "value": "bundleId"
+    },
+    {
+      "find": "@starter/",
+      "value": "scope"
+    },
+    {
+      "find": "StarterApp",
+      "value": "pascal"
+    },
+    {
+      "find": "Starter App",
+      "value": "displayName"
+    },
+    {
+      "find": "starter-app",
+      "value": "slug"
+    },
+    {
+      "find": "starter_app",
+      "value": "snake"
+    },
+    {
+      "find": "starterapp",
+      "value": "compact"
+    },
+    {
+      "find": "your-github-user",
+      "value": "owner"
+    },
+    {
+      "find": "example.com",
+      "value": "domain"
+    }
+  ],
+  "env": {
+    "generate": [
+      "AUTH_SECRET",
+      "API_KEY"
+    ],
+    "set": {
+      "EXPO_PUBLIC_APP_NAME": "displayName",
+      "APP_BUNDLE_ID": "bundleId",
+      "APPLE_SIGN_IN_IOS_BUNDLE_ID": "bundleId"
+    }
+  },
+  "setup": [
+    {
+      "title": "Start the local database",
+      "run": "pnpm db:start",
+      "needs": "docker"
+    },
+    {
+      "title": "Generate the database client",
+      "run": "pnpm db:generate"
+    },
+    {
+      "title": "Create the tables",
+      "run": "pnpm db:push"
+    },
+    {
+      "title": "Create the test tables",
+      "run": "pnpm db:push:test"
+    },
+    {
+      "title": "Add the demo user",
+      "run": "pnpm db:seed"
+    }
+  ],
+  "next": [
+    "pnpm dev                              # API :4000, website :3003, Metro",
+    "pnpm --filter=@starter/mobile ios     # the iPhone app (needs Xcode)",
+    "pnpm docs                             # the docs, with every setup step",
+    "pnpm doctor                           # what is still missing"
+  ],
+  "ports": [
+    {
+      "env": "DB_PORT",
+      "default": 26261
+    },
+    {
+      "env": "DB_ADMIN_PORT",
+      "default": 8086
+    },
+    {
+      "env": "REDIS_PORT",
+      "default": 6383
+    }
+  ]
+}

@@ -1,12 +1,14 @@
 # setupwise
 
-Check and set up everything a project needs outside its code: tools on each machine, keys in the env file, GitHub variables and secrets, and cloud secret values. One typed config, one command.
+Start a full app from nothing, and keep everything it needs outside its code in check.
 
 ```sh
-npx setupwise init      # writes setupwise.config.ts
-npx setupwise doctor    # checks everything, changes nothing
-npx setupwise setup     # what it would set up (add --apply to do it)
+npx setupwise create my-app   # website, API, iPhone app, docs, infra and CI, running locally
+npx setupwise doctor          # checks tools, keys, GitHub and cloud secrets; changes nothing
+npx setupwise setup           # what it would set up (add --apply to do it)
 ```
+
+`create` copies the starter (Next.js website, Fastify + tRPC API with email, Apple and Google sign-in, Expo iPhone app, Fumadocs docs, Storybook, Prisma, OpenTofu for Google Cloud, GitHub Actions), renames everything for your app, writes `.env` with local secrets, installs, starts the local database and seeds a demo user. Or `--from github:you/your-template`.
 
 ## Commands
 

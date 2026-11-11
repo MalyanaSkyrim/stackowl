@@ -37,7 +37,8 @@
   "devDependencies": {
     "@starter/config": "workspace:*",
     "@types/fast-redact": "^3.0.4",
-    "@types/jsonwebtoken": "^9.0.9"
+    "@types/jsonwebtoken": "^9.0.9",
+    "tsup": "^8.5.0"
   },
   "types": "./src/trpc/router.ts"
 }

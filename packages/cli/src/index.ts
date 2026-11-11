@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs'
 import { parseArgs } from 'node:util'
 import pc from 'picocolors'
 
+import { create } from './commands/create'
 import { init } from './commands/init'
 import { docsLink, doctor, setup } from './commands/run-modules'
 import { githubVars, secretsSet } from './commands/targeted'
@@ -14,7 +15,12 @@ import { builtInModules, projectModules } from './modules'
 const HELP = `${pc.bold('setupwise')}: check and set up everything your project needs outside its code.
 
 ${pc.bold('Usage')}
-  setupwise init [--yes] [--force]       write setupwise.config.ts from a few questions
+  setupwise create [folder]              a new project from the starter (web, API, iPhone app, docs, infra)
+      --from <template>                  github:owner/repo[/folder][#ref] or a local folder instead
+      --name <name> --bundle-id <id> --domain <domain> --owner <github user>
+      --github                           also create the private GitHub repository and push
+      --no-install --no-db --no-git      skip those steps
+  setupwise init [--yes] [--force]       write setupwise.config.ts for an existing project
   setupwise doctor [module...] [--json]  check everything, change nothing (exit 1 on ✖)
   setupwise setup [module...] [--apply]  run the setup steps (dry run without --apply)
   setupwise secrets set <env> [--apply]  give cloud secrets their values from .env.<env>
@@ -50,6 +56,15 @@ async function main(argv: string[]): Promise<number> {
       json: { type: 'boolean', default: false },
       yes: { type: 'boolean', short: 'y', default: false },
       force: { type: 'boolean', default: false },
+      from: { type: 'string' },
+      name: { type: 'string' },
+      'bundle-id': { type: 'string' },
+      domain: { type: 'string' },
+      owner: { type: 'string' },
+      github: { type: 'boolean', default: false },
+      'no-install': { type: 'boolean', default: false },
+      'no-db': { type: 'boolean', default: false },
+      'no-git': { type: 'boolean', default: false },
       help: { type: 'boolean', short: 'h', default: false },
       version: { type: 'boolean', short: 'v', default: false },
     },
@@ -66,6 +81,20 @@ async function main(argv: string[]): Promise<number> {
   const common = { apply: values.apply, configFile: values.config }
 
   switch (command) {
+    case 'create':
+      return create({
+        dir: rest[0],
+        from: values.from,
+        name: values.name,
+        bundleId: values['bundle-id'],
+        domain: values.domain,
+        owner: values.owner,
+        yes: values.yes,
+        install: !values['no-install'],
+        db: !values['no-db'],
+        git: !values['no-git'],
+        github: values.github,
+      })
     case 'init':
       return init({ yes: values.yes, force: values.force })
     case 'doctor':

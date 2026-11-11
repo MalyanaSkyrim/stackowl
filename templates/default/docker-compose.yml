@@ -7,8 +7,8 @@ services:
     # Local only: insecure mode has no TLS and no passwords.
     command: start-single-node --insecure
     ports:
-      - '26261:26257' # SQL (DATABASE_URL)
-      - '8086:8080' # admin UI: http://localhost:8086
+      - '${DB_PORT:-26261}:26257' # SQL (DATABASE_URL)
+      - '${DB_ADMIN_PORT:-8086}:8080' # admin UI: http://localhost:8086
     volumes:
       - starter-app-cockroach-data:/cockroach/cockroach-data
       # Creates the app user and its databases on the first start.
@@ -33,7 +33,7 @@ services:
     image: redis:7-alpine
     restart: unless-stopped
     ports:
-      - '6383:6379'
+      - '${REDIS_PORT:-6383}:6379'
     volumes:
       - starter-app-redis-data:/data
     healthcheck:

@@ -1,16 +1,23 @@
 {
   "name": "setupwise",
   "version": "0.1.0",
-  "description": "Check and set up everything a project needs outside its code: tools, keys, GitHub and cloud secrets. Dry run first, safe to repeat.",
+  "description": "Create a full app (web, API, iPhone app, docs, infra) and check and set up everything it needs outside its code: tools, keys, GitHub and cloud secrets.",
   "keywords": [
-    "setup",
-    "doctor",
     "boilerplate",
-    "secrets",
-    "github",
-    "gcp",
     "cli",
-    "devops"
+    "create",
+    "devops",
+    "doctor",
+    "expo",
+    "gcp",
+    "github",
+    "monorepo",
+    "nextjs",
+    "secrets",
+    "setup",
+    "starter",
+    "template",
+    "trpc"
   ],
   "license": "MIT",
   "type": "module",
@@ -26,6 +33,7 @@
   "types": "./dist/api.d.ts",
   "files": [
     "dist",
+    "template",
     "README.md"
   ],
   "engines": {
@@ -36,7 +44,9 @@
     "dev": "tsup --watch",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm typecheck && pnpm test && pnpm build"
+    "prepublishOnly": "pnpm typecheck && pnpm test && pnpm build",
+    "prepack": "node scripts/pack-template.mjs",
+    "postpack": "node -e \"require('node:fs').rmSync('template',{recursive:true,force:true})\""
   },
   "dependencies": {
     "@clack/prompts": "^0.11.0",

@@ -1,0 +1,58 @@
+---
+title: Templates
+description: Make your own template for setupwise create.
+---
+
+Any folder or GitHub repository can be a template. `create` copies it and, if it has a `setupwise.template.json` at its root, follows it:
+
+```json title="setupwise.template.json"
+{
+  "name": "Starter: web, API, iPhone app, docs and infra",
+  "tokens": [
+    { "find": "com.example.starterapp", "value": "bundleId" },
+    { "find": "@starter/", "value": "scope" },
+    { "find": "StarterApp", "value": "pascal" },
+    { "find": "Starter App", "value": "displayName" },
+    { "find": "starter-app", "value": "slug" },
+    { "find": "starter_app", "value": "snake" },
+    { "find": "starterapp", "value": "compact" },
+    { "find": "your-github-user", "value": "owner" },
+    { "find": "example.com", "value": "domain" }
+  ],
+  "env": {
+    "generate": ["AUTH_SECRET", "API_KEY"],
+    "set": { "APP_BUNDLE_ID": "bundleId" }
+  },
+  "ports": [{ "env": "DB_PORT", "default": 26261 }],
+  "setup": [
+    { "title": "Start the local database", "run": "pnpm db:start", "needs": "docker" },
+    { "title": "Create the tables", "run": "pnpm db:push" }
+  ],
+  "next": ["pnpm dev"]
+}
+```
+
+| Field | What it does |
+| ----- | ------------ |
+| `tokens` | Replaced in every text file and file name, **in this order**: put a token before any shorter one it contains (`com.example.starterapp` before `starterapp`) |
+| `env.generate` | Keys of `.env` given a random 32-byte secret |
+| `env.set` | Keys of `.env` given one of the values below |
+| `ports` | Ports in `.env`; a port already in use moves to the next free one, and `localhost:<port>` follows in `.env` |
+| `setup` | Commands run after `pnpm install`, in order; one with `needs: "docker"` waits for a running Docker. A failure stops the rest |
+| `next` | What `create` prints at the end |
+
+The values, from the name `Habit Tracker`:
+
+| Value | Example |
+| ----- | ------- |
+| `displayName` | `Habit Tracker` |
+| `slug` | `habit-tracker` |
+| `scope` | `@habit-tracker/` |
+| `pascal` | `HabitTracker` |
+| `snake` | `habit_tracker` |
+| `compact` | `habittracker` |
+| `bundleId` | `com.acme.habittracker` |
+| `owner` | `acme` |
+| `domain` | `example.com`, or `--domain` |
+
+The manifest is deleted from the new project. `create` also sorts the dependencies of every `package.json`, since a new scope changes their order.

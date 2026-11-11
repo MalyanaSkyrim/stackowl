@@ -101,7 +101,8 @@
       "OAUTH_NO_EMAIL": "Apple or Google didn’t share your email. Allow it and try again.",
       "OAUTH_NOT_CONFIGURED": "This sign-in option isn’t available right now.",
       "NETWORK": "Can’t reach the server. Check your connection and try again.",
-      "UNKNOWN": "Something went wrong. Please try again."
+      "UNKNOWN": "Something went wrong. Please try again.",
+      "NOT_FOUND": "This item no longer exists."
     }
   },
   "profile": {

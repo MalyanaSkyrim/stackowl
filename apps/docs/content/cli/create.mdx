@@ -1,0 +1,32 @@
+---
+title: setupwise create
+description: A new project from the starter or your own template, installed and running.
+---
+
+```sh
+setupwise create [folder] [options]
+```
+
+| Step | What it does |
+| ---- | ------------ |
+| Asks | The folder, the app's name, the bundle id and the domain (or pass them as options) |
+| Copies | The bundled starter, or `--from` a GitHub repository or a local folder. Never copies `.git`, `node_modules`, build output or `.env` files |
+| Renames | Every token of the template in every text file: `Starter App`, `starter-app`, `@starter/`, `com.example.starterapp` and the rest become your app's |
+| `.env` | From `.env.example`, with generated local secrets, your bundle id, and free ports when another project already uses the defaults |
+| git | `git init` on `main`, and a first commit once installed |
+| Installs | `pnpm install` (with corepack or npx when pnpm isn't installed) |
+| Database | The template's setup steps: starts Docker's database, generates the client, creates the tables, adds the demo user. Skipped with a note when Docker isn't running |
+| Checks | Runs `doctor`, then prints what to run next |
+
+| Option | Effect |
+| ------ | ------ |
+| `--from <template>` | `github:owner/repo[/folder][#ref]`, a GitHub URL, or a local folder. Private repositories download through `gh` |
+| `--name <name>` | The app's display name. Defaults to the folder's name |
+| `--bundle-id <id>` | iOS bundle id and Android package. Defaults to `com.<your GitHub login>.<name>` |
+| `--domain <domain>` | Replaces `example.com` everywhere |
+| `--owner <login>` | The GitHub owner written into links and workflows. Defaults to your `gh` login |
+| `--github` | Also creates the private GitHub repository and pushes |
+| `--yes` | No questions: every default |
+| `--no-install`, `--no-db`, `--no-git` | Skip those steps |
+
+`create` refuses a folder that exists and isn't empty.

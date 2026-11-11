@@ -237,20 +237,12 @@ describe('account', () => {
   test('deleting the account erases its data and signs out', async () => {
     const { user, tokens } = await signIn()
     const signedIn = appRouter.createCaller({ log, userId: user.id })
-    await signedIn.sync.push({
-      settings: [
-        {
-          key: 'settings.theme',
-          value: 'dark',
-          changedAt: new Date(),
-        },
-      ],
-    })
+    await signedIn.notes.create({ title: 'Private' })
 
     await signedIn.auth.deleteAccount()
 
     expect(await db.user.count()).toBe(0)
-    expect(await db.userSetting.count()).toBe(0)
+    expect(await db.note.count()).toBe(0)
     expect(await db.session.count()).toBe(0)
     expect(await verifyAccessToken(tokens.accessToken)).toBeNull()
     // A retry from a phone that missed the answer: signed out too.
