@@ -69,7 +69,7 @@ function pnpmCommand(): [string, string[]] | null {
 
 export async function create(options: CreateOptions): Promise<number> {
   const interactive = !options.yes && process.stdin.isTTY
-  if (interactive) p.intro(pc.bold('setupwise create'))
+  if (interactive) p.intro(pc.bold('SetupWise · create'))
 
   // --- Answers ---------------------------------------------------------------------------
   let dir = options.dir

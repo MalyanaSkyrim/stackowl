@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# setupwise installer for macOS and Linux: from a computer with nothing installed to a new
+# SetupWise installer for macOS and Linux: from a computer with nothing installed to a new
 # project running locally.
 #
 #   curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.sh | bash -s my-app
@@ -35,7 +35,7 @@ warn() { printf '  \033[33m!\033[0m %s\n' "$*"; }
 has() { command -v "$1" > /dev/null 2>&1; }
 
 OS="$(uname -s)"
-bold "setupwise: getting this computer ready"
+bold "SetupWise: getting this computer ready"
 
 # --- macOS basics -------------------------------------------------------------------------
 if [ "$OS" = "Darwin" ]; then

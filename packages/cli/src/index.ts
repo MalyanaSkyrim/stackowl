@@ -12,7 +12,7 @@ import { loadConfig } from './config'
 import { CliError } from './lib/output'
 import { builtInModules, projectModules } from './modules'
 
-const HELP = `${pc.bold('setupwise')}: check and set up everything your project needs outside its code.
+const HELP = `${pc.bold('SetupWise')}: check and set up everything your project needs outside its code.
 
 ${pc.bold('Usage')}
   setupwise create [folder]              a new project from the starter (web, API, iPhone app, docs, infra)

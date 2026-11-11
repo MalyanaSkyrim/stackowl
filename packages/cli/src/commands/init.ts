@@ -114,7 +114,7 @@ export async function init(options: {
 
   let answers = defaults
   if (!options.yes && process.stdin.isTTY) {
-    p.intro('setupwise init')
+    p.intro('SetupWise · init')
     const result = await p.group(
       {
         name: () =>

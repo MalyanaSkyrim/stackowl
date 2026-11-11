@@ -1,4 +1,4 @@
-# setupwise installer for Windows: from a computer with nothing installed to a new project
+# SetupWise installer for Windows: from a computer with nothing installed to a new project
 # running locally. In PowerShell:
 #
 #   irm https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/install/install.ps1 | iex
@@ -33,7 +33,7 @@ function Install-Winget($id, $name) {
   Refresh-Path
 }
 
-Write-Host 'setupwise: getting this computer ready' -ForegroundColor White
+Write-Host 'SetupWise: getting this computer ready' -ForegroundColor White
 
 if (-not (Has 'winget')) {
   Warn 'winget is missing: install "App Installer" from the Microsoft Store, then run this again'

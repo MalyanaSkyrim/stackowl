@@ -1,4 +1,6 @@
-# setupwise
+<p align="center"><img src=".github/logo.svg" width="72" alt="" /></p>
+
+<h1 align="center">SetupWise</h1>
 
 A CLI that creates a full app (website, API, iPhone app, docs, infra) and checks and sets up everything a project needs outside its code, plus its docs site.
 

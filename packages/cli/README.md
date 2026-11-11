@@ -1,4 +1,6 @@
-# setupwise
+<p align="center"><img src="https://raw.githubusercontent.com/MalyanaSkyrim/setupwise/main/.github/logo.svg" width="72" alt="" /></p>
+
+<h1 align="center">SetupWise</h1>
 
 Start a full app from nothing, and keep everything it needs outside its code in check.
 
