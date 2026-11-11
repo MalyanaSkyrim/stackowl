@@ -1,0 +1,38 @@
+.box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 44rem;
+  margin: 1.5rem auto 0;
+  padding: 0.75rem 0.75rem 0.75rem 1rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 0.75rem;
+  background: var(--color-fd-card);
+  text-align: start;
+}
+
+.command {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  color: var(--color-fd-card-foreground);
+}
+
+.prompt {
+  color: var(--color-fd-primary);
+}
+
+.copy {
+  flex-shrink: 0;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 999px;
+  background: var(--color-fd-secondary);
+  color: var(--color-fd-secondary-foreground);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}

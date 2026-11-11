@@ -2,7 +2,7 @@
 export const site = {
   name: 'StackOwl',
   description:
-    'Check and set up everything a project needs outside its code: tools, keys, GitHub and cloud secrets.',
+    'Create a full app (website, API, iPhone app, docs, cloud) in one command, and get guided until you publish it.',
   repository: {
     owner: 'MalyanaSkyrim',
     name: 'StackOwl',

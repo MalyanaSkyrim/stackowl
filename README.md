@@ -7,7 +7,7 @@ A CLI that creates a full app (website, API, iPhone app, docs, infra) and checks
 | Folder           | What                                                          |
 | ---------------- | ------------------------------------------------------------- |
 | `packages/cli`   | The `stackowl` npm package (CLI and `defineConfig` API)      |
-| `apps/docs`      | The docs, built with Fumadocs (default theme, light and dark) |
+| `apps/docs`      | The website: landing page at `/` and docs at `/docs` (Fumadocs, light and dark), live at https://malyanaskyrim.github.io/stackowl/ |
 | `examples/basic` | A sample `stackowl.config.ts`                                |
 
 ## Develop

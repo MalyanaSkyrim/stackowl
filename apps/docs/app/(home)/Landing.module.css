@@ -1,0 +1,203 @@
+/* Fumadocs' own color variables, so the page follows the light and dark themes. */
+.page {
+  width: 100%;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1rem 5rem;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 0 2rem;
+  text-align: center;
+}
+
+.title {
+  max-width: 46rem;
+  margin: 1.5rem 0 0;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-fd-foreground);
+}
+
+.lead {
+  max-width: 40rem;
+  margin: 1.25rem 0 0;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--color-fd-muted-foreground);
+}
+
+.note {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.primary {
+  background: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
+}
+
+.secondary {
+  border: 1px solid var(--color-fd-border);
+  color: var(--color-fd-foreground);
+}
+
+.section {
+  padding-top: 4rem;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--color-fd-foreground);
+}
+
+.sub {
+  max-width: 42rem;
+  margin: 0.75rem auto 0;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--color-fd-muted-foreground);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.card {
+  padding: 1.25rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 1rem;
+  background: var(--color-fd-card);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-fd-card-foreground);
+}
+
+.card p {
+  margin: 0.5rem 0 0;
+  line-height: 1.55;
+  color: var(--color-fd-muted-foreground);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 52rem;
+  margin: 2rem auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 999px;
+  background: var(--color-fd-card);
+  font-size: 0.9rem;
+  color: var(--color-fd-foreground);
+}
+
+.path {
+  max-width: 48rem;
+  margin: 2rem auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.path li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--color-fd-border);
+}
+
+.path li > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.path strong {
+  color: var(--color-fd-foreground);
+}
+
+.path p {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+.path code {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: var(--color-fd-primary);
+}
+
+.number {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
+  font-weight: 600;
+}
+
+.cta {
+  padding-top: 5rem;
+  text-align: center;
+}
+
+@media (max-width: 40rem) {
+  .hero {
+    padding-top: 2.5rem;
+  }
+
+  .path li {
+    flex-wrap: wrap;
+  }
+
+  .path code {
+    margin-inline-start: 3rem;
+  }
+}

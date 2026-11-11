@@ -55,7 +55,7 @@ export default defineConfig({
 - Values are never printed: secrets are compared, and passed to CLIs on stdin.
 - Output marks: `✓` fine, `!` worth a look, `✖` must be fixed, `+` a change.
 
-Your own services plug in as modules (`defineModule`). Docs: https://malyanaskyrim.github.io/stackowl/
+Your own services plug in as modules (`defineModule`). Website and docs: https://malyanaskyrim.github.io/stackowl/
 
 ## License
 
