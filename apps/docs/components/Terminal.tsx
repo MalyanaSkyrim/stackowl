@@ -30,6 +30,8 @@ export function Terminal({
   const current = lines[lineIndex]
   const doneTyping = current ? typed >= current.command.length : true
 
+  // One step per tick: the next letter, or the next line once this one is typed. `typed` is a
+  // dependency, so each step schedules the following one.
   useEffect(() => {
     if (!current) return
     const timer = setTimeout(
@@ -43,7 +45,7 @@ export function Terminal({
       doneTyping ? 900 : 35,
     )
     return () => clearTimeout(timer)
-  }, [current, doneTyping, run])
+  }, [current, doneTyping, typed, run])
 
   const replay = () => {
     setLineIndex(0)

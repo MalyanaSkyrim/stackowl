@@ -43,7 +43,7 @@ export function Terminal({
       doneTyping ? 900 : 35,
     )
     return () => clearTimeout(timer)
-  }, [current, doneTyping, run])
+  }, [current, doneTyping, typed, run])
 
   const replay = () => {
     setLineIndex(0)
