@@ -1,1 +1,16 @@
-/* Fumadocs' default theme, light and dark, untouched. Add your own rules below. */
+/*
+ * Fumadocs' default theme, with the owl's indigo as the brand color: active sidebar links,
+ * highlights, links in text, focus rings and primary buttons. Dark mode uses a lighter indigo
+ * so text in that color stays readable on the dark background.
+ */
+:root {
+  --color-fd-primary: hsl(243, 75%, 59%); /* #4F46E5, the logo */
+  --color-fd-primary-foreground: hsl(0, 0%, 100%);
+  --color-fd-ring: hsl(243, 75%, 59%);
+}
+
+.dark {
+  --color-fd-primary: hsl(234, 89%, 74%); /* #818CF8 */
+  --color-fd-primary-foreground: hsl(244, 47%, 20%);
+  --color-fd-ring: hsl(234, 89%, 74%);
+}
