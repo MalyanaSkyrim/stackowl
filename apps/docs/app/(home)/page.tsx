@@ -8,7 +8,7 @@ import Link from 'next/link'
 import styles from './Landing.module.css'
 
 export const metadata: Metadata = {
-  title: { absolute: `${site.name}: skip the setup, ship the app` },
+  title: { absolute: `${site.name}: from idea to App Store, wisely` },
   description: site.description,
 }
 
@@ -104,7 +104,7 @@ export default function HomePage() {
       <section className={styles.hero}>
         <Logo size={88} />
         <p className={styles.eyebrow}>For vibecoders, developers and experts</p>
-        <h1 className={styles.title}>Skip the setup. Ship the app.</h1>
+        <h1 className={styles.title}>From idea to App Store, wisely.</h1>
         <p className={styles.lead}>
           One command gives you a production-ready website, API, iPhone app, docs and cloud. Then{' '}
           {site.name} guides every step, from your first commit to the App Store.
