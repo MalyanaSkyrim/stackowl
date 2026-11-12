@@ -103,7 +103,7 @@ export default function HomePage() {
     <main className={styles.page}>
       <section className={styles.hero}>
         <Logo size={88} />
-        <p className={styles.eyebrow}>For vibecoders, developers and experts</p>
+        <p className={styles.eyebrow}>For vibecoders, junior and senior developers alike</p>
         <h1 className={styles.title}>From idea to App Store, wisely.</h1>
         <p className={styles.lead}>
           One command gives you a production-ready website, API, iPhone app, docs and cloud. Then{' '}
