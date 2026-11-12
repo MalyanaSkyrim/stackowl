@@ -15,6 +15,22 @@ export const metadata: Metadata = {
 const INSTALL =
   'curl -fsSL https://raw.githubusercontent.com/MalyanaSkyrim/stackowl/main/install/install.sh | bash -s my-app'
 
+/** Who StackOwl is for: the same tool, three ways in. */
+const audiences = [
+  {
+    title: 'Vibecoders',
+    body: 'Describe what you want to your AI assistant. StackOwl gives it a repo it understands (rules, skills and a worked example), and one-line commands with plain-language output, so you need very little Git or terminal know-how.',
+  },
+  {
+    title: 'Developers',
+    body: 'A typed full stack with conventions already decided: tRPC end to end, one UI kit for web and mobile, Prisma, tests and CI. Copy the notes feature and build yours.',
+  },
+  {
+    title: 'Experts and teams',
+    body: 'Infrastructure as code, secrets per environment, staging and production deploys, signed iPhone builds, and stackowl doctor in CI so nothing drifts.',
+  },
+]
+
 const parts = [
   {
     title: 'Website',
@@ -87,6 +103,7 @@ export default function HomePage() {
     <main className={styles.page}>
       <section className={styles.hero}>
         <Logo size={88} />
+        <p className={styles.eyebrow}>For vibecoders, developers and experts</p>
         <h1 className={styles.title}>Skip the setup. Ship the app.</h1>
         <p className={styles.lead}>
           One command gives you a production-ready website, API, iPhone app, docs and cloud. Then{' '}
@@ -129,6 +146,22 @@ export default function HomePage() {
             },
           ]}
         />
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.heading}>Made for everyone who builds</h2>
+        <p className={styles.sub}>
+          Whether you write every line or let an AI write them, you get the same production setup, and
+          the same guide all the way to the App Store.
+        </p>
+        <div className={styles.grid}>
+          {audiences.map((audience) => (
+            <div key={audience.title} className={styles.card}>
+              <h3>{audience.title}</h3>
+              <p>{audience.body}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className={styles.section}>
