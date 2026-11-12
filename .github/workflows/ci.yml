@@ -1,0 +1,43 @@
+# Checks the CLI and the starter on Linux, macOS and Windows: tests, then `stackowl create`
+# for real, then the generated project's own install, build and scripts.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  cli:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter stackowl typecheck
+      - run: pnpm --filter stackowl test
+      - run: pnpm --filter stackowl build
+
+      - name: Create a project with the starter
+        working-directory: ${{ runner.temp }}
+        run: node "${{ github.workspace }}/packages/cli/dist/index.js" create ci-app --yes --no-db --name "CI App"
+
+      - name: Build and check the generated project
+        working-directory: ${{ runner.temp }}/ci-app
+        shell: bash
+        run: |
+          pnpm --filter=@ci-app/database db:generate
+          pnpm --filter=@ci-app/api build
+          pnpm --filter=@ci-app/web test
+          pnpm --filter=@ci-app/mobile test
+          pnpm doctor tools env || true
+          pnpm clean

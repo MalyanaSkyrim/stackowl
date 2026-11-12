@@ -12,11 +12,15 @@ export function run(
   args: readonly string[],
   options: { input?: string; cwd?: string } = {},
 ): RunResult {
-  const result = spawnSync(command, args, {
+  // On Windows many CLIs are `.cmd` files (gcloud, pnpm, npx), which only start through the
+  // shell; every argument is quoted for cmd.exe so spaces and symbols pass through unchanged.
+  const windows = process.platform === 'win32'
+  const result = spawnSync(windows ? quoteForCmd(command) : command, windows ? args.map(quoteForCmd) : args, {
     encoding: 'utf8',
     input: options.input,
     cwd: options.cwd,
     stdio: ['pipe', 'pipe', 'pipe'],
+    shell: windows,
   })
   return {
     ok: result.status === 0,
@@ -39,4 +43,9 @@ export function has(command: string): boolean {
     found.set(command, result)
   }
   return result
+}
+
+/** An argument as cmd.exe reads it: quoted when it has spaces or symbols, inner quotes doubled. */
+export function quoteForCmd(value: string): string {
+  return /^[\w./:=@-]+$/.test(value) ? value : `"${value.replace(/"/g, '""')}"`
 }

@@ -92,7 +92,9 @@ export function checkRequirements(nodeMinimum: string | null): Requirement[] {
       install: has('docker')
         ? platform === 'darwin'
           ? ['open', '-a', 'Docker']
-          : undefined
+          : platform === 'win32'
+            ? ['cmd', '/c', 'start', '', 'C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe']
+            : undefined
         : platform === 'darwin' && brew()
           ? ['brew', 'install', '--cask', 'docker']
           : platform === 'win32' && winget()
@@ -110,7 +112,8 @@ const describe = (req: Requirement) => req.problem ?? `${req.name} is not instal
 function waitForDocker(seconds: number): boolean {
   for (let i = 0; i < seconds; i += 3) {
     if (dockerRunning()) return true
-    spawnSync('sleep', ['3'])
+    // A blocking 3-second pause that works on every platform (no `sleep` command on Windows).
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3000)
   }
   return dockerRunning()
 }
@@ -147,8 +150,8 @@ export async function preflight(options: {
         if (result.status !== 0) console.log(`${pc.red('✖')} couldn't install ${req.name}: see ${req.manual}`)
         if (req.id === 'node' && platform === 'darwin')
           run('brew', ['link', '--overwrite', '--force', req.install![2]!])
-        if (req.id === 'docker' && platform === 'darwin') {
-          if (req.install![0] !== 'open') run('open', ['-a', 'Docker'])
+        if (req.id === 'docker' && (platform === 'darwin' || platform === 'win32')) {
+          if (platform === 'darwin' && req.install![0] !== 'open') run('open', ['-a', 'Docker'])
           console.log(pc.dim('  waiting for Docker to start (accept its terms if a window opens)…'))
           waitForDocker(90)
         }

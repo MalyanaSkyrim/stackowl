@@ -100,3 +100,12 @@ describe('helpers', () => {
     expect(report.lines[0]?.text).toBe('set X (dry run)')
   })
 })
+
+describe('windows quoting', () => {
+  it('leaves plain arguments alone and quotes the rest', async () => {
+    const { quoteForCmd } = await import('../src/lib/run')
+    expect(quoteForCmd('--project=my-app')).toBe('--project=my-app')
+    expect(quoteForCmd('Habit Tracker')).toBe('"Habit Tracker"')
+    expect(quoteForCmd('say "hi"')).toBe('"say ""hi"""')
+  })
+})

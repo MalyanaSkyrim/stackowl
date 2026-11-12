@@ -18,10 +18,10 @@
     "db:studio": "prisma studio",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
-    "db:push:test": "dotenv -e ../../.env -- sh -c 'DATABASE_URL=$TEST_DATABASE_URL prisma db push'",
+    "db:push:test": "node ../../tooling/scripts/with-test-db.mjs prisma db push",
     "db:seed": "tsx prisma/seeds/seed.ts",
     "dev": "prisma studio --browser none",
-    "db:generate": "rm -rf generated && prisma generate",
+    "db:generate": "node ../../tooling/scripts/clean.mjs generated && prisma generate",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
