@@ -23,7 +23,8 @@
     "dev": "prisma studio --browser none",
     "db:generate": "node ../../tooling/scripts/clean.mjs generated && prisma generate",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "@starter/config": "workspace:*",

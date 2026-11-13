@@ -35,7 +35,6 @@ jobs:
         working-directory: ${{ runner.temp }}/ci-app
         shell: bash
         run: |
-          pnpm --filter=@ci-app/database db:generate
           pnpm --filter=@ci-app/api build
           pnpm --filter=@ci-app/web test
           pnpm --filter=@ci-app/mobile test

@@ -57,10 +57,6 @@
       "needs": "docker"
     },
     {
-      "title": "Generate the database client",
-      "run": "pnpm db:generate"
-    },
-    {
       "title": "Create the tables",
       "run": "pnpm db:push"
     },

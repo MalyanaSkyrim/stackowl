@@ -1,6 +1,6 @@
 {
   "name": "stackowl",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create a full app (web, API, iPhone app, docs, infra) and check and set up everything it needs outside its code: tools, keys, GitHub and cloud secrets.",
   "keywords": [
     "boilerplate",
