@@ -2,7 +2,7 @@
 export const site = {
   name: 'StackOwl',
   description:
-    'For vibecoders, junior and senior developers: a full app (website, API, iPhone app, docs, cloud) in one command, and a guide until you publish it.',
+    'Easy for vibecoders, solid enough for seniors: a full app (website, API, iPhone app, docs, cloud) in one command, and a guide until you publish it.',
   repository: {
     owner: 'MalyanaSkyrim',
     name: 'StackOwl',
